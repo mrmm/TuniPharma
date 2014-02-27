@@ -14,17 +14,17 @@ import java.sql.Date;
 public class Message {
 
     int id_msg;
-    int id_src;
-    int id_dst;
+    int id_bt_src;
+    int id_bt_dst;
     String sujet_msg;
     String corps_msg;
     Date date_msg;
     Boolean etat_msg;
 
-    public Message(int id_msg, int id_src, int id_dst, String sujet_msg, String corps_msg, Date date_msg, Boolean etat_msg) {
+    public Message(int id_msg, int id_bt_src, int id_bt_dst, String sujet_msg, String corps_msg, Date date_msg, Boolean etat_msg) {
         this.id_msg = id_msg;
-        this.id_src = id_src;
-        this.id_dst = id_dst;
+        this.id_bt_src = id_bt_src;
+        this.id_bt_dst = id_bt_dst;
         this.sujet_msg = sujet_msg;
         this.corps_msg = corps_msg;
         this.date_msg = date_msg;
@@ -38,13 +38,7 @@ public class Message {
         this.id_msg = id_msg;
     }
 
-    public void setId_src(int id_src) {
-        this.id_src = id_src;
-    }
-
-    public void setId_dst(int id_dst) {
-        this.id_dst = id_dst;
-    }
+    
 
     public void setSujet_msg(String sujet_msg) {
         this.sujet_msg = sujet_msg;
@@ -66,13 +60,26 @@ public class Message {
         return id_msg;
     }
 
-    public int getId_src() {
-        return id_src;
+    public void setId_bt_src(int id_bt_src) {
+        this.id_bt_src = id_bt_src;
     }
 
-    public int getId_dst() {
-        return id_dst;
+    public void setId_bt_dst(int id_bt_dst) {
+        this.id_bt_dst = id_bt_dst;
     }
+
+    public void setCorps_msg(String corps_msg) {
+        this.corps_msg = corps_msg;
+    }
+
+    public int getId_bt_src() {
+        return id_bt_src;
+    }
+
+    public int getId_bt_dst() {
+        return id_bt_dst;
+    }
+
 
     public String getSujet_msg() {
         return sujet_msg;

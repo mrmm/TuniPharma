@@ -41,15 +41,15 @@ public class MessagesDAO {
 
     public Message create(Message obj) {
 
-        String sql = "INSERT INTO Messages (id_src ,id_dst ,sujet_msg,corps_msg,date_msg,etat_msg)"
+        String sql = "INSERT INTO Messages (id_bt_src ,id_bt_dst ,sujet_msg,corps_msg,date_msg,etat_msg)"
                 + "VALUES"
                 + "(?,?,?,?,?,?);";
         
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            pstmt.setInt(1, obj.getId_src());
-            pstmt.setInt(2, obj.getId_dst());
+            pstmt.setInt(1, obj.getId_bt_src());
+            pstmt.setInt(2, obj.getId_bt_dst());
             pstmt.setString(3, obj.getSujet_msg());
             pstmt.setString(4, obj.getCorps_msg());
             pstmt.setDate(5, obj.getDate_msg());
@@ -98,8 +98,8 @@ public class MessagesDAO {
 
         String sql;
         sql = "UPDATE Messages SET "
-                + "id_src = '?',"
-                + "id_dst = '?',"
+                + "id_bt_src = '?',"
+                + "id_bt_dst = '?',"
                 + "sujet_msg = '?',"
                 + "corps_msg = '?',"
                 + "date_msg = '?' "
@@ -108,8 +108,8 @@ public class MessagesDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
 
-            pstmt.setInt(1, obj.getId_src());
-            pstmt.setInt(2, obj.getId_dst());
+            pstmt.setInt(1, obj.getId_bt_src());
+            pstmt.setInt(2, obj.getId_bt_dst());
             pstmt.setString(3, obj.getSujet_msg());
             pstmt.setString(4, obj.getCorps_msg());
             pstmt.setDate(5, obj.getDate_msg());
