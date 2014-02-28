@@ -18,10 +18,9 @@ public class BoiteMessages {
         this.id_bt = id_bt;
         this.id_cpt = id_cpt;
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Getter & Setter">                          
     // Teste sur le boutton de la formulaire d'acceuil
-
     public int getId_bt() {
         return id_bt;
     }
