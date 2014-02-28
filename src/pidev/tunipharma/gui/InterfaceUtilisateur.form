@@ -28,9 +28,9 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="949" max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" pref="1016" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -140,7 +140,7 @@
                                                   </Group>
                                                   <Component id="txtprenom2" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace pref="460" max="32767" attributes="0"/>
+                                              <EmptySpace pref="594" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -162,7 +162,7 @@
                                               <Component id="jScrollPane10" min="-2" pref="170" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="0" pref="455" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="569" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -400,7 +400,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="854" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="984" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -861,7 +861,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="47" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -869,7 +869,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -1247,7 +1247,7 @@
                                                   <Component id="jLabel36" min="-2" pref="23" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace pref="18" max="32767" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
