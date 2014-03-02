@@ -22,8 +22,10 @@ public class Pharmacie {
     String long_gm_pha;
     String email_pha;
     int type_pha;
+    String ville_pha;
+    String gouv_pha;
 
-    public Pharmacie(int id_pha, int id_resp, String nom_pha, String addresse_pha, int tel_pha, int fax_pha, int id_cal, String lat_gm_pha, String long_gm_pha, String email_pha, int type_pha) {
+    public Pharmacie(int id_pha, int id_resp, String nom_pha, String addresse_pha, int tel_pha, int fax_pha, int id_cal, String lat_gm_pha, String long_gm_pha, String email_pha, int type_pha, String ville_pha, String gouv_pha) {
         this.id_pha = id_pha;
         this.id_resp = id_resp;
         this.nom_pha = nom_pha;
@@ -35,10 +37,11 @@ public class Pharmacie {
         this.long_gm_pha = long_gm_pha;
         this.email_pha = email_pha;
         this.type_pha = type_pha;
+        this.ville_pha = ville_pha;
+        this.gouv_pha = gouv_pha;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Getter & Setter">                          
-    // Teste sur le boutton de la formulaire d'acceuil
     public int getId_pha() {
         return id_pha;
     }
@@ -81,6 +84,14 @@ public class Pharmacie {
 
     public int getType_pha() {
         return type_pha;
+    }
+
+    public String getVille_pha() {
+        return ville_pha;
+    }
+
+    public String getGouv_pha() {
+        return gouv_pha;
     }
 
     public void setId_pha(int id_pha) {
@@ -126,16 +137,22 @@ public class Pharmacie {
     public void setType_pha(int type_pha) {
         this.type_pha = type_pha;
     }
-    
-    // </editor-fold>
 
+    public void setVille_pha(String ville_pha) {
+        this.ville_pha = ville_pha;
+    }
+
+    public void setGouv_pha(String gouv_pha) {
+        this.gouv_pha = gouv_pha;
+    }
+
+    // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="toString, hashCode et equals">
-    // Teste sur le boutton de la formulaire d'acceuil
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 71 * hash + this.id_pha;
+        hash = 47 * hash + this.id_pha;
         return hash;
     }
 
@@ -156,7 +173,8 @@ public class Pharmacie {
 
     @Override
     public String toString() {
-        return "Pharmacie{" + "id_pha=" + id_pha + ", id_resp=" + id_resp + ", nom_pha=" + nom_pha + ", addresse_pha=" + addresse_pha + ", tel_pha=" + tel_pha + ", fax_pha=" + fax_pha + ", id_cal=" + id_cal + ", lat_gm_pha=" + lat_gm_pha + ", long_gm_pha=" + long_gm_pha + ", email_pha=" + email_pha + ", type_pha=" + type_pha + '}';
+        return "Pharmacie{" + "id_pha=" + id_pha + ", id_resp=" + id_resp + ", nom_pha=" + nom_pha + ", addresse_pha=" + addresse_pha + ", tel_pha=" + tel_pha + ", fax_pha=" + fax_pha + ", id_cal=" + id_cal + ", lat_gm_pha=" + lat_gm_pha + ", long_gm_pha=" + long_gm_pha + ", email_pha=" + email_pha + ", type_pha=" + type_pha + ", ville_pha=" + ville_pha + ", gouv_pha=" + gouv_pha + '}';
     }
+
     // </editor-fold>
 }

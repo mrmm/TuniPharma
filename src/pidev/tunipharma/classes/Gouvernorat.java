@@ -3,51 +3,44 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package pidev.tunipharma.classes;
 
 /**
  *
  * @author elron
  */
-public class BoiteMessages {
+public class Gouvernorat {
+    int id_gouv;
+    String nom_gouv;
 
-    int id_bt;
-    int id_cpt;
-
-    public BoiteMessages(int id_bt, int id_cpt) {
-        this.id_bt = id_bt;
-        this.id_cpt = id_cpt;
+    public Gouvernorat(int id_gouv, String nom_gouv) {
+        this.id_gouv = id_gouv;
+        this.nom_gouv = nom_gouv;
     }
-
     // <editor-fold defaultstate="collapsed" desc="Getter & Setter">
-    public int getId_bt() {
-        return id_bt;
+    public int getId_gouv() {
+        return id_gouv;
     }
 
-    public int getId_cpt() {
-        return id_cpt;
+    public String getNom_gouv() {
+        return nom_gouv;
     }
 
-    public void setId_bt(int id_bt) {
-        this.id_bt = id_bt;
+    public void setId_gouv(int id_gouv) {
+        this.id_gouv = id_gouv;
     }
 
-    public void setId_cpt(int id_cpt) {
-        this.id_cpt = id_cpt;
+    public void setNom_gouv(String nom_gouv) {
+        this.nom_gouv = nom_gouv;
     }
-
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="hashCode, Equals & toString">
     @Override
-    public String toString() {
-        return "BoiteMessages{" + "id_bt=" + id_bt + ", id_cpt=" + id_cpt + '}';
-    }
-
-    @Override
     public int hashCode() {
         int hash = 5;
-        hash = 19 * hash + this.id_bt;
+        hash = 11 * hash + this.id_gouv;
         return hash;
     }
 
@@ -59,12 +52,18 @@ public class BoiteMessages {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BoiteMessages other = (BoiteMessages) obj;
-        if (this.id_bt != other.id_bt) {
+        final Gouvernorat other = (Gouvernorat) obj;
+        if (this.id_gouv != other.id_gouv) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Gouvernorat{" + "id_gouv=" + id_gouv + ", nom_gouv=" + nom_gouv + '}';
+    }
     // </editor-fold>
+    
     
 }
