@@ -28,9 +28,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane9 = new javax.swing.JTabbedPane();
-        jPanel3 = new javax.swing.JPanel();
+        tabbedPaneAdministration = new javax.swing.JTabbedPane();
+        tabbedPaneGestionCpt = new javax.swing.JTabbedPane();
+        panelAjoutCpt = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
@@ -54,7 +54,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         cBoxAjoutCptToS = new javax.swing.JCheckBox();
         btconf2 = new javax.swing.JButton();
         btAjoutAnnuler = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        panelModCpt = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -65,13 +65,13 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         comboBoxModCptType = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableModCpt = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
+        panelNouvInscrit = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         tableNouvInscriCpt = new javax.swing.JTable();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel13 = new javax.swing.JPanel();
+        tabbedPaneGestionPha = new javax.swing.JTabbedPane();
+        scrollPaneAjoutPha = new javax.swing.JScrollPane();
+        panelAjoutPha = new javax.swing.JPanel();
         jButtonAjoutPhaAnnuler = new javax.swing.JButton();
         jButtonAjoutPhaConfirmer = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
@@ -90,8 +90,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jComboBoxAjoutPhaResponsable = new javax.swing.JComboBox();
         jLabel40 = new javax.swing.JLabel();
         jCalendarAjoutPhaHoraire = new org.torrisi.swing.jcalendar.JCalendar();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        scrollPaneModPha = new javax.swing.JScrollPane();
+        panelModPha = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
@@ -101,23 +101,23 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         comboBoxModPhaCille = new javax.swing.JComboBox();
         jScrollPane11 = new javax.swing.JScrollPane();
         tableModPha = new javax.swing.JTable();
-        jPanel17 = new javax.swing.JPanel();
-        jScrollPane14 = new javax.swing.JScrollPane();
+        panelDemandes = new javax.swing.JPanel();
+        scrollPaneDemandes = new javax.swing.JScrollPane();
         tableDemandesPha = new javax.swing.JTable();
-        panelStatNbrInscrit = new javax.swing.JTabbedPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jPanel12 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jPanel15 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        panelStatNotePha = new javax.swing.JPanel();
+        tabbedPaneStats = new javax.swing.JTabbedPane();
+        scrollPaneStatInscri = new javax.swing.JScrollPane();
+        panelStatsInscri = new javax.swing.JPanel();
+        scrollPaneStatsNbrReq = new javax.swing.JScrollPane();
+        panelStatsNbrReq = new javax.swing.JPanel();
+        scrollPaneStatsNotePha = new javax.swing.JScrollPane();
+        panelStatsNotePha = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabbedPaneAdministration.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTabbedPane9.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPane9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tabbedPaneGestionCpt.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tabbedPaneGestionCpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajouter compte", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -303,20 +303,20 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelAjoutCptLayout = new javax.swing.GroupLayout(panelAjoutCpt);
+        panelAjoutCpt.setLayout(panelAjoutCptLayout);
+        panelAjoutCptLayout.setHorizontalGroup(
+            panelAjoutCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        panelAjoutCptLayout.setVerticalGroup(
+            panelAjoutCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAjoutCptLayout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabbedPane9.addTab("Ajouter compte", jPanel3);
+        tabbedPaneGestionCpt.addTab("Ajouter compte", panelAjoutCpt);
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Modifier Compte", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -418,23 +418,23 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelModCptLayout = new javax.swing.GroupLayout(panelModCpt);
+        panelModCpt.setLayout(panelModCptLayout);
+        panelModCptLayout.setHorizontalGroup(
+            panelModCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModCptLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        panelModCptLayout.setVerticalGroup(
+            panelModCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModCptLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane9.addTab("Modifier compte", jPanel4);
+        tabbedPaneGestionCpt.addTab("Modifier compte", panelModCpt);
 
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inscriptions", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -469,28 +469,28 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelNouvInscritLayout = new javax.swing.GroupLayout(panelNouvInscrit);
+        panelNouvInscrit.setLayout(panelNouvInscritLayout);
+        panelNouvInscritLayout.setHorizontalGroup(
+            panelNouvInscritLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelNouvInscritLayout.setVerticalGroup(
+            panelNouvInscritLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTabbedPane9.addTab("Nouvelle inscri", jPanel5);
+        tabbedPaneGestionCpt.addTab("Nouvelle inscri", panelNouvInscrit);
 
-        jTabbedPane1.addTab("Gestion des comptes", jTabbedPane9);
+        tabbedPaneAdministration.addTab("Gestion des comptes", tabbedPaneGestionCpt);
 
-        jTabbedPane3.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPane3.setToolTipText("");
-        jTabbedPane3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTabbedPane3.setName(""); // NOI18N
+        tabbedPaneGestionPha.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tabbedPaneGestionPha.setToolTipText("");
+        tabbedPaneGestionPha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tabbedPaneGestionPha.setName(""); // NOI18N
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajouter Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
-        jScrollPane2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        scrollPaneAjoutPha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajouter Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        scrollPaneAjoutPha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jButtonAjoutPhaAnnuler.setText("Annuler");
 
@@ -577,109 +577,109 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         jCalendarAjoutPhaHoraire.setStartYear(2014);
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addGap(0, 371, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelAjoutPhaLayout = new javax.swing.GroupLayout(panelAjoutPha);
+        panelAjoutPha.setLayout(panelAjoutPhaLayout);
+        panelAjoutPhaLayout.setHorizontalGroup(
+            panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAjoutPhaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButtonAjoutPhaConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(76, 76, 76)
                 .addComponent(jButtonAjoutPhaAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(263, 263, 263))
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtAjoutPhaFax, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtAjoutPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(3, 3, 3))
                                     .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                         .addGap(65, 65, 65)
                                         .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
+                                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                         .addGap(137, 137, 137)
                                         .addComponent(txtAjoutPhaTel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtAjoutPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGap(43, 43, 43)
                                 .addComponent(jCalendarAjoutPhaHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGap(91, 91, 91)
                                 .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                         .addGap(103, 103, 103)
                         .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        panelAjoutPhaLayout.setVerticalGroup(
+            panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAjoutPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAjoutPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAjoutPhaTel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAjoutPhaFax, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(22, 22, 22)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jCalendarAjoutPhaHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(34, 34, 34)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(25, 25, 25)
+                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAjoutPhaAnnuler)
                     .addComponent(jButtonAjoutPhaConfirmer))
                 .addGap(94, 94, 94))
         );
 
-        jScrollPane2.setViewportView(jPanel13);
+        scrollPaneAjoutPha.setViewportView(panelAjoutPha);
 
-        jTabbedPane3.addTab("Ajouter Pharmacie", jScrollPane2);
+        tabbedPaneGestionPha.addTab("Ajouter Pharmacie", scrollPaneAjoutPha);
 
-        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        scrollPaneModPha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Information du Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        panelModPha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Information du Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtrer par :", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -741,20 +741,20 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         tableModPha.setToolTipText("");
         jScrollPane11.setViewportView(tableModPha);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelModPhaLayout = new javax.swing.GroupLayout(panelModPha);
+        panelModPha.setLayout(panelModPhaLayout);
+        panelModPhaLayout.setHorizontalGroup(
+            panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelModPhaLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane11))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelModPhaLayout.setVerticalGroup(
+            panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelModPhaLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -762,11 +762,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jScrollPane3.setViewportView(jPanel1);
+        scrollPaneModPha.setViewportView(panelModPha);
 
-        jTabbedPane3.addTab("Modifier Pharmacie", jScrollPane3);
+        tabbedPaneGestionPha.addTab("Modifier Pharmacie", scrollPaneModPha);
 
-        jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Demandes des Evenements/Services", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        panelDemandes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Demandes des Evenements/Services", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
         tableDemandesPha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -780,82 +780,82 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             }
         ));
         tableDemandesPha.setToolTipText("");
-        jScrollPane14.setViewportView(tableDemandesPha);
+        scrollPaneDemandes.setViewportView(tableDemandesPha);
 
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelDemandesLayout = new javax.swing.GroupLayout(panelDemandes);
+        panelDemandes.setLayout(panelDemandesLayout);
+        panelDemandesLayout.setHorizontalGroup(
+            panelDemandesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDemandesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
+                .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+        panelDemandesLayout.setVerticalGroup(
+            panelDemandesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
         );
 
-        jTabbedPane3.addTab("Les demandes", jPanel17);
+        tabbedPaneGestionPha.addTab("Les demandes", panelDemandes);
 
-        jTabbedPane1.addTab("Gestion des pharmacies", jTabbedPane3);
+        tabbedPaneAdministration.addTab("Gestion des pharmacies", tabbedPaneGestionPha);
 
-        panelStatNbrInscrit.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        panelStatNbrInscrit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tabbedPaneStats.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tabbedPaneStats.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inscription / Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        panelStatsInscri.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inscription / Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelStatsInscriLayout = new javax.swing.GroupLayout(panelStatsInscri);
+        panelStatsInscri.setLayout(panelStatsInscriLayout);
+        panelStatsInscriLayout.setHorizontalGroup(
+            panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 868, Short.MAX_VALUE)
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelStatsInscriLayout.setVerticalGroup(
+            panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 608, Short.MAX_VALUE)
         );
 
-        jScrollPane5.setViewportView(jPanel12);
+        scrollPaneStatInscri.setViewportView(panelStatsInscri);
 
-        panelStatNbrInscrit.addTab("Statistique d'inscription", jScrollPane5);
+        tabbedPaneStats.addTab("Statistique d'inscription", scrollPaneStatInscri);
 
-        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre de requete /Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        panelStatsNbrReq.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre de requete /Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelStatsNbrReqLayout = new javax.swing.GroupLayout(panelStatsNbrReq);
+        panelStatsNbrReq.setLayout(panelStatsNbrReqLayout);
+        panelStatsNbrReqLayout.setHorizontalGroup(
+            panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 868, Short.MAX_VALUE)
         );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelStatsNbrReqLayout.setVerticalGroup(
+            panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 608, Short.MAX_VALUE)
         );
 
-        jScrollPane6.setViewportView(jPanel15);
+        scrollPaneStatsNbrReq.setViewportView(panelStatsNbrReq);
 
-        panelStatNbrInscrit.addTab("Nombre de requete /Mois", jScrollPane6);
+        tabbedPaneStats.addTab("Nombre de requete /Mois", scrollPaneStatsNbrReq);
 
-        panelStatNotePha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Note Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        panelStatsNotePha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Note Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
-        javax.swing.GroupLayout panelStatNotePhaLayout = new javax.swing.GroupLayout(panelStatNotePha);
-        panelStatNotePha.setLayout(panelStatNotePhaLayout);
-        panelStatNotePhaLayout.setHorizontalGroup(
-            panelStatNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelStatsNotePhaLayout = new javax.swing.GroupLayout(panelStatsNotePha);
+        panelStatsNotePha.setLayout(panelStatsNotePhaLayout);
+        panelStatsNotePhaLayout.setHorizontalGroup(
+            panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 868, Short.MAX_VALUE)
         );
-        panelStatNotePhaLayout.setVerticalGroup(
-            panelStatNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelStatsNotePhaLayout.setVerticalGroup(
+            panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 608, Short.MAX_VALUE)
         );
 
-        jScrollPane7.setViewportView(panelStatNotePha);
+        scrollPaneStatsNotePha.setViewportView(panelStatsNotePha);
 
-        panelStatNbrInscrit.addTab("Note Pharmacie", jScrollPane7);
+        tabbedPaneStats.addTab("Note Pharmacie", scrollPaneStatsNotePha);
 
-        jTabbedPane1.addTab("Statistiques", panelStatNbrInscrit);
-        panelStatNbrInscrit.getAccessibleContext().setAccessibleName("");
+        tabbedPaneAdministration.addTab("Statistiques", tabbedPaneStats);
+        tabbedPaneStats.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -863,14 +863,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1067, Short.MAX_VALUE)
+                .addComponent(tabbedPaneAdministration)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -990,18 +990,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
@@ -1009,18 +1001,26 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
-    private javax.swing.JScrollPane jScrollPane14;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane3;
-    private javax.swing.JTabbedPane jTabbedPane9;
-    private javax.swing.JTabbedPane panelStatNbrInscrit;
-    private javax.swing.JPanel panelStatNotePha;
+    private javax.swing.JPanel panelAjoutCpt;
+    private javax.swing.JPanel panelAjoutPha;
+    private javax.swing.JPanel panelDemandes;
+    private javax.swing.JPanel panelModCpt;
+    private javax.swing.JPanel panelModPha;
+    private javax.swing.JPanel panelNouvInscrit;
+    private javax.swing.JPanel panelStatsInscri;
+    private javax.swing.JPanel panelStatsNbrReq;
+    private javax.swing.JPanel panelStatsNotePha;
+    private javax.swing.JScrollPane scrollPaneAjoutPha;
+    private javax.swing.JScrollPane scrollPaneDemandes;
+    private javax.swing.JScrollPane scrollPaneModPha;
+    private javax.swing.JScrollPane scrollPaneStatInscri;
+    private javax.swing.JScrollPane scrollPaneStatsNbrReq;
+    private javax.swing.JScrollPane scrollPaneStatsNotePha;
+    private javax.swing.JTabbedPane tabbedPaneAdministration;
+    private javax.swing.JTabbedPane tabbedPaneGestionCpt;
+    private javax.swing.JTabbedPane tabbedPaneGestionPha;
+    private javax.swing.JTabbedPane tabbedPaneStats;
     private javax.swing.JTable tableDemandesPha;
     private javax.swing.JTable tableModCpt;
     private javax.swing.JTable tableModPha;

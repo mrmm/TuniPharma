@@ -54,7 +54,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="panelInfoPerso">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Informations personnelles">
@@ -369,7 +369,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="panelMsg">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Mes messages">
@@ -423,7 +423,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel3">
+        <Container class="javax.swing.JPanel" name="panelMaPha">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
@@ -465,7 +465,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="jPanel4">
+                <Container class="javax.swing.JPanel" name="panelInfoPha">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Informations pharmacie">
@@ -807,7 +807,7 @@
                     </Container>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel6">
+                <Container class="javax.swing.JPanel" name="panelEvents">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Evenements">
@@ -833,7 +833,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                       <SubComponents>
-                        <Container class="javax.swing.JPanel" name="jPanel7">
+                        <Container class="javax.swing.JPanel" name="panelMesEvents">
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                               <JTabbedPaneConstraints tabName="Mes Evenements">
@@ -941,7 +941,7 @@
                             </Container>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="jPanel8">
+                        <Container class="javax.swing.JPanel" name="panelAjoutEvent">
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                               <JTabbedPaneConstraints tabName="Ajouter evenement">
@@ -1159,7 +1159,7 @@
                     </Container>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+                <Container class="javax.swing.JTabbedPane" name="tabbedPaneServices">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Services">
@@ -1202,7 +1202,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Component class="javax.swing.JTable" name="tableMaPhaMesEvent1">
+                            <Component class="javax.swing.JTable" name="tableMaPhaMesSrv">
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="5" rowCount="0">
@@ -1301,16 +1301,16 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="txtnom10" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jComboBox3" alignment="0" pref="170" max="32767" attributes="0"/>
+                                          <Component id="comboBoxMaPhaAjoutSrvType" alignment="0" pref="170" max="32767" attributes="0"/>
                                           <Component id="jScrollPane14" alignment="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace pref="192" max="32767" attributes="0"/>
-                                      <Component id="jButton2" min="-2" pref="135" max="-2" attributes="0"/>
+                                      <Component id="buttonMaPhaAjoutSrvConfirmer" min="-2" pref="135" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                      <Component id="jButton1" min="-2" pref="135" max="-2" attributes="0"/>
+                                      <Component id="buttonMaPhaAjoutSrvAnnuler" min="-2" pref="135" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="361" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1328,7 +1328,7 @@
                                           <Component id="jLabel49" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                                              <Component id="jComboBox3" pref="25" max="32767" attributes="0"/>
+                                              <Component id="comboBoxMaPhaAjoutSrvType" pref="25" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -1338,8 +1338,8 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="buttonMaPhaAjoutSrvAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="buttonMaPhaAjoutSrvConfirmer" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="239" max="32767" attributes="0"/>
                                   </Group>
@@ -1362,7 +1362,7 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JTextArea" name="txtadresse6">
+                                <Component class="javax.swing.JTextArea" name="txtMaPhaAjoutSrvDesc">
                                   <Properties>
                                     <Property name="columns" type="int" value="20"/>
                                     <Property name="rows" type="int" value="5"/>
@@ -1395,24 +1395,19 @@
                                 <Property name="text" type="java.lang.String" value="Type service : "/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JComboBox" name="jComboBox3">
+                            <Component class="javax.swing.JComboBox" name="comboBoxMaPhaAjoutSrvType">
                               <Properties>
                                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                                  <StringArray count="4">
-                                    <StringItem index="0" value="Item 1"/>
-                                    <StringItem index="1" value="Item 2"/>
-                                    <StringItem index="2" value="Item 3"/>
-                                    <StringItem index="3" value="Item 4"/>
-                                  </StringArray>
+                                  <StringArray count="0"/>
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JButton" name="jButton2">
+                            <Component class="javax.swing.JButton" name="buttonMaPhaAjoutSrvConfirmer">
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Confirmer ajout"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JButton" name="jButton1">
+                            <Component class="javax.swing.JButton" name="buttonMaPhaAjoutSrvAnnuler">
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Annuler"/>
                               </Properties>

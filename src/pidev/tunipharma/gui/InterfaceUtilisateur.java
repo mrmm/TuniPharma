@@ -29,7 +29,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabMyPharmacie = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        panelInfoPerso = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
@@ -52,12 +52,12 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         btannuler2 = new javax.swing.JButton();
         txtMeInfosNvRMDP = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        panelMsg = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableMesMsg = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        panelMaPha = new javax.swing.JPanel();
         jTabMyPhaInfo = new javax.swing.JTabbedPane();
-        jPanel4 = new javax.swing.JPanel();
+        panelInfoPha = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         btMaPhaInfoAnnuler = new javax.swing.JButton();
         btMaPhaInfoConfirmer = new javax.swing.JButton();
@@ -77,13 +77,13 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         comboBoxMaPhaInfoType = new javax.swing.JComboBox();
         jLabel43 = new javax.swing.JLabel();
         calendarMaPhaInfoHoraire = new org.torrisi.swing.jcalendar.JCalendar();
-        jPanel6 = new javax.swing.JPanel();
+        panelEvents = new javax.swing.JPanel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
-        jPanel7 = new javax.swing.JPanel();
+        panelMesEvents = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableMaPhaMesEvent = new javax.swing.JTable();
-        jPanel8 = new javax.swing.JPanel();
+        panelAjoutEvent = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         btMaPhaAjoutEventAnnuler = new javax.swing.JButton();
         btMaPhaAjoutEventConfirmer = new javax.swing.JButton();
@@ -98,21 +98,21 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         spMaPhaAjoutEventHeure = new javax.swing.JSpinner();
         spMaPhaAjoutEventMin = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabbedPaneServices = new javax.swing.JTabbedPane();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tableMaPhaMesEvent1 = new javax.swing.JTable();
+        tableMaPhaMesSrv = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         txtnom10 = new javax.swing.JTextField();
         jScrollPane14 = new javax.swing.JScrollPane();
-        txtadresse6 = new javax.swing.JTextArea();
+        txtMaPhaAjoutSrvDesc = new javax.swing.JTextArea();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        comboBoxMaPhaAjoutSrvType = new javax.swing.JComboBox();
+        buttonMaPhaAjoutSrvConfirmer = new javax.swing.JButton();
+        buttonMaPhaAjoutSrvAnnuler = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Interface Pharmacien");
@@ -292,20 +292,20 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelInfoPersoLayout = new javax.swing.GroupLayout(panelInfoPerso);
+        panelInfoPerso.setLayout(panelInfoPersoLayout);
+        panelInfoPersoLayout.setHorizontalGroup(
+            panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelInfoPersoLayout.setVerticalGroup(
+            panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoPersoLayout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabMyPharmacie.addTab("Informations personnelles", jPanel1);
+        jTabMyPharmacie.addTab("Informations personnelles", panelInfoPerso);
 
         tableMesMsg.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -317,26 +317,26 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tableMesMsg);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelMsgLayout = new javax.swing.GroupLayout(panelMsg);
+        panelMsg.setLayout(panelMsgLayout);
+        panelMsgLayout.setHorizontalGroup(
+            panelMsgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMsgLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelMsgLayout.setVerticalGroup(
+            panelMsgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMsgLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabMyPharmacie.addTab("Mes messages", jPanel2);
+        jTabMyPharmacie.addTab("Mes messages", panelMsg);
 
-        jPanel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        panelMaPha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jTabMyPhaInfo.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -514,28 +514,28 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addGap(110, 110, 110))
         );
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelInfoPhaLayout = new javax.swing.GroupLayout(panelInfoPha);
+        panelInfoPha.setLayout(panelInfoPhaLayout);
+        panelInfoPhaLayout.setHorizontalGroup(
+            panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 980, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInfoPhaLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelInfoPhaLayout.setVerticalGroup(
+            panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 692, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInfoPhaLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jTabMyPhaInfo.addTab("Informations pharmacie", jPanel4);
+        jTabMyPhaInfo.addTab("Informations pharmacie", panelInfoPha);
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evenement", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -562,18 +562,18 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelMesEventsLayout = new javax.swing.GroupLayout(panelMesEvents);
+        panelMesEvents.setLayout(panelMesEventsLayout);
+        panelMesEventsLayout.setHorizontalGroup(
+            panelMesEventsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelMesEventsLayout.setVerticalGroup(
+            panelMesEventsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTabbedPane3.addTab("Mes Evenements", jPanel7);
+        jTabbedPane3.addTab("Mes Evenements", panelMesEvents);
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evenement", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -677,33 +677,33 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addGap(90, 90, 90))
         );
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelAjoutEventLayout = new javax.swing.GroupLayout(panelAjoutEvent);
+        panelAjoutEvent.setLayout(panelAjoutEventLayout);
+        panelAjoutEventLayout.setHorizontalGroup(
+            panelAjoutEventLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelAjoutEventLayout.setVerticalGroup(
+            panelAjoutEventLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTabbedPane3.addTab("Ajouter evenement", jPanel8);
+        jTabbedPane3.addTab("Ajouter evenement", panelAjoutEvent);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelEventsLayout = new javax.swing.GroupLayout(panelEvents);
+        panelEvents.setLayout(panelEventsLayout);
+        panelEventsLayout.setHorizontalGroup(
+            panelEventsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane3)
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelEventsLayout.setVerticalGroup(
+            panelEventsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane3)
         );
 
-        jTabMyPhaInfo.addTab("Evenements", jPanel6);
+        jTabMyPhaInfo.addTab("Evenements", panelEvents);
 
-        tableMaPhaMesEvent1.setModel(new javax.swing.table.DefaultTableModel(
+        tableMaPhaMesSrv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -711,7 +711,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 "Source", "Date", "Objet", "Message", "Options"
             }
         ));
-        jScrollPane5.setViewportView(tableMaPhaMesEvent1);
+        jScrollPane5.setViewportView(tableMaPhaMesSrv);
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -726,7 +726,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Mes Services", jPanel16);
+        tabbedPaneServices.addTab("Mes Services", jPanel16);
 
         jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajouter Service", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -737,10 +737,10 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             }
         });
 
-        txtadresse6.setColumns(20);
-        txtadresse6.setRows(5);
-        txtadresse6.setName("txtadresse"); // NOI18N
-        jScrollPane14.setViewportView(txtadresse6);
+        txtMaPhaAjoutSrvDesc.setColumns(20);
+        txtMaPhaAjoutSrvDesc.setRows(5);
+        txtMaPhaAjoutSrvDesc.setName("txtadresse"); // NOI18N
+        jScrollPane14.setViewportView(txtMaPhaAjoutSrvDesc);
 
         jLabel47.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel47.setText("Description service : ");
@@ -751,11 +751,9 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         jLabel49.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel49.setText("Type service : ");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        buttonMaPhaAjoutSrvConfirmer.setText("Confirmer ajout");
 
-        jButton2.setText("Confirmer ajout");
-
-        jButton1.setText("Annuler");
+        buttonMaPhaAjoutSrvAnnuler.setText("Annuler");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -770,14 +768,14 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtnom10)
-                    .addComponent(jComboBox3, 0, 170, Short.MAX_VALUE)
+                    .addComponent(comboBoxMaPhaAjoutSrvType, 0, 170, Short.MAX_VALUE)
                     .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                 .addContainerGap(192, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonMaPhaAjoutSrvConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonMaPhaAjoutSrvAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(361, 361, 361))
         );
         jPanel15Layout.setVerticalGroup(
@@ -792,15 +790,15 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                     .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE)))
+                        .addComponent(comboBoxMaPhaAjoutSrvType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(buttonMaPhaAjoutSrvAnnuler)
+                    .addComponent(buttonMaPhaAjoutSrvConfirmer))
                 .addContainerGap(239, Short.MAX_VALUE))
         );
 
@@ -817,28 +815,28 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Ajouter Service", jPanel5);
+        tabbedPaneServices.addTab("Ajouter Service", jPanel5);
 
-        jTabMyPhaInfo.addTab("Services", jTabbedPane1);
+        jTabMyPhaInfo.addTab("Services", tabbedPaneServices);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelMaPhaLayout = new javax.swing.GroupLayout(panelMaPha);
+        panelMaPha.setLayout(panelMaPhaLayout);
+        panelMaPhaLayout.setHorizontalGroup(
+            panelMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMaPhaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabMyPhaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 1066, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        panelMaPhaLayout.setVerticalGroup(
+            panelMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMaPhaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabMyPhaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 597, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabMyPharmacie.addTab("Ma pharmacie", jPanel3);
+        jTabMyPharmacie.addTab("Ma pharmacie", panelMaPha);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -942,12 +940,12 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JButton btMaPhaInfoConfirmer;
     private javax.swing.JButton btannuler2;
     private javax.swing.JButton btconf2;
+    private javax.swing.JButton buttonMaPhaAjoutSrvAnnuler;
+    private javax.swing.JButton buttonMaPhaAjoutSrvConfirmer;
     private org.torrisi.swing.jcalendar.JCalendar calendarMaPhaInfoHoraire;
+    private javax.swing.JComboBox comboBoxMaPhaAjoutSrvType;
     private javax.swing.JComboBox comboBoxMaPhaInfoType;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private org.torrisi.swing.jcalendar.JCalendar jCalendar1;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
@@ -972,7 +970,6 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -980,13 +977,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
@@ -997,14 +988,22 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabMyPhaInfo;
     private javax.swing.JTabbedPane jTabMyPharmacie;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JPanel panelAjoutEvent;
+    private javax.swing.JPanel panelEvents;
+    private javax.swing.JPanel panelInfoPerso;
+    private javax.swing.JPanel panelInfoPha;
+    private javax.swing.JPanel panelMaPha;
+    private javax.swing.JPanel panelMesEvents;
+    private javax.swing.JPanel panelMsg;
     private javax.swing.JSpinner spMaPhaAjoutEventHeure;
     private javax.swing.JSpinner spMaPhaAjoutEventMin;
+    private javax.swing.JTabbedPane tabbedPaneServices;
     private javax.swing.JTable tableMaPhaMesEvent;
-    private javax.swing.JTable tableMaPhaMesEvent1;
+    private javax.swing.JTable tableMaPhaMesSrv;
     private javax.swing.JTable tableMesMsg;
     private javax.swing.JTextField txtMaPhaAjoutEventNom;
+    private javax.swing.JTextArea txtMaPhaAjoutSrvDesc;
     private javax.swing.JTextArea txtMaPhaInfoAddresse;
     private javax.swing.JTextField txtMaPhaInfoEmail;
     private javax.swing.JTextField txtMaPhaInfoFax;
@@ -1019,7 +1018,6 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JTextField txtMesInfosPrenom;
     private javax.swing.JTextField txtMesInfosTel;
     private javax.swing.JTextArea txtadresse3;
-    private javax.swing.JTextArea txtadresse6;
     private javax.swing.JTextField txtnom10;
     // End of variables declaration//GEN-END:variables
 }
