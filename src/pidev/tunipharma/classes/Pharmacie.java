@@ -22,10 +22,10 @@ public class Pharmacie {
     String long_gm_pha;
     String email_pha;
     int type_pha;
-    String ville_pha;
-    String gouv_pha;
+    int ville_pha;
+    int gouv_pha;
 
-    public Pharmacie(int id_pha, int id_resp, String nom_pha, String addresse_pha, int tel_pha, int fax_pha, int id_cal, String lat_gm_pha, String long_gm_pha, String email_pha, int type_pha, String ville_pha, String gouv_pha) {
+    public Pharmacie(int id_pha, int id_resp, String nom_pha, String addresse_pha, int tel_pha, int fax_pha, int id_cal, String lat_gm_pha, String long_gm_pha, String email_pha, int type_pha, int ville_pha, int gouv_pha) {
         this.id_pha = id_pha;
         this.id_resp = id_resp;
         this.nom_pha = nom_pha;
@@ -86,11 +86,11 @@ public class Pharmacie {
         return type_pha;
     }
 
-    public String getVille_pha() {
+    public int getVille_pha() {
         return ville_pha;
     }
 
-    public String getGouv_pha() {
+    public int getGouv_pha() {
         return gouv_pha;
     }
 
@@ -138,11 +138,11 @@ public class Pharmacie {
         this.type_pha = type_pha;
     }
 
-    public void setVille_pha(String ville_pha) {
+    public void setVille_pha(int ville_pha) {
         this.ville_pha = ville_pha;
     }
 
-    public void setGouv_pha(String gouv_pha) {
+    public void setGouv_pha(int gouv_pha) {
         this.gouv_pha = gouv_pha;
     }
 

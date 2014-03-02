@@ -58,8 +58,8 @@ public class PharmaciesDAO {
             pstmt.setString(8, obj.getLong_gm_pha());
             pstmt.setString(9, obj.getEmail_pha());
             pstmt.setInt(10, obj.getType_pha());
-            pstmt.setString(11, obj.getVille_pha());
-            pstmt.setString(12, obj.getGouv_pha());
+            pstmt.setInt(11, obj.getVille_pha());
+            pstmt.setInt(12, obj.getGouv_pha());
 
             obj.setId_pha(pstmt.executeUpdate());
         } catch (SQLException ex) {
@@ -76,7 +76,7 @@ public class PharmaciesDAO {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 //    public Pharmacie(id_pha,    id_resp,      nom_pha,         addresse_pha,   tel_pha, fax_pha, id_cal, lat_gm_pha, long_gm_pha, email_pha, type_pha)
-                pha = new Pharmacie(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getString(8), res.getString(9), res.getString(10), res.getInt(11), res.getString(12), res.getString(13));
+                pha = new Pharmacie(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getString(8), res.getString(9), res.getString(10), res.getInt(11), res.getInt(12), res.getInt(13));
                 l.add(pha);
             }
         } catch (SQLException ex) {
@@ -92,7 +92,7 @@ public class PharmaciesDAO {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
-                pha = new Pharmacie(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getString(8), res.getString(9), res.getString(10), res.getInt(11), res.getString(12), res.getString(13));
+                pha = new Pharmacie(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getString(8), res.getString(9), res.getString(10), res.getInt(11), res.getInt(12), res.getInt(13));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -130,8 +130,8 @@ public class PharmaciesDAO {
             pstmt.setString(8, obj.getLong_gm_pha());
             pstmt.setString(9, obj.getEmail_pha());
             pstmt.setInt(10, obj.getType_pha());
-            pstmt.setString(11, obj.getVille_pha());
-            pstmt.setString(12, obj.getGouv_pha());
+            pstmt.setInt(11, obj.getVille_pha());
+            pstmt.setInt(12, obj.getGouv_pha());
             pstmt.setInt(13, obj.getId_pha());
 
         } catch (SQLException ex) {
@@ -161,7 +161,7 @@ public class PharmaciesDAO {
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
-                pha = new Pharmacie(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getString(8), res.getString(9), res.getString(10), res.getInt(11), res.getString(12), res.getString(13));
+                pha = new Pharmacie(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getString(8), res.getString(9), res.getString(10), res.getInt(11), res.getInt(12), res.getInt(13));
                 l.add(pha);
             }
         } catch (SQLException ex) {
