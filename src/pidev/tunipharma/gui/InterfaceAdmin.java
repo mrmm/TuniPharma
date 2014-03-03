@@ -5,6 +5,13 @@
  */
 package pidev.tunipharma.gui;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pidev.tunipharma.classes.Compte;
+import pidev.tunipharma.dao.ComptesDAO;
+import pidev.tunipharma.utils.GUIUtils;
+
 /**
  *
  * @author imen
@@ -16,6 +23,15 @@ public class InterfaceAdmin extends javax.swing.JFrame {
      */
     public InterfaceAdmin() {
         initComponents();
+
+        // Remplir Les ComboBox des Gouvernorats & Villes de la base de donnée
+        GUIUtils.villeGouvListener(comboBoxModPhaGouv, comboBoxModPhaVille, true);
+        GUIUtils.villeGouvListener(comboBoxAjoutPhaGouv, comboBoxAjoutPhaVille, false);
+        GUIUtils.fillGouvsCB(comboBoxModPhaGouv, true);
+        GUIUtils.fillGouvsCB(comboBoxAjoutPhaGouv, false);
+        GUIUtils.onChange(txtAjoutCptNom);
+
+        //Verification des champs bien remplis
     }
 
     /**
@@ -32,26 +48,25 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelAjoutCpt = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
+        lbAjoutCptNomCpt = new javax.swing.JLabel();
+        lbAjoutCptPrenomCpt = new javax.swing.JLabel();
+        lbAjoutCptEmailCpt = new javax.swing.JLabel();
+        lbAjoutCptTelCpt = new javax.swing.JLabel();
+        lbAjoutCptMDPCpt = new javax.swing.JLabel();
+        lbAjoutCptRMDPCpt = new javax.swing.JLabel();
+        lbAjoutCptAddresseCpt = new javax.swing.JLabel();
+        lbAjoutCptTypeCpt = new javax.swing.JLabel();
         txtAjoutCptNom = new javax.swing.JTextField();
         txtAjoutCptPrenom = new javax.swing.JTextField();
         txtAjoutCptEmail = new javax.swing.JTextField();
         txtAjoutCptTel = new javax.swing.JTextField();
-        txtAjoutCptMDP = new javax.swing.JTextField();
-        txtAjoutCptRMDP = new javax.swing.JTextField();
-        txtAjoutCptTypeCpt = new javax.swing.JComboBox();
+        comboBoxAjoutCptTypeCpt = new javax.swing.JComboBox();
         jScrollPane10 = new javax.swing.JScrollPane();
         txtAjoutCptAddresse = new javax.swing.JTextArea();
-        btconf2 = new javax.swing.JButton();
-        btAjoutAnnuler = new javax.swing.JButton();
+        btAjoutCptConfirmer = new javax.swing.JButton();
+        btAjoutCptAnuler = new javax.swing.JButton();
+        txtAjoutCptMDP = new javax.swing.JPasswordField();
+        txtAjoutCptRMDP = new javax.swing.JPasswordField();
         panelModCpt = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -88,6 +103,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jComboBoxAjoutPhaResponsable = new javax.swing.JComboBox();
         jLabel40 = new javax.swing.JLabel();
         jCalendarAjoutPhaHoraire = new org.torrisi.swing.jcalendar.JCalendar();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        comboBoxAjoutPhaVille = new javax.swing.JComboBox();
+        comboBoxAjoutPhaGouv = new javax.swing.JComboBox();
         scrollPaneModPha = new javax.swing.JScrollPane();
         panelModPha = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -96,7 +115,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel43 = new javax.swing.JLabel();
         comboBoxModPhaGouv = new javax.swing.JComboBox();
         comboBoxModPhaType = new javax.swing.JComboBox();
-        comboBoxModPhaCille = new javax.swing.JComboBox();
+        comboBoxModPhaVille = new javax.swing.JComboBox();
         jScrollPane11 = new javax.swing.JScrollPane();
         tableModPha = new javax.swing.JTable();
         panelDemandes = new javax.swing.JPanel();
@@ -121,78 +140,86 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         jPanel11.setName(""); // NOI18N
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("Nom :");
+        lbAjoutCptNomCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptNomCpt.setText("Nom :");
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel27.setText("Prenom :");
+        lbAjoutCptPrenomCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptPrenomCpt.setText("Prenom :");
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel28.setText("Adresse Email :");
+        lbAjoutCptEmailCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptEmailCpt.setText("Adresse Email :");
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel29.setText("Num Tél :");
+        lbAjoutCptTelCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptTelCpt.setText("Num Tél :");
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel30.setText("Mot de passe :");
+        lbAjoutCptMDPCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptMDPCpt.setText("Mot de passe :");
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel31.setText("Ressaisir mot de passe :");
+        lbAjoutCptRMDPCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptRMDPCpt.setText("Ressaisir mot de passe :");
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel32.setText("Adresse :");
+        lbAjoutCptAddresseCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptAddresseCpt.setText("Adresse :");
 
-        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel33.setText("Type de compte : ");
+        lbAjoutCptTypeCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptTypeCpt.setText("Type de compte : ");
 
-        txtAjoutCptNom.setName("txtnom"); // NOI18N
+        txtAjoutCptNom.setName("Nom");
         txtAjoutCptNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutCptNomActionPerformed(evt);
             }
         });
 
-        txtAjoutCptPrenom.setName("txtprenom"); // NOI18N
+        txtAjoutCptPrenom.setName("Prenom");
         txtAjoutCptPrenom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutCptPrenomActionPerformed(evt);
             }
         });
 
-        txtAjoutCptEmail.setName("txtemail"); // NOI18N
+        txtAjoutCptEmail.setName("Email");
         txtAjoutCptEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutCptEmailActionPerformed(evt);
             }
         });
 
-        txtAjoutCptTel.setName("txttel"); // NOI18N
+        txtAjoutCptTel.setName("Num Tél");
 
-        txtAjoutCptMDP.setName("txtpwd1"); // NOI18N
-
-        txtAjoutCptRMDP.setName("txtpwd2"); // NOI18N
-
-        txtAjoutCptTypeCpt.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pharmacien", "Client" }));
-        txtAjoutCptTypeCpt.setName("listetype"); // NOI18N
-        txtAjoutCptTypeCpt.addActionListener(new java.awt.event.ActionListener() {
+        comboBoxAjoutCptTypeCpt.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pharmacien", "Client" }));
+        comboBoxAjoutCptTypeCpt.setSelectedIndex(-1);
+        comboBoxAjoutCptTypeCpt.setName("Type Compte");
+        comboBoxAjoutCptTypeCpt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAjoutCptTypeCptActionPerformed(evt);
+                comboBoxAjoutCptTypeCptActionPerformed(evt);
             }
         });
 
         txtAjoutCptAddresse.setColumns(20);
         txtAjoutCptAddresse.setRows(5);
-        txtAjoutCptAddresse.setName("txtadresse"); // NOI18N
+        txtAjoutCptAddresse.setName("Adresse");
         jScrollPane10.setViewportView(txtAjoutCptAddresse);
 
-        btconf2.setText("Confirmer");
-        btconf2.addActionListener(new java.awt.event.ActionListener() {
+        btAjoutCptConfirmer.setText("Confirmer");
+        btAjoutCptConfirmer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btconf2ActionPerformed(evt);
+                btAjoutCptConfirmerActionPerformed(evt);
             }
         });
 
-        btAjoutAnnuler.setText("Annuler");
+        btAjoutCptAnuler.setText("Annuler");
+        btAjoutCptAnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAjoutCptAnulerActionPerformed(evt);
+            }
+        });
+
+        txtAjoutCptMDP.setText("");
+        txtAjoutCptMDP.setName("Mot de passe");
+
+        txtAjoutCptRMDP.setText("");
+        txtAjoutCptMDP.setName("Rssaisir mot de passe");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -201,79 +228,74 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel31)
-                    .addComponent(jLabel33)
-                    .addComponent(jLabel32)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel28)
-                    .addComponent(jLabel29)
-                    .addComponent(jLabel30))
+                    .addComponent(lbAjoutCptRMDPCpt)
+                    .addComponent(lbAjoutCptTypeCpt)
+                    .addComponent(lbAjoutCptAddresseCpt)
+                    .addComponent(lbAjoutCptNomCpt, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbAjoutCptPrenomCpt)
+                    .addComponent(lbAjoutCptEmailCpt)
+                    .addComponent(lbAjoutCptTelCpt)
+                    .addComponent(lbAjoutCptMDPCpt))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutCptNom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutCptPrenom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutCptEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutCptTel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutCptMDP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutCptRMDP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutCptTypeCpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 430, Short.MAX_VALUE))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAjoutCptNom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAjoutCptPrenom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtAjoutCptEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBoxAjoutCptTypeCpt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtAjoutCptMDP, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtAjoutCptTel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)))
+                    .addComponent(txtAjoutCptRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 647, Short.MAX_VALUE))
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(172, 172, 172)
-                        .addComponent(btconf2)
-                        .addGap(74, 74, 74)
-                        .addComponent(btAjoutAnnuler)))
+                .addGap(172, 172, 172)
+                .addComponent(btAjoutCptConfirmer)
+                .addGap(74, 74, 74)
+                .addComponent(btAjoutCptAnuler)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel24)
-                .addGap(20, 20, 20)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbAjoutCptNomCpt, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAjoutCptNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbAjoutCptPrenomCpt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAjoutCptPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
+                    .addComponent(lbAjoutCptEmailCpt)
                     .addComponent(txtAjoutCptEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29)
+                    .addComponent(lbAjoutCptTelCpt)
                     .addComponent(txtAjoutCptTel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel30)
-                    .addComponent(txtAjoutCptMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                    .addComponent(lbAjoutCptMDPCpt)
+                    .addComponent(txtAjoutCptMDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel31)
-                    .addComponent(txtAjoutCptRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbAjoutCptRMDPCpt)
+                    .addComponent(txtAjoutCptRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel32)
+                    .addComponent(lbAjoutCptAddresseCpt)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtAjoutCptTypeCpt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel33))))
+                            .addComponent(comboBoxAjoutCptTypeCpt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbAjoutCptTypeCpt))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btconf2)
-                    .addComponent(btAjoutAnnuler))
+                    .addComponent(btAjoutCptConfirmer)
+                    .addComponent(btAjoutCptAnuler))
                 .addGap(66, 66, 66))
         );
 
@@ -313,7 +335,6 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nom :");
 
-        txtModCptNom.setText("          ");
         txtModCptNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtModCptNomActionPerformed(evt);
@@ -330,9 +351,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel3.setMaximumSize(new java.awt.Dimension(38, 17));
         jLabel3.setMinimumSize(new java.awt.Dimension(38, 17));
 
-        txtModCptPrenom.setText("           ");
+        txtModCptPrenom.setName("Prénom");
 
-        comboBoxModCptType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Utilisateur", "Pharmacien" }));
+        comboBoxModCptType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tous", "Utilisateur", "Pharmacien" }));
         comboBoxModCptType.setSelectedIndex(-1);
         comboBoxModCptType.setToolTipText("");
 
@@ -371,6 +392,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
+        txtModCptNom.setName("Nom");
+
         tableModCpt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -391,7 +414,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 881, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1098, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -401,7 +424,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -445,14 +468,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1122, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -489,7 +512,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
+            .addGap(0, 701, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,7 +528,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel35.setMinimumSize(new java.awt.Dimension(38, 17));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel36.setText("Adresse Email :");
+        jLabel36.setText("Email :");
         jLabel36.setMaximumSize(new java.awt.Dimension(38, 17));
         jLabel36.setMinimumSize(new java.awt.Dimension(38, 17));
 
@@ -514,7 +537,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel37.setMaximumSize(new java.awt.Dimension(38, 17));
         jLabel37.setMinimumSize(new java.awt.Dimension(38, 17));
 
-        txtAjoutPhaEmail.setName("txtnom"); // NOI18N
+        txtAjoutPhaEmail.setName("Email");
         txtAjoutPhaEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutPhaEmailActionPerformed(evt);
@@ -531,21 +554,21 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel39.setMaximumSize(new java.awt.Dimension(38, 17));
         jLabel39.setMinimumSize(new java.awt.Dimension(38, 17));
 
-        txtAjoutPhaNom.setName("txtnom"); // NOI18N
+        txtAjoutPhaNom.setName("Nom");
         txtAjoutPhaNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutPhaNomActionPerformed(evt);
             }
         });
 
-        txtAjoutPhaFax.setName("txtnom"); // NOI18N
+        txtAjoutPhaFax.setName("Num Fax");
         txtAjoutPhaFax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutPhaFaxActionPerformed(evt);
             }
         });
 
-        txtAjoutPhaTel.setName("txtnom"); // NOI18N
+        txtAjoutPhaTel.setName("Num Tél");
         txtAjoutPhaTel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutPhaTelActionPerformed(evt);
@@ -554,15 +577,29 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         txtAjoutPhaAddresse.setColumns(20);
         txtAjoutPhaAddresse.setRows(5);
-        txtAjoutPhaAddresse.setName("txtadresse"); // NOI18N
+        txtAjoutPhaAddresse.setName("Adresse");
         jScrollPane12.setViewportView(txtAjoutPhaAddresse);
 
-        jComboBoxAjoutPhaResponsable.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jour", "Nuit" }));
+        jComboBoxAjoutPhaResponsable.setName("Responsable");
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel40.setText("Horaire de travail :");
 
         jCalendarAjoutPhaHoraire.setStartYear(2014);
+
+        jLabel45.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel45.setText("Gouvernorat : ");
+        jLabel45.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel45.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        jLabel46.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel46.setText("Ville :");
+        jLabel46.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel46.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        comboBoxAjoutPhaVille.setName("Ville");
+
+        comboBoxAjoutPhaGouv.setName("Gouvernorat");
 
         javax.swing.GroupLayout panelAjoutPhaLayout = new javax.swing.GroupLayout(panelAjoutPha);
         panelAjoutPha.setLayout(panelAjoutPhaLayout);
@@ -575,9 +612,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addComponent(jButtonAjoutPhaAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(263, 263, 263))
             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -589,17 +627,13 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                                 .addComponent(txtAjoutPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(3, 3, 3))
-                                    .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                                        .addGap(65, 65, 65)
-                                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                                        .addGap(137, 137, 137)
-                                        .addComponent(txtAjoutPhaTel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(140, 140, 140)))
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtAjoutPhaTel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -607,23 +641,28 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAjoutPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtAjoutPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboBoxAjoutPhaVille, 0, 170, Short.MAX_VALUE)
+                                    .addComponent(comboBoxAjoutPhaGouv, 0, 170, Short.MAX_VALUE))))
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGap(43, 43, 43)
                                 .addComponent(jCalendarAjoutPhaHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGap(91, 91, 91)
-                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(164, Short.MAX_VALUE))
+                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
         panelAjoutPhaLayout.setVerticalGroup(
             panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAjoutPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -634,30 +673,38 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAjoutPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAjoutPhaTel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAjoutPhaFax, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxAjoutPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxAjoutPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jCalendarAjoutPhaHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAjoutPhaAnnuler)
                     .addComponent(jButtonAjoutPhaConfirmer))
-                .addGap(94, 94, 94))
+                .addGap(65, 65, 65))
         );
 
         scrollPaneAjoutPha.setViewportView(panelAjoutPha);
@@ -679,39 +726,44 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel43.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel43.setText("Ville:");
 
+        comboBoxModPhaGouv.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         comboBoxModPhaType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jour", "Nuit" }));
+        comboBoxModPhaType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        comboBoxModPhaVille.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBoxModPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addContainerGap()
                 .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBoxModPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(comboBoxModPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBoxModPhaCille, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(comboBoxModPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboBoxModPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(247, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxModPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxModPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxModPhaCille, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                    .addComponent(comboBoxModPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tableModPha.setModel(new javax.swing.table.DefaultTableModel(
@@ -745,7 +797,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+                .addComponent(jScrollPane11)
                 .addContainerGap())
         );
 
@@ -775,12 +827,12 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             panelDemandesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDemandesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
+                .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelDemandesLayout.setVerticalGroup(
             panelDemandesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+            .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
         );
 
         tabbedPaneGestionPha.addTab("Les demandes", panelDemandes);
@@ -796,11 +848,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelStatsInscri.setLayout(panelStatsInscriLayout);
         panelStatsInscriLayout.setHorizontalGroup(
             panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 868, Short.MAX_VALUE)
+            .addGap(0, 1085, Short.MAX_VALUE)
         );
         panelStatsInscriLayout.setVerticalGroup(
             panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 610, Short.MAX_VALUE)
         );
 
         scrollPaneStatInscri.setViewportView(panelStatsInscri);
@@ -813,11 +865,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelStatsNbrReq.setLayout(panelStatsNbrReqLayout);
         panelStatsNbrReqLayout.setHorizontalGroup(
             panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 868, Short.MAX_VALUE)
+            .addGap(0, 1085, Short.MAX_VALUE)
         );
         panelStatsNbrReqLayout.setVerticalGroup(
             panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 610, Short.MAX_VALUE)
         );
 
         scrollPaneStatsNbrReq.setViewportView(panelStatsNbrReq);
@@ -830,11 +882,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelStatsNotePha.setLayout(panelStatsNotePhaLayout);
         panelStatsNotePhaLayout.setHorizontalGroup(
             panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 868, Short.MAX_VALUE)
+            .addGap(0, 1085, Short.MAX_VALUE)
         );
         panelStatsNotePhaLayout.setVerticalGroup(
             panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 610, Short.MAX_VALUE)
         );
 
         scrollPaneStatsNotePha.setViewportView(panelStatsNotePha);
@@ -850,14 +902,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedPaneAdministration)
+                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 1284, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -884,13 +936,23 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtModCptNomActionPerformed
 
-    private void btconf2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btconf2ActionPerformed
+    private void btAjoutCptConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptConfirmerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btconf2ActionPerformed
+        if (GUIUtils.checkForm(panelAjoutCpt)) {
+            //Ajout du compte dans la base de donnée
+            Compte cpt = new Compte(-1, txtAjoutCptNom.getText(), txtAjoutCptPrenom.getText(), txtAjoutCptAddresse.getText(), txtAjoutCptEmail.getText(), txtAjoutCptMDP.getText(), Integer.parseInt(txtAjoutCptTel.getText()), comboBoxAjoutCptTypeCpt.getSelectedIndex(), true);
+            try {
+                ComptesDAO.getInstance().create(cpt);
+                GUIUtils.showMsgBox(cpt.toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btAjoutCptConfirmerActionPerformed
 
-    private void txtAjoutCptTypeCptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjoutCptTypeCptActionPerformed
+    private void comboBoxAjoutCptTypeCptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxAjoutCptTypeCptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtAjoutCptTypeCptActionPerformed
+    }//GEN-LAST:event_comboBoxAjoutCptTypeCptActionPerformed
 
     private void txtAjoutCptEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjoutCptEmailActionPerformed
         // TODO add your handling code here:
@@ -903,6 +965,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private void txtAjoutCptNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjoutCptNomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAjoutCptNomActionPerformed
+
+    private void btAjoutCptAnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptAnulerActionPerformed
+        // TODO add your handling code here:
+        if (GUIUtils.showConfBox("Voulez vous reinitialiser les champs ?")) {
+            GUIUtils.showMsgBox("Done");
+            GUIUtils.resetInput(panelAjoutCpt);
+        }
+    }//GEN-LAST:event_btAjoutCptAnulerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -940,28 +1010,22 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAjoutAnnuler;
-    private javax.swing.JButton btconf2;
+    private javax.swing.JButton btAjoutCptAnuler;
+    private javax.swing.JButton btAjoutCptConfirmer;
+    private javax.swing.JComboBox comboBoxAjoutCptTypeCpt;
+    private javax.swing.JComboBox comboBoxAjoutPhaGouv;
+    private javax.swing.JComboBox comboBoxAjoutPhaVille;
     private javax.swing.JComboBox comboBoxModCptType;
-    private javax.swing.JComboBox comboBoxModPhaCille;
     private javax.swing.JComboBox comboBoxModPhaGouv;
     private javax.swing.JComboBox comboBoxModPhaType;
+    private javax.swing.JComboBox comboBoxModPhaVille;
     private javax.swing.JButton jButtonAjoutPhaAnnuler;
     private javax.swing.JButton jButtonAjoutPhaConfirmer;
     private org.torrisi.swing.jcalendar.JCalendar jCalendarAjoutPhaHoraire;
     private javax.swing.JComboBox jComboBoxAjoutPhaResponsable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -972,6 +1036,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel16;
@@ -984,6 +1050,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JLabel lbAjoutCptAddresseCpt;
+    private javax.swing.JLabel lbAjoutCptEmailCpt;
+    private javax.swing.JLabel lbAjoutCptMDPCpt;
+    private javax.swing.JLabel lbAjoutCptNomCpt;
+    private javax.swing.JLabel lbAjoutCptPrenomCpt;
+    private javax.swing.JLabel lbAjoutCptRMDPCpt;
+    private javax.swing.JLabel lbAjoutCptTelCpt;
+    private javax.swing.JLabel lbAjoutCptTypeCpt;
     private javax.swing.JPanel panelAjoutCpt;
     private javax.swing.JPanel panelAjoutPha;
     private javax.swing.JPanel panelDemandes;
@@ -1009,12 +1083,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tableNouvInscriCpt;
     private javax.swing.JTextArea txtAjoutCptAddresse;
     private javax.swing.JTextField txtAjoutCptEmail;
-    private javax.swing.JTextField txtAjoutCptMDP;
+    private javax.swing.JPasswordField txtAjoutCptMDP;
     private javax.swing.JTextField txtAjoutCptNom;
     private javax.swing.JTextField txtAjoutCptPrenom;
-    private javax.swing.JTextField txtAjoutCptRMDP;
+    private javax.swing.JPasswordField txtAjoutCptRMDP;
     private javax.swing.JTextField txtAjoutCptTel;
-    private javax.swing.JComboBox txtAjoutCptTypeCpt;
     private javax.swing.JTextArea txtAjoutPhaAddresse;
     private javax.swing.JTextField txtAjoutPhaEmail;
     private javax.swing.JTextField txtAjoutPhaFax;

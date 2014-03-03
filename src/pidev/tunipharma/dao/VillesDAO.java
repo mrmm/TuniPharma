@@ -44,12 +44,29 @@ public class VillesDAO {
     public List<Ville> readAll() {
         List< Ville> l = new ArrayList<Ville>();
         Ville ville;
-        String sql = "SELECT * FROM Villes";
+        String sql = "SELECT id_ville, nom_ville, id_gouv FROM Villes";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 //public Message(int id_Message, int id_pha, Date date_Message, String nom_Message, String desc_Message, Boolean etat_Message) {
-                ville = new Ville(res.getInt(1), res.getInt(2), res.getString(3));
+                ville = new Ville(res.getInt(1), res.getInt(3), res.getString(2));
+                l.add(ville);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
+
+    public List<Ville> readAllByIdGouv(int id_gouv) {
+        List< Ville> l = new ArrayList<Ville>();
+        Ville ville;
+        String sql = "SELECT id_ville, nom_ville, id_gouv FROM Villes WHERE id_gouv=" + id_gouv + "";
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Message(int id_Message, int id_pha, Date date_Message, String nom_Message, String desc_Message, Boolean etat_Message) {
+                ville = new Ville(res.getInt(1), res.getInt(3), res.getString(2));
                 l.add(ville);
             }
         } catch (SQLException ex) {

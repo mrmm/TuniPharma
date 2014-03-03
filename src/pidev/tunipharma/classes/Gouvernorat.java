@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pidev.tunipharma.classes;
 
 /**
@@ -11,6 +10,7 @@ package pidev.tunipharma.classes;
  * @author elron
  */
 public class Gouvernorat {
+
     int id_gouv;
     String nom_gouv;
 
@@ -18,6 +18,7 @@ public class Gouvernorat {
         this.id_gouv = id_gouv;
         this.nom_gouv = nom_gouv;
     }
+
     // <editor-fold defaultstate="collapsed" desc="Getter & Setter">
     public int getId_gouv() {
         return id_gouv;
@@ -35,7 +36,7 @@ public class Gouvernorat {
         this.nom_gouv = nom_gouv;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="hashCode, Equals & toString">
     @Override
     public int hashCode() {
@@ -61,9 +62,8 @@ public class Gouvernorat {
 
     @Override
     public String toString() {
-        return "Gouvernorat{" + "id_gouv=" + id_gouv + ", nom_gouv=" + nom_gouv + '}';
+        return nom_gouv;
     }
     // </editor-fold>
-    
-    
+
 }

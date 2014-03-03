@@ -50,7 +50,7 @@ public class Ville {
     // <editor-fold defaultstate="collapsed" desc="hashCode, Equals & toString">
     @Override
     public String toString() {
-        return "Ville{" + "id_ville=" + id_ville + ", id_gouv=" + id_gouv + ", nom_ville=" + nom_ville + '}';
+        return nom_ville;
     }
 
     @Override
