@@ -88,12 +88,31 @@ public class ComptesDAO {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
-                cpt =  new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));;
+                cpt = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return (cpt);
+    }
+
+    public List< Compte> readByNomPreType(Integer type, String nom, String prenom) {
+        List< Compte> l = new ArrayList<Compte>();
+        Compte cpt = null;
+        String sql = "SELECT * FROM Comptes WHERE "
+                + " AND nom_cpt = '" + (nom != "" ? nom : "%") + "'"
+                + " AND prenom_cpt = '" + (prenom != "" ? prenom : "%") + "'"
+                + " type_cpt" + (type > -1 ? "=" + type : "!=-1") + " ;";
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                cpt = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
     }
 
     public void update(Compte obj) {
@@ -107,7 +126,7 @@ public class ComptesDAO {
                 + "tel_cpt = '?' "
                 + "type_cpt = '?' "
                 + "etat_cpt = '?' "
-                + "WHERE id_event = '" + obj.getId_cpt()+ "';";
+                + "WHERE id_event = '" + obj.getId_cpt() + "';";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
 
@@ -120,7 +139,7 @@ public class ComptesDAO {
             pstmt.setInt(7, obj.getTel_cpt());
             pstmt.setInt(8, obj.getType_cpt());
             pstmt.setBoolean(9, obj.isEtat_cpt());
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

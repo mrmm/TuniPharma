@@ -9,7 +9,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pidev.tunipharma.classes.Compte;
+import pidev.tunipharma.classes.Gouvernorat;
+import pidev.tunipharma.classes.Pharmacie;
+import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.ComptesDAO;
+import pidev.tunipharma.dao.PharmaciesDAO;
 import pidev.tunipharma.utils.GUIUtils;
 
 /**
@@ -29,8 +33,15 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         GUIUtils.villeGouvListener(comboBoxAjoutPhaGouv, comboBoxAjoutPhaVille, false);
         GUIUtils.fillGouvsCB(comboBoxModPhaGouv, true);
         GUIUtils.fillGouvsCB(comboBoxAjoutPhaGouv, false);
-        GUIUtils.onChange(txtAjoutCptNom);
 
+        // Ajout de listener - Ajout Compte Form
+//        GUIUtils.onChangeEmpty(txtAjoutCptNom,btAjoutCptConfirmer);
+//        GUIUtils.onChangeEmpty(txtAjoutCptPrenom,btAjoutCptConfirmer);
+//        GUIUtils.onChangeEmpty(txtAjoutCptAddresse,btAjoutCptConfirmer);
+//        GUIUtils.onChangeEmail(txtAjoutCptEmail,btAjoutCptConfirmer);
+//        GUIUtils.onChangeNumber(txtAjoutCptTel,btAjoutCptConfirmer);
+//        GUIUtils.onChangeMDP(txtAjoutCptMDP,txtAjoutCptRMDP,btAjoutCptConfirmer);
+        //GUIUtils.setFieldListener(panelAjoutCpt);
         //Verification des champs bien remplis
     }
 
@@ -49,24 +60,24 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         lbAjoutCptNomCpt = new javax.swing.JLabel();
-        lbAjoutCptPrenomCpt = new javax.swing.JLabel();
-        lbAjoutCptEmailCpt = new javax.swing.JLabel();
-        lbAjoutCptTelCpt = new javax.swing.JLabel();
-        lbAjoutCptMDPCpt = new javax.swing.JLabel();
-        lbAjoutCptRMDPCpt = new javax.swing.JLabel();
-        lbAjoutCptAddresseCpt = new javax.swing.JLabel();
-        lbAjoutCptTypeCpt = new javax.swing.JLabel();
         txtAjoutCptNom = new javax.swing.JTextField();
+        lbAjoutCptPrenomCpt = new javax.swing.JLabel();
         txtAjoutCptPrenom = new javax.swing.JTextField();
+        lbAjoutCptEmailCpt = new javax.swing.JLabel();
         txtAjoutCptEmail = new javax.swing.JTextField();
+        lbAjoutCptTelCpt = new javax.swing.JLabel();
         txtAjoutCptTel = new javax.swing.JTextField();
-        comboBoxAjoutCptTypeCpt = new javax.swing.JComboBox();
+        lbAjoutCptMDPCpt = new javax.swing.JLabel();
+        txtAjoutCptMDP = new javax.swing.JPasswordField();
+        lbAjoutCptRMDPCpt = new javax.swing.JLabel();
+        txtAjoutCptRMDP = new javax.swing.JPasswordField();
+        lbAjoutCptAddresseCpt = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
         txtAjoutCptAddresse = new javax.swing.JTextArea();
+        lbAjoutCptTypeCpt = new javax.swing.JLabel();
+        comboBoxAjoutCptTypeCpt = new javax.swing.JComboBox();
         btAjoutCptConfirmer = new javax.swing.JButton();
         btAjoutCptAnuler = new javax.swing.JButton();
-        txtAjoutCptMDP = new javax.swing.JPasswordField();
-        txtAjoutCptRMDP = new javax.swing.JPasswordField();
         panelModCpt = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -100,13 +111,13 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         txtAjoutPhaTel = new javax.swing.JTextField();
         jScrollPane12 = new javax.swing.JScrollPane();
         txtAjoutPhaAddresse = new javax.swing.JTextArea();
-        jComboBoxAjoutPhaResponsable = new javax.swing.JComboBox();
+        comboBoxAjoutPhaResponsable = new javax.swing.JComboBox();
         jLabel40 = new javax.swing.JLabel();
-        jCalendarAjoutPhaHoraire = new org.torrisi.swing.jcalendar.JCalendar();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         comboBoxAjoutPhaVille = new javax.swing.JComboBox();
         comboBoxAjoutPhaGouv = new javax.swing.JComboBox();
+        jCalendar2 = new com.toedter.calendar.JCalendar();
         scrollPaneModPha = new javax.swing.JScrollPane();
         panelModPha = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -130,6 +141,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelStatsNotePha = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1300, 700));
 
         tabbedPaneAdministration.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -143,33 +155,15 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         lbAjoutCptNomCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lbAjoutCptNomCpt.setText("Nom :");
 
-        lbAjoutCptPrenomCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbAjoutCptPrenomCpt.setText("Prenom :");
-
-        lbAjoutCptEmailCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbAjoutCptEmailCpt.setText("Adresse Email :");
-
-        lbAjoutCptTelCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbAjoutCptTelCpt.setText("Num Tél :");
-
-        lbAjoutCptMDPCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbAjoutCptMDPCpt.setText("Mot de passe :");
-
-        lbAjoutCptRMDPCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbAjoutCptRMDPCpt.setText("Ressaisir mot de passe :");
-
-        lbAjoutCptAddresseCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbAjoutCptAddresseCpt.setText("Adresse :");
-
-        lbAjoutCptTypeCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbAjoutCptTypeCpt.setText("Type de compte : ");
-
         txtAjoutCptNom.setName("Nom");
         txtAjoutCptNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAjoutCptNomActionPerformed(evt);
             }
         });
+
+        lbAjoutCptPrenomCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptPrenomCpt.setText("Prenom :");
 
         txtAjoutCptPrenom.setName("Prenom");
         txtAjoutCptPrenom.addActionListener(new java.awt.event.ActionListener() {
@@ -178,6 +172,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             }
         });
 
+        lbAjoutCptEmailCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptEmailCpt.setText("Adresse Email :");
+
         txtAjoutCptEmail.setName("Email");
         txtAjoutCptEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,7 +182,33 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             }
         });
 
+        lbAjoutCptTelCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptTelCpt.setText("Num Tél :");
+
         txtAjoutCptTel.setName("Num Tél");
+
+        lbAjoutCptMDPCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptMDPCpt.setText("Mot de passe :");
+
+        txtAjoutCptMDP.setText("");
+        txtAjoutCptMDP.setName("Mot de passe");
+
+        lbAjoutCptRMDPCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptRMDPCpt.setText("Ressaisir mot de passe :");
+
+        txtAjoutCptRMDP.setText("");
+        txtAjoutCptMDP.setName("Ressaisir mot de passe");
+
+        lbAjoutCptAddresseCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptAddresseCpt.setText("Adresse :");
+
+        txtAjoutCptAddresse.setColumns(20);
+        txtAjoutCptAddresse.setRows(5);
+        txtAjoutCptAddresse.setName("Adresse");
+        jScrollPane10.setViewportView(txtAjoutCptAddresse);
+
+        lbAjoutCptTypeCpt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbAjoutCptTypeCpt.setText("Type de compte : ");
 
         comboBoxAjoutCptTypeCpt.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pharmacien", "Client" }));
         comboBoxAjoutCptTypeCpt.setSelectedIndex(-1);
@@ -195,11 +218,6 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 comboBoxAjoutCptTypeCptActionPerformed(evt);
             }
         });
-
-        txtAjoutCptAddresse.setColumns(20);
-        txtAjoutCptAddresse.setRows(5);
-        txtAjoutCptAddresse.setName("Adresse");
-        jScrollPane10.setViewportView(txtAjoutCptAddresse);
 
         btAjoutCptConfirmer.setText("Confirmer");
         btAjoutCptConfirmer.addActionListener(new java.awt.event.ActionListener() {
@@ -214,12 +232,6 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 btAjoutCptAnulerActionPerformed(evt);
             }
         });
-
-        txtAjoutCptMDP.setText("");
-        txtAjoutCptMDP.setName("Mot de passe");
-
-        txtAjoutCptRMDP.setText("");
-        txtAjoutCptMDP.setName("Rssaisir mot de passe");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -248,7 +260,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                             .addComponent(txtAjoutCptMDP, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtAjoutCptTel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)))
                     .addComponent(txtAjoutCptRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 647, Short.MAX_VALUE))
+                .addGap(0, 643, Short.MAX_VALUE))
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addComponent(btAjoutCptConfirmer)
@@ -414,7 +426,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1098, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -468,7 +480,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1122, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1118, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -503,8 +515,18 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         scrollPaneAjoutPha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jButtonAjoutPhaAnnuler.setText("Annuler");
+        jButtonAjoutPhaAnnuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjoutPhaAnnulerActionPerformed(evt);
+            }
+        });
 
         jButtonAjoutPhaConfirmer.setText("Confirmer ajout");
+        jButtonAjoutPhaConfirmer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjoutPhaConfirmerActionPerformed(evt);
+            }
+        });
 
         jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Emplacement - Google Maps", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), java.awt.Color.black)); // NOI18N
 
@@ -580,12 +602,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         txtAjoutPhaAddresse.setName("Adresse");
         jScrollPane12.setViewportView(txtAjoutPhaAddresse);
 
-        jComboBoxAjoutPhaResponsable.setName("Responsable");
+        comboBoxAjoutPhaResponsable.setName("Responsable");
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel40.setText("Horaire de travail :");
-
-        jCalendarAjoutPhaHoraire.setStartYear(2014);
 
         jLabel45.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel45.setText("Gouvernorat : ");
@@ -640,7 +660,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                                     .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtAjoutPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -650,14 +670,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(comboBoxAjoutPhaVille, 0, 170, Short.MAX_VALUE)
                                     .addComponent(comboBoxAjoutPhaGouv, 0, 170, Short.MAX_VALUE))))
+                        .addGap(31, 31, 31)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addComponent(jCalendarAjoutPhaHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                                .addGap(91, 91, 91)
-                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(365, Short.MAX_VALUE))
+                            .addComponent(jCalendar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(310, 310, 310))
         );
         panelAjoutPhaLayout.setVerticalGroup(
             panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -672,7 +689,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -692,12 +709,12 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBoxAjoutPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jCalendarAjoutPhaHoraire, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboBoxAjoutPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -727,6 +744,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel43.setText("Ville:");
 
         comboBoxModPhaGouv.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        comboBoxModPhaGouv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxModPhaGouvActionPerformed(evt);
+            }
+        });
 
         comboBoxModPhaType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jour", "Nuit" }));
         comboBoxModPhaType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -827,7 +849,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             panelDemandesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDemandesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
+                .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 1099, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelDemandesLayout.setVerticalGroup(
@@ -902,7 +924,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 1284, Short.MAX_VALUE)
+                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -933,20 +955,26 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAjoutPhaTelActionPerformed
 
     private void txtModCptNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModCptNomActionPerformed
-        // TODO add your handling code here:
+        GUIUtils.showMsgBox("Action performed");
+        try {
+            GUIUtils.rempTable(tableModCpt,
+                    ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText()));
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtModCptNomActionPerformed
 
     private void btAjoutCptConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptConfirmerActionPerformed
         // TODO add your handling code here:
         if (GUIUtils.checkForm(panelAjoutCpt)) {
             //Ajout du compte dans la base de donnée
-            Compte cpt = new Compte(-1, txtAjoutCptNom.getText(), txtAjoutCptPrenom.getText(), txtAjoutCptAddresse.getText(), txtAjoutCptEmail.getText(), txtAjoutCptMDP.getText(), Integer.parseInt(txtAjoutCptTel.getText()), comboBoxAjoutCptTypeCpt.getSelectedIndex(), true);
-            try {
-                ComptesDAO.getInstance().create(cpt);
-                GUIUtils.showMsgBox(cpt.toString());
-            } catch (SQLException ex) {
-                Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            Compte cpt = new Compte(-1, txtAjoutCptNom.getText(), txtAjoutCptPrenom.getText(), txtAjoutCptAddresse.getText(), txtAjoutCptEmail.getText(), txtAjoutCptMDP.getText(), Integer.parseInt(txtAjoutCptTel.getText()), comboBoxAjoutCptTypeCpt.getSelectedIndex(), true);
+//            try {
+//                ComptesDAO.getInstance().create(cpt);
+//                GUIUtils.showMsgBox(cpt.toString());
+//            } catch (SQLException ex) {
+//                Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }//GEN-LAST:event_btAjoutCptConfirmerActionPerformed
 
@@ -969,10 +997,49 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private void btAjoutCptAnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptAnulerActionPerformed
         // TODO add your handling code here:
         if (GUIUtils.showConfBox("Voulez vous reinitialiser les champs ?")) {
-            GUIUtils.showMsgBox("Done");
-            GUIUtils.resetInput(panelAjoutCpt);
+            GUIUtils.resetForm(panelAjoutCpt);
+//            GUIUtils.showMsgBox("Done");
         }
     }//GEN-LAST:event_btAjoutCptAnulerActionPerformed
+
+    private void jButtonAjoutPhaConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutPhaConfirmerActionPerformed
+        // TODO add your handling code here:
+        if (GUIUtils.checkForm(panelAjoutPha)) {
+            //Ajout du compte dans la base de donnée
+            Pharmacie pha = new Pharmacie(-1,
+                    ((Compte) comboBoxAjoutPhaResponsable.getSelectedItem()).getId_cpt(),
+                    txtAjoutPhaNom.getText(),
+                    txtAjoutPhaAddresse.getText(),
+                    Integer.parseInt(txtAjoutPhaTel.getText()),
+                    Integer.parseInt(txtAjoutPhaFax.getText()),
+                    -1,
+                    "",
+                    "",
+                    txtAjoutPhaEmail.getText(),
+                    comboBoxModPhaType.getSelectedIndex(),
+                    ((Gouvernorat) comboBoxModPhaGouv.getSelectedItem()).getId_gouv(),
+                    ((Ville) comboBoxModPhaVille.getSelectedItem()).getId_ville()
+            );
+            try {
+                PharmaciesDAO.getInstance().create(pha);
+                GUIUtils.showMsgBox(pha.toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonAjoutPhaConfirmerActionPerformed
+
+    private void jButtonAjoutPhaAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutPhaAnnulerActionPerformed
+        // TODO add your handling code here:
+        if (GUIUtils.showConfBox("Voulez vous reinitialiser les champs ?")) {
+            GUIUtils.resetForm(panelAjoutPha);
+//            GUIUtils.showMsgBox("Done");
+        }
+    }//GEN-LAST:event_jButtonAjoutPhaAnnulerActionPerformed
+
+    private void comboBoxModPhaGouvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxModPhaGouvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxModPhaGouvActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1014,6 +1081,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btAjoutCptConfirmer;
     private javax.swing.JComboBox comboBoxAjoutCptTypeCpt;
     private javax.swing.JComboBox comboBoxAjoutPhaGouv;
+    private javax.swing.JComboBox comboBoxAjoutPhaResponsable;
     private javax.swing.JComboBox comboBoxAjoutPhaVille;
     private javax.swing.JComboBox comboBoxModCptType;
     private javax.swing.JComboBox comboBoxModPhaGouv;
@@ -1021,8 +1089,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxModPhaVille;
     private javax.swing.JButton jButtonAjoutPhaAnnuler;
     private javax.swing.JButton jButtonAjoutPhaConfirmer;
-    private org.torrisi.swing.jcalendar.JCalendar jCalendarAjoutPhaHoraire;
-    private javax.swing.JComboBox jComboBoxAjoutPhaResponsable;
+    private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

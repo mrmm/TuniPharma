@@ -30,7 +30,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jTabMyPharmacie" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -559,7 +559,7 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="calendarMaPhaInfoHoraire" max="32767" attributes="0"/>
+                                              <Component id="jCalendar2" max="32767" attributes="0"/>
                                               <Component id="jLabel43" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -568,7 +568,7 @@
                                           <Component id="jPanel14" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="166" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -581,9 +581,9 @@
                                       <Component id="txtMaPhaInfoNom" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                       <Component id="jLabel43" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jLabel41" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                               <Component id="comboBoxMaPhaInfoType" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -609,7 +609,10 @@
                                               <Component id="jScrollPane12" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Component id="calendarMaPhaInfoHoraire" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jCalendar2" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Component id="jPanel14" max="32767" attributes="0"/>
@@ -801,7 +804,7 @@
                             <Property name="text" type="java.lang.String" value="Horaire de travail"/>
                           </Properties>
                         </Component>
-                        <Component class="org.torrisi.swing.jcalendar.JCalendar" name="calendarMaPhaInfoHoraire">
+                        <Component class="com.toedter.calendar.JCalendar" name="jCalendar2">
                         </Component>
                       </SubComponents>
                     </Container>
@@ -990,9 +993,6 @@
                                                   </Group>
                                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jScrollPane11" min="-2" pref="170" max="-2" attributes="0"/>
-                                                      <Component id="jCalendar1" min="-2" pref="188" max="-2" attributes="0"/>
-                                                      <Component id="txtMaPhaAjoutEventNom" min="-2" pref="170" max="-2" attributes="0"/>
                                                       <Group type="102" attributes="0">
                                                           <Component id="spMaPhaAjoutEventHeure" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
@@ -1000,6 +1000,9 @@
                                                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                                           <Component id="spMaPhaAjoutEventMin" min="-2" pref="50" max="-2" attributes="0"/>
                                                       </Group>
+                                                      <Component id="jScrollPane11" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                                      <Component id="txtMaPhaAjoutEventNom" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                                      <Component id="jCalendar1" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
@@ -1009,7 +1012,7 @@
                                                   <Component id="btMaPhaAjoutEventAnnuler" min="-2" pref="135" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace pref="353" max="32767" attributes="0"/>
+                                          <EmptySpace pref="303" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1028,15 +1031,16 @@
                                           </Group>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                                  <Component id="jCalendar1" min="-2" pref="143" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                                   <Component id="jLabel36" min="-2" pref="23" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                                                  <Component id="jCalendar1" min="-2" pref="141" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace pref="26" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jLabel44" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                               <Component id="spMaPhaAjoutEventMin" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1063,8 +1067,6 @@
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Confirmer ajout"/>
                                   </Properties>
-                                </Component>
-                                <Component class="org.torrisi.swing.jcalendar.JCalendar" name="jCalendar1">
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel33">
                                   <Properties>
@@ -1150,6 +1152,8 @@
                                     <Property name="horizontalAlignment" type="int" value="0"/>
                                     <Property name="text" type="java.lang.String" value=":"/>
                                   </Properties>
+                                </Component>
+                                <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
                                 </Component>
                               </SubComponents>
                             </Container>

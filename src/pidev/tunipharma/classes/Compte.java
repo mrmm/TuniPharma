@@ -5,6 +5,12 @@
  */
 package pidev.tunipharma.classes;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import pidev.tunipharma.interfaces.CompteInterface;
 
 /**
@@ -35,9 +41,7 @@ public class Compte implements CompteInterface {
         this.etat_cpt = etat_cpt;
     }
 
-
-    // <editor-fold defaultstate="collapsed" desc="Getter & Setter">                          
-    // Teste sur le boutton de la formulaire d'acceuil
+    // <editor-fold defaultstate="collapsed" desc="Getter & Setter">
     public void setId_cpt(int id_cpt) {
         this.id_cpt = id_cpt;
     }
@@ -107,6 +111,37 @@ public class Compte implements CompteInterface {
     }
     // </editor-fold> 
 
+    public String getTypeCptNom() {
+        switch (type_cpt) {
+            case 1:
+                return "Administrateur";
+            case 2:
+                return "Pharmacien";
+            case 3:
+                return "Client";
+            default:
+                return "Inconnu";
+        }
+    }
+
+    public JPanel getImageCpt() {
+        
+        String nomImg="";
+        String path ="img/";
+        switch(type_cpt){
+            case 1: nomImg=path+"admin.png";
+                break;
+            case 2: nomImg=path+"pharmacien.png";
+                break;
+            case 3: nomImg=path+"utilisateur.png";
+                break;
+            default:nomImg=path+"deconnecter.png";
+                break;
+        }
+        JPanel jp = new ImageImplement(new ImageIcon("1.png").getImage());
+        return jp;
+    }
+
     @Override
     public void activerCompte() {
         this.etat_cpt = true;
@@ -116,4 +151,37 @@ public class Compte implements CompteInterface {
     public void desactiverCompte() {
         this.etat_cpt = false;
     }
+
+    // <editor-fold defaultstate="collapsed" desc="Getter & Setter">      
+    class ImageImplement extends JPanel {
+
+        private Image img;
+
+        public ImageImplement(Image img) {
+            this.img = img;
+            Dimension size = new Dimension(70, 70);
+            setPreferredSize(size);
+            setMinimumSize(size);
+            setMaximumSize(size);
+            setSize(size);
+            setLayout(null);
+        }
+
+        public void paintComponent(Graphics g) {
+            g.drawImage(img, 0, 0, null);
+        }
+
+    }
+
+    public class ImageInJframe extends JFrame {
+
+        public void start() {
+            ImageImplement panel = new ImageImplement(new ImageIcon("1.png").getImage());
+            add(panel);
+            setVisible(true);
+            setSize(400, 400);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+        }
+    }
+    // </editor-fold>
 }

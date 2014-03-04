@@ -155,9 +155,9 @@ public class PharmaciesDAO {
         List< Pharmacie> l = new ArrayList<Pharmacie>();
         Pharmacie pha;
         String sql = "SELECT * FROM Pharmacies WHERE "
-                + "ville_pha=" + (ville != "" ? ville : "%")
-                + "AND gouv_pha=" + (gouv != "" ? gouv : "%")
-                + " AND type" + (type > -1 ? "=" + type : "!=-1");
+                + "ville_pha='" + (ville != "" ? ville : "%")
+                + "' AND gouv_pha='" + (gouv != "" ? gouv : "%")
+                + "' AND type_pha" + (type > -1 ? "=" + type : "!=-1");
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {

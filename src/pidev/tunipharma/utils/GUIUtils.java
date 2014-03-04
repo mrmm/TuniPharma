@@ -16,17 +16,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
+import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.GouvernoratsDAO;
@@ -91,37 +95,48 @@ public class GUIUtils {
     // S'ils sont bien remplis
     public static boolean checkForm(Container c) {
         Component[] comp = c.getComponents();
-
-        while (comp.length == 1 && comp[0] instanceof Container) {
-            comp = ((Container) comp[0]).getComponents();
+        if (comp.length == 1 && comp[0] instanceof Container) {
+            checkForm((Container) comp[0]);
         }
         boolean test = true;
         int i = 0;
         while (test && i < comp.length) {
-            comp[i].getName();
+            System.out.println(comp[i].getClass().getName());
             if (comp[i] instanceof JTextField) {
                 JTextField tf = (JTextField) comp[i];
                 if (tf.getText().isEmpty()) {
                     test = false;
-                    showMsgBox("Le champs " + tf.getName() + " est vide !!");
+                    //Verification de format des email 
+                    String m="";
+                    if(tf.getName().toUpperCase().contains("EMAIL") && !isEmail(tf)){
+                        m+="  un Email invalide";
+                    }
+                    if(tf.getName().toUpperCase().contains("NUM") && !isEmail(tf)){
+                        m+=" n'est pa un nombre";
+                    }
+                    showMsgBox("Le champs " + tf.getName() + " est invalide "+m+" !!");
                 }
-            }
-            if (comp[i] instanceof JComboBox) {
+            } else if (comp[i] instanceof JComboBox) {
                 JComboBox cb = (JComboBox) comp[i];
-                if (cb.getSelectedItem() == null) {
+                if (cb.getSelectedIndex() == -1) {
                     test = false;
                     showMsgBox("Le " + cb.getName() + " n'est pas encore choisi !!");
                 }
-            }
-            if (comp[i] instanceof JScrollPane) {
-                Component[] jsComp = ((JScrollPane) comp[i]).getComponents();
-                JTextArea ta = (jsComp[0] instanceof JTextArea ? (JTextArea) jsComp[0] : (JTextArea) comp[i]);
+            } else if (comp[i] instanceof JScrollPane) {
+                JScrollPane js = (JScrollPane) comp[i];
+                Component[] jsComp = js.getViewport().getComponents();
+                JTextArea ta = (JTextArea) jsComp[0];
                 if (ta.getText().isEmpty()) {
                     test = false;
                     showMsgBox("Le champs " + ta.getName() + " est vide !!");
                 }
-            }
-            if (comp[i] instanceof JCheckBox) {
+            } else if (comp[i] instanceof JTextArea) {
+                JTextArea ta = (JTextArea) comp[i];
+                if (ta.getText().isEmpty()) {
+                    test = false;
+                    showMsgBox("Le champs " + ta.getName() + " est vide !!");
+                }
+            } else if (comp[i] instanceof JCheckBox) {
                 JCheckBox cb = (JCheckBox) comp[i];
                 if (!cb.isSelected()) {
                     test = false;
@@ -133,13 +148,10 @@ public class GUIUtils {
         return test;
     }
 
-    public static void resetInput(Container c) {
-
+    public static void resetForm(Container c) {
         Component[] comp = c.getComponents();
         if (comp.length == 1 && comp[0] instanceof Container) {
-            resetInput((Container) comp[0]);
-        } else {
-            c.removeAll();
+            resetForm((Container) comp[0]);
         }
         int i = 0;
         while (i < comp.length) {
@@ -159,30 +171,30 @@ public class GUIUtils {
                 Component[] jsComp = js.getViewport().getComponents();
                 JTextArea ta = (JTextArea) jsComp[0];
                 ta.setText("");
-                js.setViewportView(ta);
-                js.removeAll();
                 JViewport jvp = new JViewport();
-                new JViewport().setView(ta);
+                jvp.setView(ta);
                 js.setViewport(jvp);
                 c.add(js);
             } else if (comp[i] instanceof JCheckBox) {
                 // Reset des case a cocher - Check Box
                 JCheckBox cb = (JCheckBox) comp[i];
                 cb.setSelected(false);
-                comp[i] = cb;
                 c.add(cb);
             } else if (comp[i] instanceof JTextArea) {
                 // Reset des Zone de texte - Text Area
                 JTextArea cb = (JTextArea) comp[i];
                 cb.setText("");
-                comp[i] = cb;
+                c.add(cb);
+            } else if (comp[i] instanceof JButton) {
+                // Reset des Zone de texte - Text Area
+                JButton cb = (JButton) comp[i];
+                cb.setEnabled(true);
                 c.add(cb);
             } else {
                 c.add(comp[i]);
             }
             i++;
         }
-
     }
 
     public static void setErrOkField(JComponent c, boolean b) {
@@ -196,18 +208,72 @@ public class GUIUtils {
         }
     }
 
-    public static void onChange(final JTextComponent c) {
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Ajout de Listener - onChange">
+    public static void onChangeEmpty(final JTextComponent c, final JButton b) {
         c.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
                 if (c.getText().isEmpty()) {
                     setErrOkField(c, false);
+                    b.setEnabled(false);
                 } else {
                     setErrOkField(c, true);
+                    b.setEnabled(true);
                 }
             }
         });
 
+    }
+
+    public static void onChangeEmail(final JTextComponent c, final JButton b) {
+        c.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                if (c.getText().isEmpty() || !isEmail((JTextField) c)) {
+                    setErrOkField(c, false);
+                    b.setEnabled(false);
+                } else {
+                    setErrOkField(c, true);
+                    b.setEnabled(true);
+                }
+            }
+        });
+    }
+
+    public static void onChangeNumber(final JTextComponent c, final JButton b) {
+        c.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                if (c.getText().isEmpty() || !isNumeric(c.getText().toString())) {
+                    setErrOkField(c, false);
+                    b.setEnabled(false);
+                } else {
+                    setErrOkField(c, true);
+                    b.setEnabled(true);
+                }
+            }
+        });
+    }
+
+    public static void onChangeMDP(final JTextComponent p1, final JTextComponent p2, final JButton b) {
+        CaretListener cl = new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                if (p1.getText().isEmpty() || !p1.getText().equals(p2.getText())) {
+                    setErrOkField(p1, false);
+                    setErrOkField(p2, false);
+                    b.setEnabled(false);
+                } else {
+                    setErrOkField(p1, true);
+                    setErrOkField(p2, true);
+                    b.setEnabled(true);
+                }
+            }
+        };
+        p1.addCaretListener(cl);
+        p2.addCaretListener(cl);
     }
     // </editor-fold>
 
@@ -229,7 +295,7 @@ public class GUIUtils {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Verification format des champs">
-    public static boolean checkEmail(JTextField tf) {
+    public static boolean isEmail(JTextField tf) {
         boolean isValidEmail = false;
         String validExpression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern compare = Pattern.compile(validExpression, Pattern.CASE_INSENSITIVE);
@@ -239,7 +305,22 @@ public class GUIUtils {
         }
         return isValidEmail;
     }
+
+    public static boolean isNumeric(String s) {
+        return s.matches("[-+]?\\d*\\.?\\d+");
+    }
+
     //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Modifier Compte - Gestion de table">
+    public static void rempTable(JTable t, List<Compte> l){
+        t.removeAll();
+        DefaultTableModel model = (DefaultTableModel) t.getModel();
+        for(Compte c : l){
+            model.addRow(new Object[]{c.getNom_cpt(), c.getPrenom_cpt(), c.getType_cpt(),""});
+        }
+    }
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Traitement - Gouvernorat & Villes ">
     // </editor-fold>
