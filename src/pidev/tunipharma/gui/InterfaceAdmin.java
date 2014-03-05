@@ -6,6 +6,8 @@
 package pidev.tunipharma.gui;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pidev.tunipharma.classes.Compte;
@@ -35,12 +37,19 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         GUIUtils.fillGouvsCB(comboBoxAjoutPhaGouv, false);
 
         // Ajout de listener - Ajout Compte Form
-//        GUIUtils.onChangeEmpty(txtAjoutCptNom,btAjoutCptConfirmer);
-//        GUIUtils.onChangeEmpty(txtAjoutCptPrenom,btAjoutCptConfirmer);
-//        GUIUtils.onChangeEmpty(txtAjoutCptAddresse,btAjoutCptConfirmer);
-//        GUIUtils.onChangeEmail(txtAjoutCptEmail,btAjoutCptConfirmer);
-//        GUIUtils.onChangeNumber(txtAjoutCptTel,btAjoutCptConfirmer);
-//        GUIUtils.onChangeMDP(txtAjoutCptMDP,txtAjoutCptRMDP,btAjoutCptConfirmer);
+        GUIUtils.onChangeEmpty(txtAjoutCptNom, btAjoutCptConfirmer);
+        GUIUtils.onChangeEmpty(txtAjoutCptPrenom, btAjoutCptConfirmer);
+        GUIUtils.onChangeEmpty(txtAjoutCptAddresse, btAjoutCptConfirmer);
+        GUIUtils.onChangeEmail(txtAjoutCptEmail, btAjoutCptConfirmer);
+        GUIUtils.onChangeNumber(txtAjoutCptTel, btAjoutCptConfirmer);
+        GUIUtils.onChangeMDP(txtAjoutCptMDP, txtAjoutCptRMDP, btAjoutCptConfirmer);
+
+        // Ajout de listener - Ajout Pharmacie Form
+        GUIUtils.onChangeEmpty(txtAjoutPhaNom, btAjoutPhaConfirmer);
+        GUIUtils.onChangeEmpty(txtAjoutPhaAddresse, btAjoutPhaConfirmer);
+        GUIUtils.onChangeEmail(txtAjoutPhaEmail, btAjoutPhaConfirmer);
+        GUIUtils.onChangeNumber(txtAjoutPhaFax, btAjoutPhaConfirmer);
+        GUIUtils.onChangeNumber(txtAjoutPhaTel, btAjoutPhaConfirmer);
         //GUIUtils.setFieldListener(panelAjoutCpt);
         //Verification des champs bien remplis
     }
@@ -55,6 +64,13 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         tabbedPaneAdministration = new javax.swing.JTabbedPane();
+        tabbedPaneStats = new javax.swing.JTabbedPane();
+        scrollPaneStatInscri = new javax.swing.JScrollPane();
+        panelStatsInscri = new javax.swing.JPanel();
+        scrollPaneStatsNbrReq = new javax.swing.JScrollPane();
+        panelStatsNbrReq = new javax.swing.JPanel();
+        scrollPaneStatsNotePha = new javax.swing.JScrollPane();
+        panelStatsNotePha = new javax.swing.JPanel();
         tabbedPaneGestionCpt = new javax.swing.JTabbedPane();
         panelAjoutCpt = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -96,9 +112,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         tabbedPaneGestionPha = new javax.swing.JTabbedPane();
         scrollPaneAjoutPha = new javax.swing.JScrollPane();
         panelAjoutPha = new javax.swing.JPanel();
-        jButtonAjoutPhaAnnuler = new javax.swing.JButton();
-        jButtonAjoutPhaConfirmer = new javax.swing.JButton();
-        jPanel14 = new javax.swing.JPanel();
+        btAjoutPhaAnnuler = new javax.swing.JButton();
+        btAjoutPhaConfirmer = new javax.swing.JButton();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
@@ -117,7 +132,16 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel46 = new javax.swing.JLabel();
         comboBoxAjoutPhaVille = new javax.swing.JComboBox();
         comboBoxAjoutPhaGouv = new javax.swing.JComboBox();
-        jCalendar2 = new com.toedter.calendar.JCalendar();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableJourDeGarde = new javax.swing.JTable();
+        btAjoutJourGarde = new javax.swing.JButton();
+        jLabel44 = new javax.swing.JLabel();
+        txtAjoutPhaLongitude = new javax.swing.JTextField();
+        jLabel47 = new javax.swing.JLabel();
+        txtAjoutPhaLatitude = new javax.swing.JTextField();
+        comboBoxAjoutPhaType = new javax.swing.JComboBox();
+        jLabel48 = new javax.swing.JLabel();
+        dateGarde = new com.toedter.calendar.JDateChooser();
         scrollPaneModPha = new javax.swing.JScrollPane();
         panelModPha = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -127,26 +151,83 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         comboBoxModPhaGouv = new javax.swing.JComboBox();
         comboBoxModPhaType = new javax.swing.JComboBox();
         comboBoxModPhaVille = new javax.swing.JComboBox();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jScrollPane11 = new javax.swing.JScrollPane();
         tableModPha = new javax.swing.JTable();
         panelDemandes = new javax.swing.JPanel();
         scrollPaneDemandes = new javax.swing.JScrollPane();
         tableDemandesPha = new javax.swing.JTable();
-        tabbedPaneStats = new javax.swing.JTabbedPane();
-        scrollPaneStatInscri = new javax.swing.JScrollPane();
-        panelStatsInscri = new javax.swing.JPanel();
-        scrollPaneStatsNbrReq = new javax.swing.JScrollPane();
-        panelStatsNbrReq = new javax.swing.JPanel();
-        scrollPaneStatsNotePha = new javax.swing.JScrollPane();
-        panelStatsNotePha = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1300, 700));
 
         tabbedPaneAdministration.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        tabbedPaneStats.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tabbedPaneStats.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        panelStatsInscri.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inscription / Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+
+        javax.swing.GroupLayout panelStatsInscriLayout = new javax.swing.GroupLayout(panelStatsInscri);
+        panelStatsInscri.setLayout(panelStatsInscriLayout);
+        panelStatsInscriLayout.setHorizontalGroup(
+            panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1077, Short.MAX_VALUE)
+        );
+        panelStatsInscriLayout.setVerticalGroup(
+            panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 634, Short.MAX_VALUE)
+        );
+
+        scrollPaneStatInscri.setViewportView(panelStatsInscri);
+
+        tabbedPaneStats.addTab("Statistique d'inscription", scrollPaneStatInscri);
+
+        panelStatsNbrReq.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre de requete /Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+
+        javax.swing.GroupLayout panelStatsNbrReqLayout = new javax.swing.GroupLayout(panelStatsNbrReq);
+        panelStatsNbrReq.setLayout(panelStatsNbrReqLayout);
+        panelStatsNbrReqLayout.setHorizontalGroup(
+            panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1085, Short.MAX_VALUE)
+        );
+        panelStatsNbrReqLayout.setVerticalGroup(
+            panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 621, Short.MAX_VALUE)
+        );
+
+        scrollPaneStatsNbrReq.setViewportView(panelStatsNbrReq);
+
+        tabbedPaneStats.addTab("Nombre de requete /Mois", scrollPaneStatsNbrReq);
+
+        panelStatsNotePha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Note Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+
+        javax.swing.GroupLayout panelStatsNotePhaLayout = new javax.swing.GroupLayout(panelStatsNotePha);
+        panelStatsNotePha.setLayout(panelStatsNotePhaLayout);
+        panelStatsNotePhaLayout.setHorizontalGroup(
+            panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1085, Short.MAX_VALUE)
+        );
+        panelStatsNotePhaLayout.setVerticalGroup(
+            panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 621, Short.MAX_VALUE)
+        );
+
+        scrollPaneStatsNotePha.setViewportView(panelStatsNotePha);
+
+        tabbedPaneStats.addTab("Note Pharmacie", scrollPaneStatsNotePha);
+
+        tabbedPaneAdministration.addTab("Statistiques", tabbedPaneStats);
+        tabbedPaneStats.getAccessibleContext().setAccessibleName("");
+
         tabbedPaneGestionCpt.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         tabbedPaneGestionCpt.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tabbedPaneGestionCpt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabbedPaneGestionCptMouseClicked(evt);
+            }
+        });
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajouter compte", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -260,7 +341,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                             .addComponent(txtAjoutCptMDP, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtAjoutCptTel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)))
                     .addComponent(txtAjoutCptRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 643, Short.MAX_VALUE))
+                .addGap(0, 639, Short.MAX_VALUE))
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addComponent(btAjoutCptConfirmer)
@@ -347,9 +428,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nom :");
 
-        txtModCptNom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtModCptNomActionPerformed(evt);
+        txtModCptNom.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtModCptNomCaretUpdate(evt);
             }
         });
 
@@ -364,10 +445,19 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel3.setMinimumSize(new java.awt.Dimension(38, 17));
 
         txtModCptPrenom.setName("Prénom");
+        txtModCptPrenom.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtModCptPrenomCaretUpdate(evt);
+            }
+        });
 
-        comboBoxModCptType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tous", "Utilisateur", "Pharmacien" }));
-        comboBoxModCptType.setSelectedIndex(-1);
+        comboBoxModCptType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tous", "Administrateur", "Pharmacien", "Client" }));
         comboBoxModCptType.setToolTipText("");
+        comboBoxModCptType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxModCptTypeItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -375,48 +465,53 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtModCptNom, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtModCptPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxModCptType, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtModCptNom, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtModCptPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboBoxModCptType, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtModCptNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtModCptPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxModCptType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtModCptNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtModCptPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBoxModCptType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         txtModCptNom.setName("Nom");
 
         tableModCpt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nom", "Prenom", "Type", "Options"
+                "ID", "Nom", "Prenom", "Type", "Cocher"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tableModCpt);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -426,7 +521,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -435,8 +530,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -462,10 +557,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         tableNouvInscriCpt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Non", "Prenom", "Date d'inscription", "Option"
@@ -480,7 +572,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1118, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1114, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -514,32 +606,19 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         scrollPaneAjoutPha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ajouter Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
         scrollPaneAjoutPha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jButtonAjoutPhaAnnuler.setText("Annuler");
-        jButtonAjoutPhaAnnuler.addActionListener(new java.awt.event.ActionListener() {
+        btAjoutPhaAnnuler.setText("Annuler");
+        btAjoutPhaAnnuler.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAjoutPhaAnnulerActionPerformed(evt);
+                btAjoutPhaAnnulerActionPerformed(evt);
             }
         });
 
-        jButtonAjoutPhaConfirmer.setText("Confirmer ajout");
-        jButtonAjoutPhaConfirmer.addActionListener(new java.awt.event.ActionListener() {
+        btAjoutPhaConfirmer.setText("Confirmer ajout");
+        btAjoutPhaConfirmer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAjoutPhaConfirmerActionPerformed(evt);
+                btAjoutPhaConfirmerActionPerformed(evt);
             }
         });
-
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Emplacement - Google Maps", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), java.awt.Color.black)); // NOI18N
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 701, Short.MAX_VALUE)
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 145, Short.MAX_VALUE)
-        );
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel34.setText("Nom :");
@@ -605,7 +684,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         comboBoxAjoutPhaResponsable.setName("Responsable");
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel40.setText("Horaire de travail :");
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setText("Jours de garde");
 
         jLabel45.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel45.setText("Gouvernorat : ");
@@ -621,72 +701,140 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         comboBoxAjoutPhaGouv.setName("Gouvernorat");
 
+        tableJourDeGarde.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Jour", "Mois", "Année", "Date"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tableJourDeGarde);
+
+        btAjoutJourGarde.setText("Ajouter garde");
+        btAjoutJourGarde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAjoutJourGardeActionPerformed(evt);
+            }
+        });
+
+        jLabel44.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel44.setText("Longitude : ");
+        jLabel44.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel44.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        txtAjoutPhaLongitude.setName("Num Tél");
+        txtAjoutPhaLongitude.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAjoutPhaLongitudeActionPerformed(evt);
+            }
+        });
+
+        jLabel47.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel47.setText("Latitude :");
+        jLabel47.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel47.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        txtAjoutPhaLatitude.setName("Num Fax");
+        txtAjoutPhaLatitude.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAjoutPhaLatitudeActionPerformed(evt);
+            }
+        });
+
+        comboBoxAjoutPhaType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jour", "Nuit" }));
+        comboBoxAjoutPhaType.setSelectedIndex(-1);
+        comboBoxAjoutPhaVille.setName("Ville");
+
+        jLabel48.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel48.setText("Type : ");
+        jLabel48.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel48.setMinimumSize(new java.awt.Dimension(38, 17));
+
         javax.swing.GroupLayout panelAjoutPhaLayout = new javax.swing.GroupLayout(panelAjoutPha);
         panelAjoutPha.setLayout(panelAjoutPhaLayout);
         panelAjoutPhaLayout.setHorizontalGroup(
             panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAjoutPhaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonAjoutPhaConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
-                .addComponent(jButtonAjoutPhaAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(263, 263, 263))
             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGap(34, 34, 34)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtAjoutPhaFax, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                                .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtAjoutPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addComponent(txtAjoutPhaLongitude))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAjoutPhaLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(140, 140, 140)))
+                                        .addGap(68, 68, 68)))
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtAjoutPhaTel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAjoutPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jScrollPane12)
+                                    .addComponent(txtAjoutPhaTel)))
                             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
                                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(comboBoxAjoutPhaVille, 0, 170, Short.MAX_VALUE)
-                                    .addComponent(comboBoxAjoutPhaGouv, 0, 170, Short.MAX_VALUE))))
-                        .addGap(31, 31, 31)
-                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCalendar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(310, 310, 310))
+                                    .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(68, 68, 68)
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtAjoutPhaFax)
+                                    .addComponent(comboBoxAjoutPhaVille, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboBoxAjoutPhaGouv, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(68, 68, 68)
+                                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtAjoutPhaNom)
+                                    .addComponent(txtAjoutPhaEmail)
+                                    .addComponent(comboBoxAjoutPhaResponsable, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                                .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addComponent(txtAjoutPhaLatitude))
+                            .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                                .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addComponent(comboBoxAjoutPhaType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(78, 78, 78)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAjoutPhaLayout.createSequentialGroup()
+                                .addComponent(dateGarde, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btAjoutJourGarde))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                        .addGap(285, 285, 285)
+                        .addComponent(btAjoutPhaConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76)
+                        .addComponent(btAjoutPhaAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
         panelAjoutPhaLayout.setVerticalGroup(
             panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAjoutPhaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAjoutPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAjoutPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboBoxAjoutPhaResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -706,22 +854,40 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboBoxAjoutPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBoxAjoutPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                            .addComponent(comboBoxAjoutPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtAjoutPhaLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAjoutPhaLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxAjoutPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelAjoutPhaLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btAjoutJourGarde)
+                            .addComponent(dateGarde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
                 .addGroup(panelAjoutPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAjoutPhaAnnuler)
-                    .addComponent(jButtonAjoutPhaConfirmer))
-                .addGap(65, 65, 65))
+                    .addComponent(btAjoutPhaAnnuler)
+                    .addComponent(btAjoutPhaConfirmer))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         scrollPaneAjoutPha.setViewportView(panelAjoutPha);
@@ -755,13 +921,19 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         comboBoxModPhaVille.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jLabel4.setText("Nom : ");
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboBoxModPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -771,8 +943,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBoxModPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addComponent(comboBoxModPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -784,19 +956,18 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxModPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxModPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxModPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxModPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tableModPha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Non", "Responsable", "Gouvernement", "Ville", "Option"
+                "ID", "Non", "Responsable", "Gouvernement", "Ville", "Option"
             }
         ));
         tableModPha.setToolTipText("");
@@ -807,7 +978,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelModPhaLayout.setHorizontalGroup(
             panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelModPhaLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane11))
@@ -816,7 +987,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelModPhaLayout.setVerticalGroup(
             panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelModPhaLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane11)
@@ -827,14 +998,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         tabbedPaneGestionPha.addTab("Modifier Pharmacie", scrollPaneModPha);
 
-        panelDemandes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Demandes des Evenements/Services", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
+        panelDemandes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Demandes des Evenements", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
         tableDemandesPha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Pharmacie Hote", "Responsable", "Date/Horaire", "Option"
@@ -849,7 +1017,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             panelDemandesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDemandesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 1099, Short.MAX_VALUE)
+                .addComponent(scrollPaneDemandes, javax.swing.GroupLayout.DEFAULT_SIZE, 1095, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelDemandesLayout.setVerticalGroup(
@@ -861,70 +1029,13 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         tabbedPaneAdministration.addTab("Gestion des pharmacies", tabbedPaneGestionPha);
 
-        tabbedPaneStats.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        tabbedPaneStats.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        panelStatsInscri.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inscription / Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
-
-        javax.swing.GroupLayout panelStatsInscriLayout = new javax.swing.GroupLayout(panelStatsInscri);
-        panelStatsInscri.setLayout(panelStatsInscriLayout);
-        panelStatsInscriLayout.setHorizontalGroup(
-            panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1085, Short.MAX_VALUE)
-        );
-        panelStatsInscriLayout.setVerticalGroup(
-            panelStatsInscriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
-        );
-
-        scrollPaneStatInscri.setViewportView(panelStatsInscri);
-
-        tabbedPaneStats.addTab("Statistique d'inscription", scrollPaneStatInscri);
-
-        panelStatsNbrReq.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre de requete /Mois", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
-
-        javax.swing.GroupLayout panelStatsNbrReqLayout = new javax.swing.GroupLayout(panelStatsNbrReq);
-        panelStatsNbrReq.setLayout(panelStatsNbrReqLayout);
-        panelStatsNbrReqLayout.setHorizontalGroup(
-            panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1085, Short.MAX_VALUE)
-        );
-        panelStatsNbrReqLayout.setVerticalGroup(
-            panelStatsNbrReqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
-        );
-
-        scrollPaneStatsNbrReq.setViewportView(panelStatsNbrReq);
-
-        tabbedPaneStats.addTab("Nombre de requete /Mois", scrollPaneStatsNbrReq);
-
-        panelStatsNotePha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Note Pharmacie", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
-
-        javax.swing.GroupLayout panelStatsNotePhaLayout = new javax.swing.GroupLayout(panelStatsNotePha);
-        panelStatsNotePha.setLayout(panelStatsNotePhaLayout);
-        panelStatsNotePhaLayout.setHorizontalGroup(
-            panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1085, Short.MAX_VALUE)
-        );
-        panelStatsNotePhaLayout.setVerticalGroup(
-            panelStatsNotePhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
-        );
-
-        scrollPaneStatsNotePha.setViewportView(panelStatsNotePha);
-
-        tabbedPaneStats.addTab("Note Pharmacie", scrollPaneStatsNotePha);
-
-        tabbedPaneAdministration.addTab("Statistiques", tabbedPaneStats);
-        tabbedPaneStats.getAccessibleContext().setAccessibleName("");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+                .addComponent(tabbedPaneAdministration, javax.swing.GroupLayout.DEFAULT_SIZE, 1276, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -954,27 +1065,27 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAjoutPhaTelActionPerformed
 
-    private void txtModCptNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModCptNomActionPerformed
-        GUIUtils.showMsgBox("Action performed");
-        try {
-            GUIUtils.rempTable(tableModCpt,
-                    ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText()));
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_txtModCptNomActionPerformed
-
     private void btAjoutCptConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptConfirmerActionPerformed
         // TODO add your handling code here:
         if (GUIUtils.checkForm(panelAjoutCpt)) {
             //Ajout du compte dans la base de donnée
-//            Compte cpt = new Compte(-1, txtAjoutCptNom.getText(), txtAjoutCptPrenom.getText(), txtAjoutCptAddresse.getText(), txtAjoutCptEmail.getText(), txtAjoutCptMDP.getText(), Integer.parseInt(txtAjoutCptTel.getText()), comboBoxAjoutCptTypeCpt.getSelectedIndex(), true);
-//            try {
-//                ComptesDAO.getInstance().create(cpt);
-//                GUIUtils.showMsgBox(cpt.toString());
-//            } catch (SQLException ex) {
-//                Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            String pass = String.valueOf(txtAjoutCptMDP.getPassword(), 0, txtAjoutCptMDP.getPassword().length);
+            Compte cpt = new Compte(-1, txtAjoutCptNom.getText(),
+                    txtAjoutCptPrenom.getText(),
+                    txtAjoutCptAddresse.getText(),
+                    txtAjoutCptEmail.getText(),
+                    pass,
+                    Integer.parseInt(txtAjoutCptTel.getText()),
+                    comboBoxAjoutCptTypeCpt.getSelectedIndex() + 2,
+                    true);
+
+            try {
+                ComptesDAO.getInstance().create(cpt);
+                GUIUtils.showMsgBox(cpt.toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            GUIUtils.resetForm(panelAjoutCpt);
         }
     }//GEN-LAST:event_btAjoutCptConfirmerActionPerformed
 
@@ -1002,7 +1113,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btAjoutCptAnulerActionPerformed
 
-    private void jButtonAjoutPhaConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutPhaConfirmerActionPerformed
+    private void btAjoutPhaConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutPhaConfirmerActionPerformed
         // TODO add your handling code here:
         if (GUIUtils.checkForm(panelAjoutPha)) {
             //Ajout du compte dans la base de donnée
@@ -1013,8 +1124,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     Integer.parseInt(txtAjoutPhaTel.getText()),
                     Integer.parseInt(txtAjoutPhaFax.getText()),
                     -1,
-                    "",
-                    "",
+                    txtAjoutPhaLatitude.getText(),
+                    txtAjoutPhaLongitude.getText(),
                     txtAjoutPhaEmail.getText(),
                     comboBoxModPhaType.getSelectedIndex(),
                     ((Gouvernorat) comboBoxModPhaGouv.getSelectedItem()).getId_gouv(),
@@ -1022,27 +1133,94 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             );
             try {
                 PharmaciesDAO.getInstance().create(pha);
+
                 GUIUtils.showMsgBox(pha.toString());
             } catch (SQLException ex) {
                 Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
             }
+            GUIUtils.resetForm(panelAjoutPha);
         }
-    }//GEN-LAST:event_jButtonAjoutPhaConfirmerActionPerformed
+    }//GEN-LAST:event_btAjoutPhaConfirmerActionPerformed
 
-    private void jButtonAjoutPhaAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutPhaAnnulerActionPerformed
+    private void btAjoutPhaAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutPhaAnnulerActionPerformed
         // TODO add your handling code here:
         if (GUIUtils.showConfBox("Voulez vous reinitialiser les champs ?")) {
             GUIUtils.resetForm(panelAjoutPha);
 //            GUIUtils.showMsgBox("Done");
         }
-    }//GEN-LAST:event_jButtonAjoutPhaAnnulerActionPerformed
+    }//GEN-LAST:event_btAjoutPhaAnnulerActionPerformed
 
     private void comboBoxModPhaGouvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxModPhaGouvActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxModPhaGouvActionPerformed
 
+    private void txtModCptNomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtModCptNomCaretUpdate
+        // TODO add your handling code here:
+        try {
+            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
+//            System.out.println("Taille de la liste : " + l.size());
+            GUIUtils.rempTableCompte(tableModCpt, l);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtModCptNomCaretUpdate
+
+    private void txtModCptPrenomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtModCptPrenomCaretUpdate
+        // TODO add your handling code here:
+        try {
+            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
+//            System.out.println("Taille de la liste : " + l.size());
+            GUIUtils.rempTableCompte(tableModCpt, l);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtModCptPrenomCaretUpdate
+
+    private void comboBoxModCptTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxModCptTypeItemStateChanged
+        // TODO add your handling code here:
+        try {
+            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
+//            System.out.println("Taille de la liste : " + l.size());
+            GUIUtils.rempTableCompte(tableModCpt, l);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_comboBoxModCptTypeItemStateChanged
+
+    private void tabbedPaneGestionCptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabbedPaneGestionCptMouseClicked
+        // TODO add your handling code here:
+        try {
+            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(0, "", "");
+//            System.out.println("Taille de la liste : " + l.size());
+            GUIUtils.rempTableCompte(tableModCpt, l);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tabbedPaneGestionCptMouseClicked
+
+    private void txtAjoutPhaLongitudeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjoutPhaLongitudeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAjoutPhaLongitudeActionPerformed
+
+    private void txtAjoutPhaLatitudeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjoutPhaLatitudeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAjoutPhaLatitudeActionPerformed
+
+    private void btAjoutJourGardeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutJourGardeActionPerformed
+        try {
+            Date d = dateGarde.getDate();
+            String s = d.getDate() + "/" + d.getMonth() + "/" + (d.getYear() + 1900);
+            String nJ[] = {"Dimamche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+            String nM[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Novembre", "Decembre"};
+            GUIUtils.addRow(tableJourDeGarde, new Object[]{ nJ[d.getDay()],d.getDate()+" "+nM[d.getMonth()],(d.getYear() + 1900), s});
+        } catch (Exception e) {
+            System.out.println("JDateChooser Exception");
+        }
+    }//GEN-LAST:event_btAjoutJourGardeActionPerformed
+
     /**
      * @param args the command line arguments
+     *
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1079,17 +1257,19 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAjoutCptAnuler;
     private javax.swing.JButton btAjoutCptConfirmer;
+    private javax.swing.JButton btAjoutJourGarde;
+    private javax.swing.JButton btAjoutPhaAnnuler;
+    private javax.swing.JButton btAjoutPhaConfirmer;
     private javax.swing.JComboBox comboBoxAjoutCptTypeCpt;
     private javax.swing.JComboBox comboBoxAjoutPhaGouv;
     private javax.swing.JComboBox comboBoxAjoutPhaResponsable;
+    private javax.swing.JComboBox comboBoxAjoutPhaType;
     private javax.swing.JComboBox comboBoxAjoutPhaVille;
     private javax.swing.JComboBox comboBoxModCptType;
     private javax.swing.JComboBox comboBoxModPhaGouv;
     private javax.swing.JComboBox comboBoxModPhaType;
     private javax.swing.JComboBox comboBoxModPhaVille;
-    private javax.swing.JButton jButtonAjoutPhaAnnuler;
-    private javax.swing.JButton jButtonAjoutPhaConfirmer;
-    private com.toedter.calendar.JCalendar jCalendar2;
+    private com.toedter.calendar.JDateChooser dateGarde;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1099,14 +1279,17 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
@@ -1116,7 +1299,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbAjoutCptAddresseCpt;
     private javax.swing.JLabel lbAjoutCptEmailCpt;
     private javax.swing.JLabel lbAjoutCptMDPCpt;
@@ -1145,6 +1330,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tabbedPaneGestionPha;
     private javax.swing.JTabbedPane tabbedPaneStats;
     private javax.swing.JTable tableDemandesPha;
+    private javax.swing.JTable tableJourDeGarde;
     private javax.swing.JTable tableModCpt;
     private javax.swing.JTable tableModPha;
     private javax.swing.JTable tableNouvInscriCpt;
@@ -1158,6 +1344,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAjoutPhaAddresse;
     private javax.swing.JTextField txtAjoutPhaEmail;
     private javax.swing.JTextField txtAjoutPhaFax;
+    private javax.swing.JTextField txtAjoutPhaLatitude;
+    private javax.swing.JTextField txtAjoutPhaLongitude;
     private javax.swing.JTextField txtAjoutPhaNom;
     private javax.swing.JTextField txtAjoutPhaTel;
     private javax.swing.JTextField txtModCptNom;

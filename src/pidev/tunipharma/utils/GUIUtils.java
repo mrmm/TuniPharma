@@ -5,12 +5,14 @@
  */
 package pidev.tunipharma.utils;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -43,6 +47,7 @@ import pidev.tunipharma.dao.VillesDAO;
 public class GUIUtils {
 
     // <editor-fold defaultstate="collapsed" desc="Traitement - Gouvernorat & Villes ">
+
     // Remplissage des Villes dans ComboBox, selon ID Gouvernorat selectionné
     public static void fillVillesCB(JComboBox cb, int id, boolean all) {
         try {
@@ -107,14 +112,16 @@ public class GUIUtils {
                 if (tf.getText().isEmpty()) {
                     test = false;
                     //Verification de format des email 
-                    String m="";
-                    if(tf.getName().toUpperCase().contains("EMAIL") && !isEmail(tf)){
-                        m+="  un Email invalide";
+                    String m = "";
+                    if (tf.getName().toUpperCase().contains("EMAIL") && !isEmail(tf)) {
+                        m += "  n'est pas Email invalide";
+                        test = false;
                     }
-                    if(tf.getName().toUpperCase().contains("NUM") && !isEmail(tf)){
-                        m+=" n'est pa un nombre";
+                    if (tf.getName().toUpperCase().contains("NUM") && !isNumeric(tf.getText()) && tf.getText().length() < 8) {
+                        m += " n'est pas numéro valide ";
+                        test = false;
                     }
-                    showMsgBox("Le champs " + tf.getName() + " est invalide "+m+" !!");
+                    showMsgBox("Le champs " + tf.getName() + " est invalide " + m + " !!");
                 }
             } else if (comp[i] instanceof JComboBox) {
                 JComboBox cb = (JComboBox) comp[i];
@@ -246,7 +253,7 @@ public class GUIUtils {
         c.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                if (c.getText().isEmpty() || !isNumeric(c.getText().toString())) {
+                if (c.getText().isEmpty() || !isNumeric(c.getText().toString()) || c.getText().length() < 8) {
                     setErrOkField(c, false);
                     b.setEnabled(false);
                 } else {
@@ -311,17 +318,89 @@ public class GUIUtils {
     }
 
     //</editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="Modifier Compte - Gestion de table">
-    public static void rempTable(JTable t, List<Compte> l){
-        t.removeAll();
+    
+    // <editor-fold defaultstate="collapsed" desc="Manipulation des JTables">
+    public static void rempTableCompte(JTable t, List<Compte> l) {
+        remAllRows(t);
+        System.out.println("Taille de liste " + l.size());
+        Iterator<Compte> it = l.iterator();
         DefaultTableModel model = (DefaultTableModel) t.getModel();
-        for(Compte c : l){
-            model.addRow(new Object[]{c.getNom_cpt(), c.getPrenom_cpt(), c.getType_cpt(),""});
+        Compte c;
+        while (it.hasNext()) {
+            c = it.next();
+            model.addRow(new Object[]{c.getNom_cpt(), c.getPrenom_cpt(), c.getTypeCptNom(), ""});
         }
     }
-    // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Traitement - Gouvernorat & Villes ">
+    public static void rempTableNouvInscri(JTable t, List<Compte> l) {
+        remAllRows(t);
+        System.out.println("Taille de liste " + l.size());
+        Iterator<Compte> it = l.iterator();
+        DefaultTableModel model = (DefaultTableModel) t.getModel();
+        Compte c;
+        while (it.hasNext()) {
+            c = it.next();
+            model.addRow(new Object[]{c.getNom_cpt(), c.getPrenom_cpt(), c.getTypeCptNom(), ""});
+        }
+    }
+
+    public static void remAllRows(JTable t) {
+        DefaultTableModel dm = (DefaultTableModel) t.getModel();
+        int colCount = dm.getColumnCount();
+        String[] tab = new String[colCount];
+        for (int i = 0; i < colCount; i++) {
+            tab[i] = dm.getColumnName(i);
+        }
+        dm = new DefaultTableModel(tab, 0);
+        t.setModel(dm);
+    }
+
+    public static void addRow(JTable t, Object[] o) {
+        DefaultTableModel dm = (DefaultTableModel) t.getModel();
+        dm.addRow(o);
+        t.setModel(dm);
+    }
+
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="JTable Manipulation">
+// </editor-fold>
+    
+    public static void addCompPanel(JPanel p, Component[] c) {
+        if (c[0] instanceof JRootPane) {
+            addCompPanel(p, ((JRootPane) c[0]).getComponents());
+        }
+        for (int i = 0; i < c.length; i++) {
+            p.add(c[i]);
+        }
+    }
+
+    public static void getComponentTree(Component[] c, String m, String d, int j, JDateChooser jd) {
+        boolean t = true;
+        int i = 0;
+        j++;
+//        System.out.println("getComponentTree Called with comonent : "+c.length);
+        while (i < c.length) {
+            if (c[i] instanceof Container) {
+                getComponentTree(((Container) c[i]).getComponents(), m, d, j, jd);
+                System.out.println("getComponentTree Called with component " + j + " : " + c.getClass().getName());
+            } else {
+                if (t) {
+                    d += "-";
+                    t = false;
+                }
+                m += d + c[i].getClass().getName() + "\n" + m;
+            }
+            if (c[i] instanceof JDateChooser) {
+                System.out.println("JDateChooser Found in component[" + j + "][" + i + "]");
+                jd = (JDateChooser) c[i];
+                
+            }
+            if (c[i] instanceof JButton) {
+                System.out.println("Button '" + ((JButton) c[i]).getText() + "' found in component[" + j + "][" + i + "]");
+            }
+            i++;
+        }
+
+    }
 }

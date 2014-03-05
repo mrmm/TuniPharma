@@ -66,4 +66,16 @@ public class Demande {
     public int getId_concerne_dmd() {
         return id_concerne_dmd;
     }
+    
+    public String getNomTypeDmd(int type){
+        String s="";
+        switch(type){
+            case 1: s="Comptes";
+                break;
+            case 2:
+                s="Evenements";
+                break;
+        }
+        return s;
+    }
 }

@@ -5,13 +5,10 @@
  */
 package pidev.tunipharma.classes;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import pidev.tunipharma.interfaces.CompteInterface;
+import pidev.tunipharma.utils.ImageImplement;
 
 /**
  *
@@ -124,22 +121,26 @@ public class Compte implements CompteInterface {
         }
     }
 
-    public JPanel getImageCpt() {
-        
-        String nomImg="";
-        String path ="img/";
-        switch(type_cpt){
-            case 1: nomImg=path+"admin.png";
+    public static JPanel getImageCpt(int type_c) {
+
+        String nomImg = "";
+        String path = "img/";
+        switch (type_c) {
+            case 1:
+                nomImg = path + "admin.png";
                 break;
-            case 2: nomImg=path+"pharmacien.png";
+            case 2:
+                nomImg = path + "pharmacien.png";
                 break;
-            case 3: nomImg=path+"utilisateur.png";
+            case 3:
+                nomImg = path + "utilisateur.png";
                 break;
-            default:nomImg=path+"deconnecter.png";
+            default:
+                nomImg = path + "deconnecter.png";
                 break;
         }
-        JPanel jp = new ImageImplement(new ImageIcon("1.png").getImage());
-        return jp;
+        System.out.println(nomImg);
+        return (new ImageImplement(new ImageIcon(nomImg).getImage()));
     }
 
     @Override
@@ -152,36 +153,8 @@ public class Compte implements CompteInterface {
         this.etat_cpt = false;
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Getter & Setter">      
-    class ImageImplement extends JPanel {
-
-        private Image img;
-
-        public ImageImplement(Image img) {
-            this.img = img;
-            Dimension size = new Dimension(70, 70);
-            setPreferredSize(size);
-            setMinimumSize(size);
-            setMaximumSize(size);
-            setSize(size);
-            setLayout(null);
-        }
-
-        public void paintComponent(Graphics g) {
-            g.drawImage(img, 0, 0, null);
-        }
-
+    @Override
+    public String toString() {
+        return "Compte{" + "id_cpt=" + id_cpt + ", nom_cpt=" + nom_cpt + ", prenom_cpt=" + prenom_cpt + ", addresse_cpt=" + addresse_cpt + ", email_cpt=" + email_cpt + ", pass_cpt=" + pass_cpt + ", tel_cpt=" + tel_cpt + ", type_cpt=" + type_cpt + ", etat_cpt=" + etat_cpt + '}';
     }
-
-    public class ImageInJframe extends JFrame {
-
-        public void start() {
-            ImageImplement panel = new ImageImplement(new ImageIcon("1.png").getImage());
-            add(panel);
-            setVisible(true);
-            setSize(400, 400);
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
-        }
-    }
-    // </editor-fold>
 }

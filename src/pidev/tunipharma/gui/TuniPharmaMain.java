@@ -6,7 +6,11 @@
 package pidev.tunipharma.gui;
 
 import java.awt.Graphics;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import pidev.tunipharma.classes.Compte;
+import pidev.tunipharma.utils.GUIUtils;
 import pidev.tunipharma.utils.Session;
 
 /**
@@ -24,13 +28,14 @@ public class TuniPharmaMain extends javax.swing.JFrame {
         // Verification si utilisateur connecté
         Compte cpt = Session.getCptConn();
         if (Session.getSes() == null) {
-            lbInfoUtilisateur.setText("DÉCONNECTÉ");
+            lbNomUser.setText("DÉCONNECTÉ");
+            lbInfoUser.setText("");
+            panelIconUtilisateur.add(Compte.getImageCpt(-1));
         } else {
-            
-            lbInfoUtilisateur.setText("Bonjour " + cpt.getPrenom_cpt() + " " + cpt.getNom_cpt() + "\n"
-                    + "Type Compte : " + cpt.getTypeCptNom());
+            lbNomUser.setText("Bonjour " + cpt.getPrenom_cpt() + " " + cpt.getNom_cpt());
+            lbInfoUser.setText("Type Compte : " + cpt.getTypeCptNom());
+            panelIconUtilisateur = Compte.getImageCpt(cpt.getType_cpt());
         }
-        panelIconUtilisateur = cpt.getImageCpt();
     }
 
     /**
@@ -45,31 +50,42 @@ public class TuniPharmaMain extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         panelCorps = new javax.swing.JPanel();
         panelInfoUtilisateur = new javax.swing.JPanel();
-        lbInfoUtilisateur = new javax.swing.JLabel();
+        lbNomUser = new javax.swing.JLabel();
         panelIconUtilisateur = new javax.swing.JPanel();
+        lbInfoUser = new javax.swing.JLabel();
         menuBarMain = new javax.swing.JMenuBar();
         menuFichier = new javax.swing.JMenu();
         menuItemQuiter = new javax.swing.JMenuItem();
         menuPharmacie = new javax.swing.JMenu();
         menuItemRechPha = new javax.swing.JMenuItem();
         menuMonCpt = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuItemGestPha = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        menuItemStats = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        panelCorps.setLayout(null);
+        panelCorps.setOpaque(false);
+
         javax.swing.GroupLayout panelCorpsLayout = new javax.swing.GroupLayout(panelCorps);
         panelCorps.setLayout(panelCorpsLayout);
         panelCorpsLayout.setHorizontalGroup(
             panelCorpsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1080, Short.MAX_VALUE)
         );
         panelCorpsLayout.setVerticalGroup(
             panelCorpsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
+            .addGap(0, 862, Short.MAX_VALUE)
         );
 
         panelInfoUtilisateur.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        panelInfoUtilisateur.setOpaque(false);
 
         panelIconUtilisateur.setBorder(javax.swing.BorderFactory.createCompoundBorder());
 
@@ -89,15 +105,22 @@ public class TuniPharmaMain extends javax.swing.JFrame {
         panelInfoUtilisateurLayout.setHorizontalGroup(
             panelInfoUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoUtilisateurLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbInfoUtilisateur, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelInfoUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbNomUser, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(lbInfoUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelIconUtilisateur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelIconUtilisateur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelInfoUtilisateurLayout.setVerticalGroup(
             panelInfoUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbInfoUtilisateur, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
             .addComponent(panelIconUtilisateur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelInfoUtilisateurLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lbNomUser, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbInfoUser, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
         );
 
         menuFichier.setText("Fichier");
@@ -115,12 +138,42 @@ public class TuniPharmaMain extends javax.swing.JFrame {
         menuPharmacie.setText("Pharmacies");
 
         menuItemRechPha.setText("Recherche pharmacie");
+        menuItemRechPha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemRechPhaActionPerformed(evt);
+            }
+        });
         menuPharmacie.add(menuItemRechPha);
 
         menuBarMain.add(menuPharmacie);
 
         menuMonCpt.setText("Mon Compte");
+
+        jMenuItem5.setText("Informations personnelles");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        menuMonCpt.add(jMenuItem5);
+
+        jMenuItem6.setText("Mes messages");
+        menuMonCpt.add(jMenuItem6);
+
         menuBarMain.add(menuMonCpt);
+
+        jMenu1.setText("Administrateur");
+
+        menuItemGestPha.setText("Gestion des comptes");
+        jMenu1.add(menuItemGestPha);
+
+        jMenuItem2.setText("Gestion des pharmacies");
+        jMenu1.add(jMenuItem2);
+
+        menuItemStats.setText("Statistique");
+        jMenu1.add(menuItemStats);
+
+        menuBarMain.add(jMenu1);
 
         setJMenuBar(menuBarMain);
 
@@ -130,31 +183,37 @@ public class TuniPharmaMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelCorps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(759, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelInfoUtilisateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(panelInfoUtilisateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelCorps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelCorps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        panelCorps.removeAll();
+        GUIUtils.addCompPanel(panelCorps, new InterfaceUtilisateur().getComponents());
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     private void menuItemQuiterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemQuiterActionPerformed
         // TODO add your handling code here:
-
+        System.exit(0);
     }//GEN-LAST:event_menuItemQuiterActionPerformed
 
-    @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g); //To change body of generated methods, choose Tools | Templates.
-    }
+    private void menuItemRechPhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRechPhaActionPerformed
+        // TODO add your handling code here:
+        panelCorps.removeAll();
+        GUIUtils.addCompPanel(panelCorps, new InterfaceRecherchePharmacie().getComponents());
+    }//GEN-LAST:event_menuItemRechPhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,12 +251,19 @@ public class TuniPharmaMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JLabel lbInfoUtilisateur;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JLabel lbInfoUser;
+    private javax.swing.JLabel lbNomUser;
     private javax.swing.JMenuBar menuBarMain;
     private javax.swing.JMenu menuFichier;
+    private javax.swing.JMenuItem menuItemGestPha;
     private javax.swing.JMenuItem menuItemQuiter;
     private javax.swing.JMenuItem menuItemRechPha;
+    private javax.swing.JMenuItem menuItemStats;
     private javax.swing.JMenu menuMonCpt;
     private javax.swing.JMenu menuPharmacie;
     private javax.swing.JPanel panelCorps;

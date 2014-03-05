@@ -91,6 +91,26 @@ public class DemandesDAO {
         return (dmd);
     }
 
+    public List readByType(int type) {
+        List<Demande> l = new ArrayList<Demande>();
+        Demande dmd;
+        String sql;
+        Event ev;
+        Compte cpt;
+        sql = "SELECT * FROM Demandes WHERE id_type_dmd=" + type;
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Demande(int id_dmd,int type_dmd,Date date_dmd,int id_cpt_dmd,int id_concerne_dmd)
+                dmd = new Demande(res.getInt(1), res.getInt(2), res.getDate(3), res.getInt(4), res.getInt(5));
+                l.add(dmd);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
+
     public void update(Demande obj) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

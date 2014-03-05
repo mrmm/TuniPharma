@@ -100,15 +100,20 @@ public class ComptesDAO {
         List< Compte> l = new ArrayList<Compte>();
         Compte cpt = null;
         String sql = "SELECT * FROM Comptes WHERE "
-                + " AND nom_cpt = '" + (nom != "" ? nom : "%") + "'"
-                + " AND prenom_cpt = '" + (prenom != "" ? prenom : "%") + "'"
-                + " type_cpt" + (type > -1 ? "=" + type : "!=-1") + " ;";
+                + " nom_cpt LIKE \"" + (!nom.isEmpty() ? nom+"%" : "%") + "\""
+                + " AND prenom_cpt LIKE \"" + (!prenom.isEmpty() ? prenom+"%" : "%") + "\""
+                + " AND type_cpt" + (type > 0 ? "=" + type : "!=-1") + " ;";
+        System.out.println("Req SQL : "+sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
+           
             while (res.next()) {
                 //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
                 cpt = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));;
+//                 System.out.println(cpt.toString());
+                l.add(cpt);
             }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
