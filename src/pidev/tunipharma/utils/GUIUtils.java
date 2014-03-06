@@ -33,12 +33,14 @@ import javax.swing.JViewport;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.text.JTextComponent;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.GouvernoratsDAO;
 import pidev.tunipharma.dao.VillesDAO;
+import pidev.tunipharma.gui.TableButton;
 
 /**
  *
@@ -47,7 +49,6 @@ import pidev.tunipharma.dao.VillesDAO;
 public class GUIUtils {
 
     // <editor-fold defaultstate="collapsed" desc="Traitement - Gouvernorat & Villes ">
-
     // Remplissage des Villes dans ComboBox, selon ID Gouvernorat selectionné
     public static void fillVillesCB(JComboBox cb, int id, boolean all) {
         try {
@@ -318,9 +319,35 @@ public class GUIUtils {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Manipulation des JTables">
+    public static DefaultTableModel getModel(Object[][] data, Object[] cols) {
+        DefaultTableModel model = new DefaultTableModel(data, cols) {
+            @Override
+            public Class<?> getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+            }
+        };
+        return model;
+    }
+
     public static void rempTableCompte(JTable t, List<Compte> l) {
+        remAllRows(t);
+        System.out.println("Taille de liste " + l.size());
+        Iterator<Compte> it = l.iterator();
+        DefaultTableModel model = (DefaultTableModel) t.getModel();
+        Compte c;
+        while (it.hasNext()) {
+            c = it.next();
+            model.addRow(new Object[]{c.getId_cpt(), c.getNom_cpt(), c.getPrenom_cpt(), c.getTypeCptNom(), c});
+        }
+
+        //t.getColumnModel().getColumn(4).setCellRenderer(null);
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer());
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t));
+//        System.out.println(t.getColumnModel().getColumn(4).getCellRenderer().getClass().getName());
+    }
+
+    public static void rempTableNouvInscri(JTable t, List<Compte> l) {
         remAllRows(t);
         System.out.println("Taille de liste " + l.size());
         Iterator<Compte> it = l.iterator();
@@ -332,7 +359,7 @@ public class GUIUtils {
         }
     }
 
-    public static void rempTableNouvInscri(JTable t, List<Compte> l) {
+    public static void rempTablePha(JTable t, List<Compte> l) {
         remAllRows(t);
         System.out.println("Taille de liste " + l.size());
         Iterator<Compte> it = l.iterator();
@@ -362,10 +389,8 @@ public class GUIUtils {
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="JTable Manipulation">
 // </editor-fold>
-    
     public static void addCompPanel(JPanel p, Component[] c) {
         if (c[0] instanceof JRootPane) {
             addCompPanel(p, ((JRootPane) c[0]).getComponents());
@@ -394,7 +419,7 @@ public class GUIUtils {
             if (c[i] instanceof JDateChooser) {
                 System.out.println("JDateChooser Found in component[" + j + "][" + i + "]");
                 jd = (JDateChooser) c[i];
-                
+
             }
             if (c[i] instanceof JButton) {
                 System.out.println("Button '" + ((JButton) c[i]).getText() + "' found in component[" + j + "][" + i + "]");
@@ -402,5 +427,55 @@ public class GUIUtils {
             i++;
         }
 
+    }
+
+    public static void disAllTextField(JPanel p) {
+        Component[] comp = p.getComponents();
+        p.removeAll();
+        for (int i = 0; i < comp.length; i++) {
+            if (comp[i] instanceof JTextField) {
+                JTextField tf = (JTextField) comp[i];
+                tf.setEnabled(false);
+                p.add(tf);
+            } else if (comp[i] instanceof JScrollPane) {
+                // Reset des zone de texte dans ScrollPane - Text Area
+                JScrollPane js = (JScrollPane) comp[i];
+                Component[] jsComp = js.getViewport().getComponents();
+                JTextArea ta = (JTextArea) jsComp[0];
+                ta.setEnabled(false);
+                JViewport jvp = new JViewport();
+                jvp.setView(ta);
+                js.setViewport(jvp);
+                p.add(js);
+            } else {
+                p.add(comp[i]);
+            }
+        }
+    }
+
+    public static void enAllTextField(JPanel p) {
+        Component[] comp = p.getComponents();
+        p.removeAll();
+        for (int i = 0; i < comp.length; i++) {
+            if (comp[i] instanceof JTextField) {
+                JTextField tf = (JTextField) comp[i];
+                tf.setBackground(Color.WHITE);
+                tf.setForeground(Color.BLACK);
+                tf.setEnabled(true);
+                p.add(tf);
+            } else if (comp[i] instanceof JScrollPane) {
+                // Reset des zone de texte dans ScrollPane - Text Area
+                JScrollPane js = (JScrollPane) comp[i];
+                Component[] jsComp = js.getViewport().getComponents();
+                JTextArea ta = (JTextArea) jsComp[0];
+                ta.setEnabled(true);
+                JViewport jvp = new JViewport();
+                jvp.setView(ta);
+                js.setViewport(jvp);
+                p.add(js);
+            } else {
+                p.add(comp[i]);
+            }
+        }
     }
 }

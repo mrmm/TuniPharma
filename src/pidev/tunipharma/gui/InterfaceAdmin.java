@@ -5,6 +5,7 @@
  */
 package pidev.tunipharma.gui;
 
+import pidev.tunipharma.utils.GUIUtils;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.ComptesDAO;
 import pidev.tunipharma.dao.PharmaciesDAO;
-import pidev.tunipharma.utils.GUIUtils;
+import static pidev.tunipharma.gui.TableButton.makeTable;
 
 /**
  *
@@ -29,6 +30,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
      */
     public InterfaceAdmin() {
         initComponents();
+        //Pour mettre le fenetre dans le centre de l'ecran 
+        setLocationRelativeTo(null);
+        // Aggrendir la feneter lors de l'ouverture
+//        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         // Remplir Les ComboBox des Gouvernorats & Villes de la base de donnée
         GUIUtils.villeGouvListener(comboBoxModPhaGouv, comboBoxModPhaVille, true);
@@ -103,7 +108,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtModCptPrenom = new javax.swing.JTextField();
         comboBoxModCptType = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPaneTableModCpt = new javax.swing.JScrollPane();
         tableModCpt = new javax.swing.JTable();
         panelNouvInscrit = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -151,7 +156,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         comboBoxModPhaGouv = new javax.swing.JComboBox();
         comboBoxModPhaType = new javax.swing.JComboBox();
         comboBoxModPhaVille = new javax.swing.JComboBox();
-        jTextField1 = new javax.swing.JTextField();
+        txtModPhaNom = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane11 = new javax.swing.JScrollPane();
         tableModPha = new javax.swing.JTable();
@@ -501,7 +506,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nom", "Prenom", "Type", "Cocher"
+                "ID", "Nom", "Prenom", "Type", "Option"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -512,7 +517,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tableModCpt);
+        tableModCpt = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
+            "ID", "Nom", "Prenom", "Type", "Option"
+        }),4);
+        tableModCpt.setName("tableModCpt");
+        scrollPaneTableModCpt.setViewportView(tableModCpt);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -521,7 +530,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
+                    .addComponent(scrollPaneTableModCpt, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -531,7 +540,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                .addComponent(scrollPaneTableModCpt, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -560,10 +569,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Non", "Prenom", "Date d'inscription", "Option"
+                "ID", "Non", "Prenom", "Date d'inscription", "Option"
             }
         ));
         tableNouvInscriCpt.setToolTipText("");
+        tableNouvInscriCpt = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
+            "ID", "Nom", "Prenom", "Type", "Option"
+        }),4);
+        tableNouvInscriCpt.setName("tableNouvInscriCpt");
         jScrollPane9.setViewportView(tableNouvInscriCpt);
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -921,6 +934,12 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         comboBoxModPhaVille.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        txtModPhaNom.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtModPhaNomCaretUpdate(evt);
+            }
+        });
+
         jLabel4.setText("Nom : ");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -928,10 +947,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtModPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -957,7 +976,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     .addComponent(comboBoxModPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxModPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxModPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtModPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -978,7 +997,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         panelModPhaLayout.setHorizontalGroup(
             panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelModPhaLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(panelModPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane11))
@@ -1123,7 +1142,6 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     txtAjoutPhaAddresse.getText(),
                     Integer.parseInt(txtAjoutPhaTel.getText()),
                     Integer.parseInt(txtAjoutPhaFax.getText()),
-                    -1,
                     txtAjoutPhaLatitude.getText(),
                     txtAjoutPhaLongitude.getText(),
                     txtAjoutPhaEmail.getText(),
@@ -1156,47 +1174,36 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
     private void txtModCptNomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtModCptNomCaretUpdate
         // TODO add your handling code here:
-        try {
-            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
-//            System.out.println("Taille de la liste : " + l.size());
-            GUIUtils.rempTableCompte(tableModCpt, l);
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fillTableModCpt(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
     }//GEN-LAST:event_txtModCptNomCaretUpdate
 
     private void txtModCptPrenomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtModCptPrenomCaretUpdate
         // TODO add your handling code here:
-        try {
-            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
-//            System.out.println("Taille de la liste : " + l.size());
-            GUIUtils.rempTableCompte(tableModCpt, l);
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fillTableModCpt(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
     }//GEN-LAST:event_txtModCptPrenomCaretUpdate
 
     private void comboBoxModCptTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxModCptTypeItemStateChanged
         // TODO add your handling code here:
-        try {
-            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
-//            System.out.println("Taille de la liste : " + l.size());
-            GUIUtils.rempTableCompte(tableModCpt, l);
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fillTableModCpt(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
     }//GEN-LAST:event_comboBoxModCptTypeItemStateChanged
 
     private void tabbedPaneGestionCptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabbedPaneGestionCptMouseClicked
         // TODO add your handling code here:
+        txtModCptNom.setText("");
+        txtModCptPrenom.setText("");
+        comboBoxModCptType.setSelectedIndex(-1);
+        fillTableModCpt(0, "", "");
+    }//GEN-LAST:event_tabbedPaneGestionCptMouseClicked
+
+    private void fillTableModCpt(int i, String n, String p) {
         try {
-            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(0, "", "");
-//            System.out.println("Taille de la liste : " + l.size());
+            List<Compte> l = ComptesDAO.getInstance().readByNomPreType(i, n, p);
+            //System.out.println("Taille de la liste : " + l.size());
             GUIUtils.rempTableCompte(tableModCpt, l);
         } catch (SQLException ex) {
             Logger.getLogger(InterfaceAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_tabbedPaneGestionCptMouseClicked
+    }
 
     private void txtAjoutPhaLongitudeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjoutPhaLongitudeActionPerformed
         // TODO add your handling code here:
@@ -1207,16 +1214,22 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAjoutPhaLatitudeActionPerformed
 
     private void btAjoutJourGardeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutJourGardeActionPerformed
+//        GUIUtils.showMsgBox(evt.getSource().getClass().getName());
         try {
             Date d = dateGarde.getDate();
             String s = d.getDate() + "/" + d.getMonth() + "/" + (d.getYear() + 1900);
             String nJ[] = {"Dimamche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
             String nM[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Novembre", "Decembre"};
-            GUIUtils.addRow(tableJourDeGarde, new Object[]{ nJ[d.getDay()],d.getDate()+" "+nM[d.getMonth()],(d.getYear() + 1900), s});
+            GUIUtils.addRow(tableJourDeGarde, new Object[]{nJ[d.getDay()], d.getDate() + " " + nM[d.getMonth()], (d.getYear() + 1900), s});
         } catch (Exception e) {
             System.out.println("JDateChooser Exception");
         }
     }//GEN-LAST:event_btAjoutJourGardeActionPerformed
+
+    private void txtModPhaNomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtModPhaNomCaretUpdate
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txtModPhaNomCaretUpdate
 
     /**
      * @param args the command line arguments
@@ -1235,6 +1248,19 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     break;
                 }
             }
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                System.out.println("Nom UIManager : " + info.getName());
+//            }
+            /**
+             * ********************************** Changer l'apparence de
+             * l'application **************************************
+             */
+            // javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+            /**
+             * ********************************** Changer l'apparence de
+             * l'application **************************************
+             */
+
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(InterfaceAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -1295,13 +1321,11 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbAjoutCptAddresseCpt;
     private javax.swing.JLabel lbAjoutCptEmailCpt;
     private javax.swing.JLabel lbAjoutCptMDPCpt;
@@ -1325,6 +1349,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollPaneStatInscri;
     private javax.swing.JScrollPane scrollPaneStatsNbrReq;
     private javax.swing.JScrollPane scrollPaneStatsNotePha;
+    private javax.swing.JScrollPane scrollPaneTableModCpt;
     private javax.swing.JTabbedPane tabbedPaneAdministration;
     private javax.swing.JTabbedPane tabbedPaneGestionCpt;
     private javax.swing.JTabbedPane tabbedPaneGestionPha;
@@ -1350,5 +1375,6 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField txtAjoutPhaTel;
     private javax.swing.JTextField txtModCptNom;
     private javax.swing.JTextField txtModCptPrenom;
+    private javax.swing.JTextField txtModPhaNom;
     // End of variables declaration//GEN-END:variables
 }
