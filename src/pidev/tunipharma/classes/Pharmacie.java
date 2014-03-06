@@ -17,7 +17,6 @@ public class Pharmacie {
     String addresse_pha;
     int tel_pha;
     int fax_pha;
-    int id_cal;
     String lat_gm_pha;
     String long_gm_pha;
     String email_pha;
@@ -25,14 +24,13 @@ public class Pharmacie {
     int ville_pha;
     int gouv_pha;
 
-    public Pharmacie(int id_pha, int id_resp, String nom_pha, String addresse_pha, int tel_pha, int fax_pha, int id_cal, String lat_gm_pha, String long_gm_pha, String email_pha, int type_pha, int ville_pha, int gouv_pha) {
+    public Pharmacie(int id_pha, int id_resp, String nom_pha, String addresse_pha, int tel_pha, int fax_pha, String lat_gm_pha, String long_gm_pha, String email_pha, int type_pha, int ville_pha, int gouv_pha) {
         this.id_pha = id_pha;
         this.id_resp = id_resp;
         this.nom_pha = nom_pha;
         this.addresse_pha = addresse_pha;
         this.tel_pha = tel_pha;
         this.fax_pha = fax_pha;
-        this.id_cal = id_cal;
         this.lat_gm_pha = lat_gm_pha;
         this.long_gm_pha = long_gm_pha;
         this.email_pha = email_pha;
@@ -64,10 +62,6 @@ public class Pharmacie {
 
     public int getFax_pha() {
         return fax_pha;
-    }
-
-    public int getId_cal() {
-        return id_cal;
     }
 
     public String getLat_gm_pha() {
@@ -118,10 +112,6 @@ public class Pharmacie {
         this.fax_pha = fax_pha;
     }
 
-    public void setId_cal(int id_cal) {
-        this.id_cal = id_cal;
-    }
-
     public void setLat_gm_pha(String lat_gm_pha) {
         this.lat_gm_pha = lat_gm_pha;
     }
@@ -147,7 +137,6 @@ public class Pharmacie {
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="toString, hashCode et equals">
     @Override
     public int hashCode() {
@@ -173,7 +162,7 @@ public class Pharmacie {
 
     @Override
     public String toString() {
-        return "Pharmacie{" + "id_pha=" + id_pha + ", id_resp=" + id_resp + ", nom_pha=" + nom_pha + ", addresse_pha=" + addresse_pha + ", tel_pha=" + tel_pha + ", fax_pha=" + fax_pha + ", id_cal=" + id_cal + ", lat_gm_pha=" + lat_gm_pha + ", long_gm_pha=" + long_gm_pha + ", email_pha=" + email_pha + ", type_pha=" + type_pha + ", ville_pha=" + ville_pha + ", gouv_pha=" + gouv_pha + '}';
+        return "Pharmacie{" + "id_pha=" + id_pha + ", id_resp=" + id_resp + ", nom_pha=" + nom_pha + ", addresse_pha=" + addresse_pha + ", tel_pha=" + tel_pha + ", fax_pha=" + fax_pha + ", lat_gm_pha=" + lat_gm_pha + ", long_gm_pha=" + long_gm_pha + ", email_pha=" + email_pha + ", type_pha=" + type_pha + ", ville_pha=" + ville_pha + ", gouv_pha=" + gouv_pha + '}';
     }
 
     // </editor-fold>

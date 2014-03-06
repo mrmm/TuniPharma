@@ -7,14 +7,13 @@ package pidev.tunipharma.classes;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import pidev.tunipharma.interfaces.CompteInterface;
 import pidev.tunipharma.utils.ImageImplement;
 
 /**
  *
  * @author elron
  */
-public class Compte implements CompteInterface {
+public class Compte {
 
     int id_cpt;
     String nom_cpt;
@@ -143,12 +142,10 @@ public class Compte implements CompteInterface {
         return (new ImageImplement(new ImageIcon(nomImg).getImage()));
     }
 
-    @Override
     public void activerCompte() {
         this.etat_cpt = true;
     }
 
-    @Override
     public void desactiverCompte() {
         this.etat_cpt = false;
     }
