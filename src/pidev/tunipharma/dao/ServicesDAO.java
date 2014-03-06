@@ -109,7 +109,7 @@ public class ServicesDAO {
             pstmt.setString(3, obj.getDescription_srv());
             pstmt.setString(4, obj.getNom_srv());
             pstmt.setInt(5, obj.getId_srv());
-
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -121,6 +121,7 @@ public class ServicesDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_srv());
+            pstmt.executeUpdate();
 
         } catch (SQLException ex) {
             ex.printStackTrace();

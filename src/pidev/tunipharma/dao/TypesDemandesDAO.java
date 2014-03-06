@@ -99,6 +99,7 @@ public class TypesDemandesDAO {
 
             pstmt.setString(1, obj.getDmd_table());
             pstmt.setInt(2, obj.getId_type_dmd());
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -110,7 +111,7 @@ public class TypesDemandesDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_type_dmd());
-
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

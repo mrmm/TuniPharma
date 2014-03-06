@@ -100,6 +100,7 @@ public class BoitesMessagesDAO {
 
             pstmt.setInt(1, obj.getId_cpt());
             pstmt.setInt(2, obj.getId_bt());
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -111,6 +112,7 @@ public class BoitesMessagesDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_bt());
+            pstmt.executeUpdate();
             
         } catch (SQLException ex) {
             ex.printStackTrace();

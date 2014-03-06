@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pidev.tunipharma.dao;
 
 import java.sql.Connection;
@@ -21,7 +20,7 @@ import pidev.tunipharma.connection.DBConnection;
  * @author elron
  */
 public class MessagesDAO {
-    
+
     private Connection connexion;
     private Statement stmt;
     private static MessagesDAO instance;
@@ -44,7 +43,7 @@ public class MessagesDAO {
         String sql = "INSERT INTO Messages (id_bt_src ,id_bt_dst ,sujet_msg,corps_msg,date_msg,etat_msg)"
                 + "VALUES"
                 + "(?,?,?,?,?,?);";
-        
+
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -104,7 +103,7 @@ public class MessagesDAO {
                 + "corps_msg = '?',"
                 + "date_msg = '?' "
                 + "etat_msg = '?' "
-                + "WHERE id_msg = '" + obj.getId_msg()+ "';";
+                + "WHERE id_msg = '" + obj.getId_msg() + "';";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
 
@@ -115,6 +114,7 @@ public class MessagesDAO {
             pstmt.setDate(5, obj.getDate_msg());
             pstmt.setBoolean(6, obj.isEtat_msg());
             pstmt.setInt(7, obj.getId_msg());
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -126,7 +126,7 @@ public class MessagesDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_msg());
-            
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

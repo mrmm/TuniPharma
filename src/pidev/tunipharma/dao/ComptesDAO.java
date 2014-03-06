@@ -67,7 +67,7 @@ public class ComptesDAO {
     public List<Compte> readAll() {
         List< Compte> l = new ArrayList<Compte>();
         Compte ad;
-        String sql = "SELECT * FROM Comptes";
+        String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,email_cpt,pass_cpt,addresse_cpt,tel_cpt,type_cpt,etat_cpt FROM Comptes";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -83,7 +83,7 @@ public class ComptesDAO {
 
     public Compte readById(Integer id) {
         Compte cpt = null;
-        String sql = "SELECT * FROM Comptes WHERE id_cpt='" + id + "'";
+        String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,addresse_cpt,email_cpt,pass_cpt,tel_cpt,type_cpt,etat_cpt FROM Comptes WHERE id_cpt='" + id + "'";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -93,20 +93,42 @@ public class ComptesDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        System.out.println(cpt);
         return (cpt);
     }
 
-    public List< Compte> readByNomPreType(Integer type, String nom, String prenom) {
+    public List<Compte> readByNomPreType(Integer type, String nom, String prenom) {
         List< Compte> l = new ArrayList<Compte>();
         Compte cpt = null;
         String sql = "SELECT * FROM Comptes WHERE "
-                + " nom_cpt LIKE \"" + (!nom.isEmpty() ? nom+"%" : "%") + "\""
-                + " AND prenom_cpt LIKE \"" + (!prenom.isEmpty() ? prenom+"%" : "%") + "\""
+                + " nom_cpt LIKE \"" + (!nom.isEmpty() ? nom + "%" : "%") + "\""
+                + " AND prenom_cpt LIKE \"" + (!prenom.isEmpty() ? prenom + "%" : "%") + "\""
                 + " AND type_cpt" + (type > 0 ? "=" + type : "!=-1") + " ;";
-        System.out.println("Req SQL : "+sql);
+        System.out.println("Req SQL : " + sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
-           
+
+            while (res.next()) {
+                //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                cpt = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));;
+//                 System.out.println(cpt.toString());
+                l.add(cpt);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
+
+    public List<Compte> readInactif() {
+        List< Compte> l = new ArrayList<Compte>();
+        Compte cpt = null;
+        String sql = "SELECT * FROM Comptes c WHERE c=etat_cpt=0 AND (SELECT COUNT (*) FROM Demandes d WHERE d.id_concerne_dmd = c.id_cpt AND d.id_cpt_dmd = c.id_cpt) = 0;";
+        System.out.println("Req SQL : " + sql);
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+
             while (res.next()) {
                 //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
                 cpt = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));;

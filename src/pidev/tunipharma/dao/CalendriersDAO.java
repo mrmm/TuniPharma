@@ -115,7 +115,7 @@ public class CalendriersDAO {
             pstmt.setInt(5, obj.getMois());
             pstmt.setInt(6, obj.getAnnee());
             pstmt.setInt(7, obj.getId_cal());
-
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -127,7 +127,7 @@ public class CalendriersDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_cal());
-
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

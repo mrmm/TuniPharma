@@ -96,14 +96,14 @@ public class TypesServiceDAO {
         sql = "UPDATE Types_Service SET "
                 + "nom_type_srv = '?',"
                 + "description_type_srv = '?',"
-                + "WHERE id_type_srv = '" + obj.getId_type_srv()+ "';";
+                + "WHERE id_type_srv = '" + obj.getId_type_srv() + "';";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
 
             pstmt.setString(1, obj.getNom_type_srv());
             pstmt.setString(2, obj.getDescription_type_srv());
             pstmt.setInt(3, obj.getId_type_srv());
-
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -115,7 +115,7 @@ public class TypesServiceDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_type_srv());
-
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

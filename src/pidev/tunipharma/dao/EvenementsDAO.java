@@ -110,6 +110,7 @@ public class EvenementsDAO {
             pstmt.setString(4, obj.getDesc_event());
             pstmt.setBoolean(5, obj.isEtat_event());
             pstmt.setInt(6, obj.getId_event());
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -121,7 +122,7 @@ public class EvenementsDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_event());
-            
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
