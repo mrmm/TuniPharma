@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 03, 2014 at 12:54 PM
+-- Generation Time: Mar 06, 2014 at 04:59 PM
 -- Server version: 5.5.35
 -- PHP Version: 5.4.6-1ubuntu1.6
 
@@ -68,14 +68,22 @@ CREATE TABLE IF NOT EXISTS `Comptes` (
   `type_cpt` int(11) NOT NULL,
   `etat_cpt` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_cpt`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `Comptes`
 --
 
 INSERT INTO `Comptes` (`id_cpt`, `nom_cpt`, `prenom_cpt`, `email_cpt`, `pass_cpt`, `addresse_cpt`, `tel_cpt`, `type_cpt`, `etat_cpt`) VALUES
-(1, 'Mourad', 'Maatoug', 'mr.maatoug@gmail.com', '098f6bcd4621d373cade4e832627b4f6', '24 Rue de pasteur cite el hidhab fouchana ', 55445544, 41745485, 1);
+(1, 'Mourad', 'Maatoug', 'mr.maatoug@gmail.com', '098f6bcd4621d373cade4e832627b4f6', '24 Rue de pasteur cite el hidhab fouchana ', 55445544, 1, 1),
+(2, 'Dkhili', 'Imen', 'imen.dkhili@gmail.com', '51af5addf00345255bc29e54526f67e5', 'Slimen', 55447788, 1, 1),
+(3, 'Hmidi', 'Hend', 'hmidi.hend@gmal.com', '202cb962ac59075b964b07152d234b70', 'Slimen', 47414121, 2, 1),
+(4, 'Khouli', 'Chiheb', 'khouli.chiheb@gmail.com', '68053af2923e00204c3ca7c6a3150cf7', 'Mourouj', 14213254, 3, 1),
+(6, 'Ochi', 'Amani', 'amani.ochi@gmail.com', 'c20ad4d76fe97759aa27a0c99bff6710', 'Hammem Chat', 14215214, 2, 1),
+(7, 'Fellah', 'Asma', 'fellah.asma@gmail.com', '2b24d495052a8ce66358eb576b8912c8', 'Marsa', 44552211, 2, 1),
+(8, 'mourad', 'aada', 'ad@ad.com', '63c4b1baf3b4460fa9936b1a20919bec', 'asasa', 12212123, 2, 1),
+(9, 'Test Nom', 'Test Prenom', 'test.test@gmail.com', 'c963bb45d10eb0312ac123a0eb51a09d', 'Test Test Test', 2147483647, 2147483647, 0),
+(10, 'Test Nom', 'Test Prenom', 'test.test@gmail.com', 'c963bb45d10eb0312ac123a0eb51a09d', 'Test Test Test', 44774447, 47474747, 0);
 
 -- --------------------------------------------------------
 
@@ -92,7 +100,14 @@ CREATE TABLE IF NOT EXISTS `Demandes` (
   PRIMARY KEY (`id_dmd`),
   KEY `id_type_dmd` (`id_type_dmd`,`id_cpt_dmd`),
   KEY `id_cpt_dmd` (`id_cpt_dmd`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `Demandes`
+--
+
+INSERT INTO `Demandes` (`id_dmd`, `id_type_dmd`, `date_dmd`, `id_cpt_dmd`, `id_concerne_dmd`) VALUES
+(1, 1, '2014-03-06 00:00:00', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -184,15 +199,16 @@ CREATE TABLE IF NOT EXISTS `Pharmacies` (
   `addresse_pha` text NOT NULL,
   `tel_pha` int(11) NOT NULL,
   `fax_pha` int(11) NOT NULL,
-  `id_cal` int(11) NOT NULL,
   `lat_gm_pha` varchar(100) NOT NULL,
   `long_gm_pha` varchar(100) NOT NULL,
   `email_pha` varchar(100) NOT NULL,
   `type_pha` int(11) NOT NULL,
-  `ville_pha` varchar(50) NOT NULL,
-  `gouv_pha` varchar(50) NOT NULL,
+  `ville_pha` int(50) NOT NULL,
+  `gouv_pha` int(50) NOT NULL,
   PRIMARY KEY (`id_pha`),
-  KEY `id_resp` (`id_resp`)
+  KEY `id_resp` (`id_resp`),
+  KEY `ville_pha` (`ville_pha`,`gouv_pha`),
+  KEY `gouv_pha` (`gouv_pha`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -222,7 +238,15 @@ CREATE TABLE IF NOT EXISTS `Types_Demande` (
   `id_type_dmd` int(11) NOT NULL AUTO_INCREMENT,
   `dmd_table` varchar(50) NOT NULL,
   PRIMARY KEY (`id_type_dmd`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `Types_Demande`
+--
+
+INSERT INTO `Types_Demande` (`id_type_dmd`, `dmd_table`) VALUES
+(1, 'Evenements'),
+(2, 'Comptes');
 
 -- --------------------------------------------------------
 
@@ -571,7 +595,9 @@ ALTER TABLE `Messages`
 -- Constraints for table `Pharmacies`
 --
 ALTER TABLE `Pharmacies`
-  ADD CONSTRAINT `Pharmacies_ibfk_1` FOREIGN KEY (`id_resp`) REFERENCES `Comptes` (`id_cpt`);
+  ADD CONSTRAINT `Pharmacies_ibfk_3` FOREIGN KEY (`gouv_pha`) REFERENCES `Gouvernorats` (`id_gouv`),
+  ADD CONSTRAINT `Pharmacies_ibfk_1` FOREIGN KEY (`id_resp`) REFERENCES `Comptes` (`id_cpt`),
+  ADD CONSTRAINT `Pharmacies_ibfk_2` FOREIGN KEY (`ville_pha`) REFERENCES `Villes` (`id_ville`);
 
 --
 -- Constraints for table `Services`
