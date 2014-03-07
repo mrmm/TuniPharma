@@ -69,7 +69,7 @@
                       <Component id="txtInfosNvMDP" alignment="0" max="32767" attributes="0"/>
                       <Component id="txtInfosNvRMDP" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -79,7 +79,7 @@
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -274,8 +274,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtInfosNvMDP">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtInfosNvMDP.setName(&quot;Nouveau mot de passe&quot;);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtInfosNvRMDP">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtInfosNvRMDP.setName(&quot;Ressaisir nouveau mot de passe&quot;);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

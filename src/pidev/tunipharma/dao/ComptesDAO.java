@@ -238,12 +238,25 @@ public class ComptesDAO {
     }
 
     public void delete(int id) {
-        String sql;
-        sql = "DELETE FROM Comptes WHERE id_cpt = ?;";
+        String sql = "DELETE FROM Comptes WHERE id_cpt = ?;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
             System.out.println("SQL Delete Compte : " + pstmt);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void changeEtat(int id,boolean etat) {
+        String sql = "UPDATE Comptes SET etat_cpt = ? "
+                + "WHERE id_cpt =  ? ;";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setBoolean(1, etat);
+            pstmt.setInt(2, id);
+            System.out.println("SQL Activate Compte : " + pstmt);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

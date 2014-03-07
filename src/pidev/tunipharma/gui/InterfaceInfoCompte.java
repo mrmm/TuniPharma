@@ -45,7 +45,7 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
 
         GUIUtils.onChangeEmpty(txtMesInfosNom, btModCpt);
         GUIUtils.onChangeEmpty(txtMesInfosPrenom, btModCpt);
-        GUIUtils.onChangeNumber(txtInfosNvMDP, btModCpt);
+        GUIUtils.onChangeNumber(txtMesInfosTel, btModCpt);
         GUIUtils.onChangeEmail(txtMesInfosEmail, btModCpt);
         GUIUtils.onChangeMDP(txtInfosNvMDP, txtInfosNvRMDP, btModCpt);
         setLocationRelativeTo(null);
@@ -148,6 +148,10 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
             }
         });
 
+        txtInfosNvMDP.setName("Nouveau mot de passe");
+
+        txtInfosNvRMDP.setName("Ressaisir nouveau mot de passe");
+
         javax.swing.GroupLayout panelInfoCptLayout = new javax.swing.GroupLayout(panelInfoCpt);
         panelInfoCpt.setLayout(panelInfoCptLayout);
         panelInfoCptLayout.setHorizontalGroup(
@@ -172,7 +176,7 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
                     .addComponent(jScrollPane10)
                     .addComponent(txtInfosNvMDP)
                     .addComponent(txtInfosNvRMDP))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoCptLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btModCpt, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +184,7 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
                 .addComponent(btAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelInfoCptLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

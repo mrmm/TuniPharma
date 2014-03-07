@@ -126,7 +126,8 @@ public class DemandesDAO {
      */
     public Demande readByIdConcern(int id, int type) {
         Demande dmd = null;
-        String sql = "SELECT * FROM Demandes WHERE id_type_dmd=" + type + " AND id_concerne_dmd=" + id;
+        String sql = "SELECT * FROM Demandes WHERE id_type_dmd = " + type + " AND id_concerne_dmd = " + id;
+        System.out.println("SQL readByIdConcern : "+sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {

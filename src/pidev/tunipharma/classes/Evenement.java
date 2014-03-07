@@ -11,7 +11,7 @@ import java.sql.Date;
  *
  * @author elron
  */
-public class Event {
+public class Evenement {
 
     int id_event;
     int id_pha;
@@ -20,7 +20,7 @@ public class Event {
     String desc_event;
     Boolean etat_event;
 
-    public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+    public Evenement(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
         this.id_event = id_event;
         this.id_pha = id_pha;
         this.date_event = date_event;

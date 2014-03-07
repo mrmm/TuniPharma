@@ -145,18 +145,6 @@ public class PharmaciesDAO {
         }
     }
 
-    public void delete(int id) {
-        String sql;
-        sql = "DELETE FROM Pharmacies WHERE id_pha = ?;";
-        try {
-            PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public List<Pharmacie> readByTypeVilleGouvTypeNom(int type, int ville, int gouv, String nom) {
         List< Pharmacie> l = new ArrayList<Pharmacie>();
         Pharmacie pha;
@@ -177,4 +165,18 @@ public class PharmaciesDAO {
         }
         return (l);
     }
+
+    public void delete(int id) {
+        String sql;
+        sql = "DELETE FROM Pharmacies WHERE id_pha = ?;";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    
 }

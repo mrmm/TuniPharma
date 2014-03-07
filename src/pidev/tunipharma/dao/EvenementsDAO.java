@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import pidev.tunipharma.classes.Event;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pidev.tunipharma.classes.Evenement;
 import pidev.tunipharma.connection.DBConnection;
 
 /**
@@ -30,15 +32,19 @@ public class EvenementsDAO {
         stmt = connexion.createStatement();
     }
 
-    public static EvenementsDAO getInstance() throws SQLException {
+    public static EvenementsDAO getInstance() {
         if (instance == null) {
-            instance = new EvenementsDAO();
+            try {
+                instance = new EvenementsDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(EvenementsDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
     }
 
-    public Event create(Event obj) {
+    public Evenement create(Evenement obj) {
 
         String sql = "INSERT INTO Evenements (id_pha ,date_event ,nom_event ,desc_event,etat_event)"
                 + "VALUES"
@@ -59,15 +65,15 @@ public class EvenementsDAO {
         return (obj);
     }
 
-    public List<Event> readAll() {
-        List< Event> l = new ArrayList<Event>();
-        Event event;
+    public List<Evenement> readAll() {
+        List< Evenement> l = new ArrayList<Evenement>();
+        Evenement event;
         String sql = "SELECT * FROM Evenements";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
-                //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
-                event = new Event(res.getInt(1), res.getInt(2), res.getDate(3), res.getString(4), res.getString(5), res.getBoolean(6));
+                //public Evenement(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                event = new Evenement(res.getInt(1), res.getInt(2), res.getDate(3), res.getString(4), res.getString(5), res.getBoolean(6));
                 l.add(event);
             }
         } catch (SQLException ex) {
@@ -76,14 +82,14 @@ public class EvenementsDAO {
         return (l);
     }
 
-    public Event readById(Integer id) {
-        Event event = null;
+    public Evenement readById(Integer id) {
+        Evenement event = null;
         String sql = "SELECT * FROM Evenements WHERE id_event='" + id + "'";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
-                //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
-                event = new Event(res.getInt(1), res.getInt(2), res.getDate(3), res.getString(4), res.getString(5), res.getBoolean(6));
+                //public Evenement(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                event = new Evenement(res.getInt(1), res.getInt(2), res.getDate(3), res.getString(4), res.getString(5), res.getBoolean(6));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -91,7 +97,7 @@ public class EvenementsDAO {
         return (event);
     }
 
-    public void update(Event obj) {
+    public void update(Evenement obj) {
 
         String sql;
         sql = "UPDATE Evenements SET "
@@ -116,12 +122,26 @@ public class EvenementsDAO {
         }
     }
 
-    public void delete(Event obj) {
+    public void delete(int id) {
         String sql;
         sql = "DELETE FROM Evenements WHERE id_event = ?;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, obj.getId_event());
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void changeEtat(int id,boolean etat) {
+        String sql = "UPDATE Comptes SET etat_event = ? "
+                + "WHERE id_event =  ? ;";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setBoolean(1, etat);
+            pstmt.setInt(2, id);
+            System.out.println("SQL Activate Compte : " + pstmt);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -9,10 +9,12 @@ import pidev.tunipharma.utils.GUIUtils;
 import java.util.Date;
 import java.util.List;
 import pidev.tunipharma.classes.Compte;
+import pidev.tunipharma.classes.Demande;
 import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.ComptesDAO;
+import pidev.tunipharma.dao.DemandesDAO;
 import pidev.tunipharma.dao.PharmaciesDAO;
 import static pidev.tunipharma.gui.TableButton.makeTable;
 
@@ -345,7 +347,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                             .addComponent(txtAjoutCptMDP, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtAjoutCptTel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)))
                     .addComponent(txtAjoutCptRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 639, Short.MAX_VALUE))
+                .addGap(0, 603, Short.MAX_VALUE))
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addComponent(btAjoutCptConfirmer)
@@ -529,7 +531,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPaneTableModCpt, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
+                    .addComponent(scrollPaneTableModCpt)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -584,7 +586,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1114, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 1078, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -606,7 +608,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        tabbedPaneGestionCpt.addTab("Nouvelle inscri", panelNouvInscrit);
+        tabbedPaneGestionCpt.addTab("Nouvelles inscriptions", panelNouvInscrit);
 
         tabbedPaneAdministration.addTab("Gestion des comptes", tabbedPaneGestionCpt);
 
@@ -1036,9 +1038,10 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         },
         new String [] {
-            "Pharmacie Hote", "Responsable", "Date/Horaire", "Option"
+            "ID", "Pharmacie Hote", "Responsable", "Date/Horaire", "Option"
         }
     ));
+    tableDemandesPha.setName("tableDemandesPha");
     tableDemandesPha.setToolTipText("");
     scrollPaneDemandes.setViewportView(tableDemandesPha);
 
@@ -1096,6 +1099,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAjoutPhaTelActionPerformed
 
+    // <editor-fold defaultstate="collapsed" desc="Formulaire Ajout Pharmacie">
     private void btAjoutCptConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptConfirmerActionPerformed
         // TODO add your handling code here:
         if (GUIUtils.checkForm(panelAjoutCpt)) {
@@ -1114,6 +1118,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             GUIUtils.resetForm(panelAjoutCpt);
         }
     }//GEN-LAST:event_btAjoutCptConfirmerActionPerformed
+    // </editor-fold>
 
     private void comboBoxAjoutCptTypeCptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxAjoutCptTypeCptActionPerformed
         // TODO add your handling code here:
@@ -1127,6 +1132,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAjoutCptPrenomActionPerformed
 
+    // <editor-fold defaultstate="collapsed" desc="Formulaire Ajout Compte">
     private void txtAjoutCptNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjoutCptNomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAjoutCptNomActionPerformed
@@ -1154,8 +1160,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     txtAjoutPhaLongitude.getText(),
                     txtAjoutPhaEmail.getText(),
                     comboBoxModPhaType.getSelectedIndex() + 1,
-                    ((Gouvernorat) comboBoxAjoutPhaGouv.getSelectedItem()).getId_gouv(),
-                    ((Ville) comboBoxAjoutPhaVille.getSelectedItem()).getId_ville()
+                    ((Ville) comboBoxAjoutPhaVille.getSelectedItem()).getId_ville(),
+                    ((Gouvernorat) comboBoxAjoutPhaGouv.getSelectedItem()).getId_gouv()
             );
             GUIUtils.showMsgBox(pha.toString());
             PharmaciesDAO.getInstance().create(pha);
@@ -1174,7 +1180,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private void comboBoxModPhaGouvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxModPhaGouvActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxModPhaGouvActionPerformed
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Table Modifier Comptes ">
     private void txtModCptNomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtModCptNomCaretUpdate
         // TODO add your handling code here:
         fillTableModCpt(comboBoxModCptType.getSelectedIndex(), txtModCptNom.getText(), txtModCptPrenom.getText());
@@ -1196,12 +1204,14 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         txtModCptPrenom.setText("");
         comboBoxModCptType.setSelectedIndex(-1);
         fillTableModCpt(0, "", "");
+        fillTableDmdCpt();
     }//GEN-LAST:event_tabbedPaneGestionCptMouseClicked
 
     private void fillTableModCpt(int i, String n, String p) {
         List<Compte> l = ComptesDAO.getInstance().readByNomPreType(i, n, p);
         GUIUtils.rempTableCompte(tableModCpt, l);
     }
+    // </editor-fold>
 
     private void btAjoutJourGardeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutJourGardeActionPerformed
 //        GUIUtils.showMsgBox(evt.getSource().getClass().getName());
@@ -1216,6 +1226,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btAjoutJourGardeActionPerformed
 
+    // <editor-fold defaultstate="collapsed" desc="Table Modifier Pharmacies">
     private void txtModPhaNomCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtModPhaNomCaretUpdate
         // TODO add your handling code here:
         Gouvernorat g = (Gouvernorat) comboBoxModPhaGouv.getSelectedItem();
@@ -1254,15 +1265,25 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         fillTableModPha(0, 0, 0, "");
     }//GEN-LAST:event_tabbedPaneGestionPhaMouseClicked
 
-    // t : type de pharmacie
-    // g : id gouvernorat
-    // v : id ville
-    // n : nom  pharmacie
+    /**
+     * @param t type de pharmacie
+     * @param g id gouvernorat
+     * @param v id ville
+     * @param n nom  pharmacie
+     */
     private void fillTableModPha(int t, int g, int v, String n) {
         List<Pharmacie> l = PharmaciesDAO.getInstance().readByTypeVilleGouvTypeNom(t, g, v, n);
         GUIUtils.rempTablePha(tableModPha, l);
     }
-
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Table Nouvelles Inscriptions">
+    private void fillTableDmdCpt() {
+        List<Compte> l = ComptesDAO.getInstance().readInactif();
+        GUIUtils.rempTableNouvInscri(tableNouvInscriCpt, l);
+    }
+    // </editor-fold>
+    
     /**
      * @param args the command line arguments
      *

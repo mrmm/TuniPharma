@@ -91,7 +91,7 @@ public class GUIUtils {
         for (Compte c : ComptesDAO.getInstance().readAllPharmacienDisp()) {
             cb.addItem(c);
         }
-        System.out.println("Taille de la liste [fillPharmacienCB] : "+cb.getItemCount());
+        System.out.println("Taille de la liste [fillPharmacienCB] : " + cb.getItemCount());
         System.out.println(cb.getItemCount());
 
     }
@@ -298,10 +298,23 @@ public class GUIUtils {
         JOptionPane.showMessageDialog(null, txt);
     }
 
+    public static void showMsgBox(Object o, String txt) {
+        JOptionPane.showMessageDialog((Component) o, txt);
+    }
+
     // Methode pour afficher message de confirmation
     public static boolean showConfBox(String txt) {
         boolean test = false;
         int confRes = JOptionPane.showConfirmDialog(null, txt);
+        if (confRes == JOptionPane.YES_NO_OPTION) {
+            test = true;
+        }
+        return test;
+    }
+
+    public static boolean showConfBox(Object o, String txt) {
+        boolean test = false;
+        int confRes = JOptionPane.showConfirmDialog((Component) o, txt);
         if (confRes == JOptionPane.YES_NO_OPTION) {
             test = true;
         }
@@ -356,18 +369,25 @@ public class GUIUtils {
 
     public static void rempTableNouvInscri(JTable t, List<Compte> l) {
         remAllRows(t);
-        System.out.println("Taille de liste " + l.size());
+        System.out.println("Taille de liste rempTableNouvInscri : " + l.size());
         Iterator<Compte> it = l.iterator();
         DefaultTableModel model = (DefaultTableModel) t.getModel();
         Demande d;
         Compte c;
         while (it.hasNext()) {
             c = it.next();
-            d = DemandesDAO.getInstance().readByIdConcern(c.getId_cpt(),2);
-            model.addRow(new Object[]{d.getId_dmd(),c.getNom_cpt(),c.getPrenom_cpt(),d.getDate_dmd().toString(),""});
+            d = DemandesDAO.getInstance().readByIdConcern(c.getId_cpt(), 2);
+            System.out.println("Compte !!!!!!!!!!!!! " + c);
+            model.addRow(new Object[]{
+                d.getId_dmd(),
+                c.getNom_cpt(),
+                c.getPrenom_cpt(),
+                d.getDate_dmd().toString(),
+                ""
+            });
         }
-        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(1));
-        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 1));
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(2));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 2));
     }
 
     public static void rempTablePha(JTable t, List<Pharmacie> l) {
@@ -384,13 +404,11 @@ public class GUIUtils {
             g = GouvernoratsDAO.getInstance().readById(p.getGouv_pha());
             v = VillesDAO.getInstance().readById(p.getVille_pha());
             r = ComptesDAO.getInstance().readById(p.getId_resp());
-            model.addRow(new Object[]{p.getId_pha(), p.getNom_pha(),r.getNom_cpt()+" "+r.getPrenom_cpt(), g.getNom_gouv(), v.getNom_ville(), p});
+            model.addRow(new Object[]{p.getId_pha(), p.getNom_pha(), r.getNom_cpt() + " " + r.getPrenom_cpt(), g.getNom_gouv(), v.getNom_ville(), p});
         }
         t.getColumnModel().getColumn(5).setCellRenderer(TableButton.getBtRenderer(1));
         t.getColumnModel().getColumn(5).setCellEditor(TableButton.getBtEditor(t, 1));
     }
-    
-    
 
     public static void remAllRows(JTable t) {
         DefaultTableModel dm = (DefaultTableModel) t.getModel();
