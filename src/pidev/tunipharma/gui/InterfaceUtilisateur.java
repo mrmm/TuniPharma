@@ -51,8 +51,8 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         txtMeInfosNvMDP = new javax.swing.JTextField();
         jScrollPane10 = new javax.swing.JScrollPane();
         txtMeInfosAddresse = new javax.swing.JTextArea();
-        btconf2 = new javax.swing.JButton();
-        btannuler2 = new javax.swing.JButton();
+        btMesInfoConfirmer = new javax.swing.JButton();
+        btMesInfoAnnuler = new javax.swing.JButton();
         txtMeInfosNvRMDP = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         panelMsg = new javax.swing.JPanel();
@@ -180,9 +180,14 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         txtMeInfosAddresse.setName("txtadresse"); // NOI18N
         jScrollPane10.setViewportView(txtMeInfosAddresse);
 
-        btconf2.setText("Modifier mes information");
+        btMesInfoConfirmer.setText("Modifier mes information");
+        btMesInfoConfirmer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMesInfoConfirmerActionPerformed(evt);
+            }
+        });
 
-        btannuler2.setText("Annuler");
+        btMesInfoAnnuler.setText("Annuler");
 
         txtMeInfosNvRMDP.setName("txtpwd1"); // NOI18N
 
@@ -228,9 +233,9 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(172, 172, 172)
-                        .addComponent(btconf2)
+                        .addComponent(btMesInfoConfirmer)
                         .addGap(18, 18, 18)
-                        .addComponent(btannuler2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btMesInfoAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(506, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -273,8 +278,8 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                         .addComponent(jLabel32)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btconf2)
-                            .addComponent(btannuler2))
+                            .addComponent(btMesInfoConfirmer)
+                            .addComponent(btMesInfoAnnuler))
                         .addGap(66, 66, 66))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -854,7 +859,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabMyPharmacie, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jTabMyPharmacie)
                 .addContainerGap())
         );
 
@@ -897,6 +902,11 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnom10ActionPerformed
 
+    private void btMesInfoConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMesInfoConfirmerActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btMesInfoConfirmerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -937,8 +947,8 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JButton btMaPhaAjoutEventConfirmer;
     private javax.swing.JButton btMaPhaInfoAnnuler;
     private javax.swing.JButton btMaPhaInfoConfirmer;
-    private javax.swing.JButton btannuler2;
-    private javax.swing.JButton btconf2;
+    private javax.swing.JButton btMesInfoAnnuler;
+    private javax.swing.JButton btMesInfoConfirmer;
     private javax.swing.JButton buttonMaPhaAjoutSrvAnnuler;
     private javax.swing.JButton buttonMaPhaAjoutSrvConfirmer;
     private javax.swing.JComboBox comboBoxMaPhaAjoutSrvType;

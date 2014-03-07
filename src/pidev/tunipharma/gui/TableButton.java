@@ -6,11 +6,16 @@ package pidev.tunipharma.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+import pidev.tunipharma.dao.ComptesDAO;
+import pidev.tunipharma.dao.PharmaciesDAO;
 import pidev.tunipharma.utils.GUIUtils;
 
 public class TableButton extends JPanel {
@@ -28,7 +33,7 @@ public class TableButton extends JPanel {
                 return getValueAt(0, column).getClass();
             }
         };
-        add(new JScrollPane(makeTable(model, 1)));
+        add(new JScrollPane(makeTable(model, 1, 1)));
         setBorder(BorderFactory.createTitledBorder("Multiple Buttons in a Table Cell"));
         setPreferredSize(new Dimension(320, 240));
     }
@@ -40,68 +45,64 @@ public class TableButton extends JPanel {
         column.setPreferredWidth(width);
     }
 
-    public static JTable makeTable(DefaultTableModel tableModel, int btColumn) {
+    public static JTable makeTable(DefaultTableModel tableModel, int btColumn, int type) {
 
         final JTable table = new JTable(tableModel);
         table.setRowHeight(50);
         table.setAutoCreateRowSorter(true);
         TableColumn column = table.getColumnModel().getColumn(btColumn);
-        column.setCellRenderer(new ButtonsRenderer());
-        column.setCellEditor(new ButtonsEditor(table));
+        column.setCellRenderer(new ButtonsRenderer(type));
+        column.setCellEditor(new ButtonsEditor(table, type));
         return table;
     }
 
-    public static ButtonsRenderer getBtRenderer() {
-        return new ButtonsRenderer();
+    /**
+     * @param type 1 Pour modifier et supprimer , 2 pour afficher, accepter et refuser
+     * @return
+     */
+    public static ButtonsRenderer getBtRenderer(int type) {
+        return new ButtonsRenderer(type);
     }
 
-    public static ButtonsEditor getBtEditor(JTable t) {
-        return new ButtonsEditor(t);
+    /**
+     * @param type 1 Pour modifier et supprimer , 2 pour afficher, accepter et refuser
+     * @param t table pour creer les bouttons
+     * @return
+     */
+    public static ButtonsEditor getBtEditor(JTable t, int type) {
+        return new ButtonsEditor(t, type);
     }
-
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
-//    }
-//
-//    public static void createAndShowGUI() {
-//        try {
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-//            ex.printStackTrace();
-//        }
-//        JFrame frame = new JFrame("MultipleButtonsInTableCell");
-//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(new TableButton());
-//        frame.pack();
-//        frame.setLocationRelativeTo(null);
-//        frame.setVisible(true);
-//    }
 }
 
 class ButtonsPanel extends JPanel {
 
-    public final List<JButton> buttons = Arrays.asList(new JButton(new ImageIcon("img/edit.png")), new JButton(new ImageIcon("img/delete.png")));
+    public List<JButton> buttons;
 
-    public ButtonsPanel() {
+    public ButtonsPanel(int type) {
         super();
         setOpaque(true);
+        buttons = Arrays.asList(new JButton(new ImageIcon("img/edit.png")));
+        switch (type) {
+            case 1:
+                buttons = Arrays.asList(new JButton(new ImageIcon("img/edit.png")), new JButton(new ImageIcon("img/delete.png")));
+                break;
+            case 2:
+                buttons = Arrays.asList(new JButton(new ImageIcon("img/edit.png")), new JButton(new ImageIcon("img/accept.png")), new JButton(new ImageIcon("img/deny.png")));
+                break;
+        }
         for (JButton b : buttons) {
             b.setFocusable(false);
             b.setRolloverEnabled(false);
             add(b);
         }
+
     }
 }
 
 class ButtonsRenderer extends ButtonsPanel implements TableCellRenderer {
 
-    public ButtonsRenderer() {
-        super();
+    public ButtonsRenderer(int type) {
+        super(type);
         setName("Table.cellRenderer");
     }
 
@@ -116,38 +117,48 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
 
     transient protected ChangeEvent changeEvent = null;
 
+    /**
+     * @param table Le JTable à utiliser
+     * @param row Le ligne selectionnée dans le tableau
+     * @param disp true pour afficher les fenêtre pour ne pas afficher
+     * @return String[3] case 0 : Message a afficher case 1 : l'ID de l'objet
+     * (Compte,Pharmacie) case 2 : 1 pour un compte 2 pour pharmacie
+     */
     public String[] getTableInfos(JTable table, int row, boolean disp) {
 
-        String[] res = new String[2];
+        String[] res = new String[3];
         res[0] = "";
         Object id = table.getModel().getValueAt(row, 0);
-        GUIUtils.showMsgBox("Table " + table.getName());
+        //GUIUtils.showMsgBox("Table " + table.getName());
         switch (table.getName()) {
             case "tableModCpt":
                 if (disp) {
                     new InterfaceInfoCompte((int) id).setVisible(true);
                 }
-                res[0] += "le compte de " + table.getModel().getValueAt(row, 1) + " " + table.getModel().getValueAt(row, 2);
+                res[0] += "supprimer le compte de " + table.getModel().getValueAt(row, 1) + " " + table.getModel().getValueAt(row, 2);
+                res[2] = "" + 1;
                 break;
             case "tableNouvInscriCpt":
                 if (disp) {
                     new InterfaceInfoCompte((int) id).setVisible(true);
                 }
                 res[0] += "le compte de " + table.getModel().getValueAt(row, 1) + " " + table.getModel().getValueAt(row, 2);
+                res[2] = "" + 1;
                 break;
             case "tableModPha":
                 if (disp) {
                     new InterfaceInfoPharmacie((int) id).setVisible(true);
                 }
-                res[0] += "la pharmacie " + table.getModel().getValueAt(row, 1);
+                res[0] += "supprimer la pharmacie " + table.getModel().getValueAt(row, 1);
+                res[2] = "" + 2;
                 break;
         }
         res[1] = String.valueOf(id);
         return res;
     }
 
-    public ButtonsEditor(final JTable table) {
-        super();
+    public ButtonsEditor(final JTable table, int type) {
+        super(type);
         //---->
         //DEBUG: view button click -> control key down + edit button(same cell) press -> remain selection color
         MouseListener ml = new MouseAdapter() {
@@ -161,6 +172,20 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
         };
         buttons.get(0).addMouseListener(ml);
         buttons.get(1).addMouseListener(ml);
+        if (buttons.size() == 3) {
+            buttons.get(2).addMouseListener(ml);
+            buttons.get(2).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    //JOptionPane.showMessageDialog(table, "accepter");
+                    int row = table.convertRowIndexToModel(table.getEditingRow());
+                    Object id = table.getModel().getValueAt(row, 0);
+                    getTableInfos(table, row, true);
+                    fireEditingStopped();
+                }
+            });
+        }
         //<----
 
         buttons.get(0).addActionListener(new ActionListener() {
@@ -183,7 +208,21 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                 int row = table.convertRowIndexToModel(table.getEditingRow());
                 //int n = getRowToObject(table.getName());
                 fireEditingStopped();
-                if (GUIUtils.showConfBox("Voullez-vous supprimer " + getTableInfos(table, row, false)[0] + " ?")) {
+
+                Object[] daoInstances = new Object[]{ComptesDAO.getInstance(), PharmaciesDAO.getInstance()};
+
+                String[] res = getTableInfos(table, row, false);
+
+                if (GUIUtils.showConfBox("Voullez-vous " + res[0] + " ?")) {
+                    if (daoInstances[Integer.parseInt(res[2]) - 1] instanceof ComptesDAO) {
+                        ((ComptesDAO) daoInstances[Integer.parseInt(res[2]) - 1]).delete(Integer.parseInt(res[1]));
+                        //GUIUtils.showMsgBox("CompteDAO delete : "+Integer.parseInt(res[1]));
+                    } else if (daoInstances[Integer.parseInt(res[2]) - 1] instanceof PharmaciesDAO) {
+                        ((PharmaciesDAO) daoInstances[Integer.parseInt(res[2]) - 1]).delete(Integer.parseInt(res[1]));
+                        //GUIUtils.showMsgBox("PharmaciesDAO dalete : "+Integer.parseInt(res[1]) );
+                    } else {
+                        GUIUtils.showMsgBox("Ni Pharmacie, Ni Compte !! ");
+                    }
 
                 }
             }

@@ -152,6 +152,6 @@ public class Compte {
 
     @Override
     public String toString() {
-        return "Compte{" + "id_cpt=" + id_cpt + ", nom_cpt=" + nom_cpt + ", prenom_cpt=" + prenom_cpt + ", addresse_cpt=" + addresse_cpt + ", email_cpt=" + email_cpt + ", pass_cpt=" + pass_cpt + ", tel_cpt=" + tel_cpt + ", type_cpt=" + type_cpt + ", etat_cpt=" + etat_cpt + '}';
+        return "["+id_cpt+"] "+nom_cpt + " " + prenom_cpt;
     }
 }

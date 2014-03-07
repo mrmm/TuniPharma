@@ -38,7 +38,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabMyPharmacie" pref="661" max="32767" attributes="0"/>
+              <Component id="jTabMyPharmacie" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -156,9 +156,9 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
-                                      <Component id="btconf2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btMesInfoConfirmer" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btannuler2" min="-2" pref="191" max="-2" attributes="0"/>
+                                      <Component id="btMesInfoAnnuler" min="-2" pref="191" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace pref="506" max="32767" attributes="0"/>
@@ -213,8 +213,8 @@
                                       <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace pref="157" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="btconf2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btannuler2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btMesInfoConfirmer" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btMesInfoAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                                   </Group>
@@ -341,12 +341,15 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="btconf2">
+                    <Component class="javax.swing.JButton" name="btMesInfoConfirmer">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Modifier mes information"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMesInfoConfirmerActionPerformed"/>
+                      </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btannuler2">
+                    <Component class="javax.swing.JButton" name="btMesInfoAnnuler">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Annuler"/>
                       </Properties>

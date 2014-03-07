@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -29,9 +31,13 @@ public class VillesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static VillesDAO getInstance() throws SQLException {
+    public static VillesDAO getInstance() {
         if (instance == null) {
-            instance = new VillesDAO();
+            try {
+                instance = new VillesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(VillesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
@@ -82,7 +88,7 @@ public class VillesDAO {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 //public Message(int id_Message, int id_pha, Date date_Message, String nom_Message, String desc_Message, Boolean etat_Message) {
-                ville = new Ville(res.getInt(1), res.getInt(2), res.getString(3));
+                ville = new Ville(res.getInt(1), res.getInt(3), res.getString(2));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -60,16 +60,14 @@
                       <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtMesInfosNom" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtMesInfosPrenom" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtMesInfosEmail" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtMesInfosTel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtMeInfosAncientMDP" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtMeInfosNvMDP" alignment="0" min="-2" pref="242" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="jScrollPane10" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtMesInfosNom" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtMesInfosPrenom" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtMesInfosEmail" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtMesInfosTel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane10" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtInfosNvMDP" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtInfosNvRMDP" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
@@ -116,13 +114,13 @@
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtMeInfosAncientMDP" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtInfosNvMDP" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtMeInfosNvMDP" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtInfosNvRMDP" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -198,7 +196,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtMesInfosNom">
           <Properties>
-            <Property name="name" type="java.lang.String" value="txtnom" noResource="true"/>
+            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="&quot;Nom&quot;" type="code"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMesInfosNomActionPerformed"/>
@@ -206,7 +206,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtMesInfosPrenom">
           <Properties>
-            <Property name="name" type="java.lang.String" value="txtprenom" noResource="true"/>
+            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="&quot;Pr&#xe9;nom&quot;" type="code"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMesInfosPrenomActionPerformed"/>
@@ -214,7 +216,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtMesInfosEmail">
           <Properties>
-            <Property name="name" type="java.lang.String" value="txtemail" noResource="true"/>
+            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="&quot;Email&quot;" type="code"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMesInfosEmailActionPerformed"/>
@@ -222,17 +226,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtMesInfosTel">
           <Properties>
-            <Property name="name" type="java.lang.String" value="txttel" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtMeInfosAncientMDP">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="txtpwd1" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtMeInfosNvMDP">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="txtpwd2" noResource="true"/>
+            <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="&quot;Num T&#xe9;l&quot;" type="code"/>
+            </Property>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane10">
@@ -242,11 +238,13 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="txtMeInfosAddresse">
+            <Component class="javax.swing.JTextArea" name="txtMesInfosAddresse">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="name" type="java.lang.String" value="txtadresse" noResource="true"/>
+                <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;Adresse&quot;" type="code"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>
@@ -274,6 +272,10 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAnnulerActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="txtInfosNvMDP">
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="txtInfosNvRMDP">
         </Component>
       </SubComponents>
     </Container>

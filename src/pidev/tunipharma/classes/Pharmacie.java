@@ -166,4 +166,15 @@ public class Pharmacie {
     }
 
     // </editor-fold>
+    
+    public String getTypePhaNom() {
+        switch (type_pha) {
+            case 1:
+                return "Jour";
+            case 2:
+                return "Nuit";
+            default:
+                return "Inconnu";
+        }
+    }
 }

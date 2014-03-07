@@ -759,7 +759,7 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableModCpt = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4);&#xa;tableModCpt.setName(&quot;tableModCpt&quot;);"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableModCpt = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4,1);&#xa;tableModCpt.setName(&quot;tableModCpt&quot;);"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -871,7 +871,7 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableNouvInscriCpt = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4);&#xa;tableNouvInscriCpt.setName(&quot;tableNouvInscriCpt&quot;);"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableNouvInscriCpt = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4,2);&#xa;tableNouvInscriCpt.setName(&quot;tableNouvInscriCpt&quot;);"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -891,6 +891,9 @@
             </Property>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabbedPaneGestionPhaMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Gestion des pharmacies">
@@ -1053,7 +1056,7 @@
                                           <Component id="jLabel46" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                           <Component id="comboBoxAjoutPhaVille" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jScrollPane12" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel35" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
@@ -1362,12 +1365,9 @@
                     <Component class="javax.swing.JTextField" name="txtAjoutPhaLongitude">
                       <Properties>
                         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="&quot;Num T&#xe9;l&quot;" type="code"/>
+                          <Connection code="&quot;Longitude Google Map&quot;" type="code"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAjoutPhaLongitudeActionPerformed"/>
-                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel47">
                       <Properties>
@@ -1386,12 +1386,9 @@
                     <Component class="javax.swing.JTextField" name="txtAjoutPhaLatitude">
                       <Properties>
                         <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="&quot;Num Fax&quot;" type="code"/>
+                          <Connection code="&quot;Latitude Google Map&quot;" type="code"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAjoutPhaLatitudeActionPerformed"/>
-                      </Events>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="comboBoxAjoutPhaType">
                       <Properties>
@@ -1404,7 +1401,7 @@
                         <Property name="selectedIndex" type="int" value="-1"/>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboBoxAjoutPhaVille.setName(&quot;Ville&quot;);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboBoxAjoutPhaType.setName(&quot;Type de pharmacie&quot;);"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel48">
@@ -1575,21 +1572,26 @@
                             </Property>
                           </Properties>
                           <Events>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="comboBoxModPhaGouvItemStateChanged"/>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxModPhaGouvActionPerformed"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JComboBox" name="comboBoxModPhaType">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="2">
-                                <StringItem index="0" value="Jour"/>
-                                <StringItem index="1" value="Nuit"/>
+                              <StringArray count="3">
+                                <StringItem index="0" value="Tous"/>
+                                <StringItem index="1" value="Jour"/>
+                                <StringItem index="2" value="Nuit"/>
                               </StringArray>
                             </Property>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                               <Color id="Curseur par d&#xe9;faut"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="comboBoxModPhaTypeItemStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JComboBox" name="comboBoxModPhaVille">
                           <Properties>
@@ -1600,6 +1602,9 @@
                               <Color id="Curseur par d&#xe9;faut"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="comboBoxModPhaVilleItemStateChanged"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtModPhaNom">
                           <Events>
@@ -1666,6 +1671,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableModPha = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, &#xa;    new String [] {&quot;ID&quot;, &quot;Non&quot;, &quot;Responsable&quot;, &quot;Gouvernement&quot;, &quot;Ville&quot;, &quot;Option&quot;}),5,1);&#xa;tableModPha.setName(&quot;tableModPha&quot;);"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>

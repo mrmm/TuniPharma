@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -30,9 +32,13 @@ public class PharmaciesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static PharmaciesDAO getInstance() throws SQLException {
+    public static PharmaciesDAO getInstance() {
         if (instance == null) {
-            instance = new PharmaciesDAO();
+            try {
+                instance = new PharmaciesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(PharmaciesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
@@ -45,6 +51,7 @@ public class PharmaciesDAO {
                 + "(id_resp,nom_pha,addresse_pha,tel_pha,fax_pha,lat_gm_pha,long_gm_pha,email_pha,type_pha,ville_pha,gouv_pha)"
                 + "VALUES "
                 + "(?,?,?,?,?,?,?,?,?,?,?)";
+        //System.out.println("SQL : " + sql);
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -59,7 +66,7 @@ public class PharmaciesDAO {
             pstmt.setInt(9, obj.getType_pha());
             pstmt.setInt(10, obj.getVille_pha());
             pstmt.setInt(11, obj.getGouv_pha());
-
+            System.out.println("SQL : "+pstmt);
             obj.setId_pha(pstmt.executeUpdate());
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -138,26 +145,27 @@ public class PharmaciesDAO {
         }
     }
 
-    public void delete(Pharmacie obj) {
+    public void delete(int id) {
         String sql;
         sql = "DELETE FROM Pharmacies WHERE id_pha = ?;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, obj.getId_pha());
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public List<Pharmacie> readByTypeVilleGouvType(int type, String ville, String gouv) {
+    public List<Pharmacie> readByTypeVilleGouvTypeNom(int type, int ville, int gouv, String nom) {
         List< Pharmacie> l = new ArrayList<Pharmacie>();
         Pharmacie pha;
         String sql = "SELECT * FROM Pharmacies WHERE "
-                + "ville_pha='" + (ville != "" ? ville : "%")
-                + "' AND gouv_pha='" + (gouv != "" ? gouv : "%")
-                + "' AND type_pha" + (type > -1 ? "=" + type : "!=-1");
+                + "ville_pha" + (ville > 0 ? "=" + ville : "!=-1")
+                + " AND gouv_pha" + (gouv > 0 ? "=" + gouv : "!=-1")
+                + " AND nom_pha LIKE \"" + (!nom.isEmpty() ? nom+"%" : "%")
+                + "\" AND type_pha" + (type > 0 ? "=" + type : "!=-1");
+        System.out.println("SQL : "+sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {

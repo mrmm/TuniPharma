@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.*;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -30,9 +32,13 @@ public class DemandesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static DemandesDAO getInstance() throws SQLException {
+    public static DemandesDAO getInstance() {
         if (instance == null) {
-            instance = new DemandesDAO();
+            try {
+                instance = new DemandesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(DemandesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
@@ -91,12 +97,14 @@ public class DemandesDAO {
         return (dmd);
     }
 
-    public List readByType(int type) {
+    /**
+     * @param type 1 pour les evenements et 2 pour les comptes
+     * @return List<Demande> : les demande selon le type selectionné
+     */
+    public List<Demande> readByType(int type) {
         List<Demande> l = new ArrayList<Demande>();
         Demande dmd;
         String sql;
-        Event ev;
-        Compte cpt;
         sql = "SELECT * FROM Demandes WHERE id_type_dmd=" + type;
         try {
             ResultSet res = stmt.executeQuery(sql);
@@ -109,6 +117,26 @@ public class DemandesDAO {
             ex.printStackTrace();
         }
         return (l);
+    }
+
+    /**
+     * @param id ID Compte ou Evenement de la demande
+     * @param type Type de la demande 1 pour les evenements 2 pour les comptes
+     * @return
+     */
+    public Demande readByIdConcern(int id, int type) {
+        Demande dmd = null;
+        String sql = "SELECT * FROM Demandes WHERE id_type_dmd=" + type + " AND id_concerne_dmd=" + id;
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                dmd = new Demande(res.getInt(1), res.getInt(2), res.getDate(3), res.getInt(4), res.getInt(5));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (dmd);
     }
 
     public void update(Demande obj) {

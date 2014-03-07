@@ -5,9 +5,6 @@
  */
 package pidev.tunipharma.gui;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.dao.ComptesDAO;
@@ -22,29 +19,36 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
     /**
      * Creates new form InterfaceInfoCompte
      */
+    private Compte cptInfo;
+
     public InterfaceInfoCompte(int id) {
         initComponents();
         String titre = "";
         Compte c = null;
-        try {
-            c = ComptesDAO.getInstance().readById((int) id);
-            if (c != null) {
-                System.out.println("Compte not Null");
-                titre = "Information Comptes - " + c.getNom_cpt() + " " + c.getPrenom_cpt();
-            } else {
-                GUIUtils.showMsgBox("Compte Invalid !!");
-            }
-            //GUIUtils.showMsgBox(c.getClass().getName());
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceInfoCompte.class.getName()).log(Level.SEVERE, null, ex);
+        c = ComptesDAO.getInstance().readById((int) id);
+        cptInfo = c;
+        if (c != null) {
+            System.out.println("Compte not Null");
+            titre = "Information Compte - " + c.getNom_cpt() + " " + c.getPrenom_cpt();
+        } else {
+            GUIUtils.showMsgBox("Compte Invalid !!");
+            this.dispose();
         }
         this.setTitle(titre);
-        
+
         txtMesInfosNom.setText(c.getNom_cpt());
         txtMesInfosPrenom.setText(c.getPrenom_cpt());
         txtMesInfosEmail.setText(c.getEmail_cpt());
         txtMesInfosTel.setText(String.valueOf(c.getTel_cpt()));
+        txtMesInfosAddresse.setText(c.getAddresse_cpt());
         GUIUtils.disAllTextField(panelInfoCpt);
+
+        GUIUtils.onChangeEmpty(txtMesInfosNom, btModCpt);
+        GUIUtils.onChangeEmpty(txtMesInfosPrenom, btModCpt);
+        GUIUtils.onChangeNumber(txtInfosNvMDP, btModCpt);
+        GUIUtils.onChangeEmail(txtMesInfosEmail, btModCpt);
+        GUIUtils.onChangeMDP(txtInfosNvMDP, txtInfosNvRMDP, btModCpt);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -68,13 +72,13 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
         txtMesInfosPrenom = new javax.swing.JTextField();
         txtMesInfosEmail = new javax.swing.JTextField();
         txtMesInfosTel = new javax.swing.JTextField();
-        txtMeInfosAncientMDP = new javax.swing.JTextField();
-        txtMeInfosNvMDP = new javax.swing.JTextField();
         jScrollPane10 = new javax.swing.JScrollPane();
-        txtMeInfosAddresse = new javax.swing.JTextArea();
+        txtMesInfosAddresse = new javax.swing.JTextArea();
         jLabel34 = new javax.swing.JLabel();
         btModCpt = new javax.swing.JButton();
         btAnnuler = new javax.swing.JButton();
+        txtInfosNvMDP = new javax.swing.JPasswordField();
+        txtInfosNvRMDP = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,37 +103,33 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel32.setText("Adresse :");
 
-        txtMesInfosNom.setName("txtnom"); // NOI18N
+        txtMesInfosNom.setName("Nom");
         txtMesInfosNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMesInfosNomActionPerformed(evt);
             }
         });
 
-        txtMesInfosPrenom.setName("txtprenom"); // NOI18N
+        txtMesInfosPrenom.setName("Prénom");
         txtMesInfosPrenom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMesInfosPrenomActionPerformed(evt);
             }
         });
 
-        txtMesInfosEmail.setName("txtemail"); // NOI18N
+        txtMesInfosEmail.setName("Email");
         txtMesInfosEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMesInfosEmailActionPerformed(evt);
             }
         });
 
-        txtMesInfosTel.setName("txttel"); // NOI18N
+        txtMesInfosTel.setName("Num Tél");
 
-        txtMeInfosAncientMDP.setName("txtpwd1"); // NOI18N
-
-        txtMeInfosNvMDP.setName("txtpwd2"); // NOI18N
-
-        txtMeInfosAddresse.setColumns(20);
-        txtMeInfosAddresse.setRows(5);
-        txtMeInfosAddresse.setName("txtadresse"); // NOI18N
-        jScrollPane10.setViewportView(txtMeInfosAddresse);
+        txtMesInfosAddresse.setColumns(20);
+        txtMesInfosAddresse.setRows(5);
+        txtMesInfosAddresse.setName("Adresse");
+        jScrollPane10.setViewportView(txtMesInfosAddresse);
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel34.setText("Ressaisir mot de passe :");
@@ -164,15 +164,14 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
                         .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel34))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInfoCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtMesInfosNom)
-                        .addComponent(txtMesInfosPrenom)
-                        .addComponent(txtMesInfosEmail)
-                        .addComponent(txtMesInfosTel)
-                        .addComponent(txtMeInfosAncientMDP)
-                        .addComponent(txtMeInfosNvMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelInfoCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtMesInfosNom)
+                    .addComponent(txtMesInfosPrenom)
+                    .addComponent(txtMesInfosEmail)
+                    .addComponent(txtMesInfosTel)
+                    .addComponent(jScrollPane10)
+                    .addComponent(txtInfosNvMDP)
+                    .addComponent(txtInfosNvRMDP))
                 .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoCptLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -209,12 +208,12 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelInfoCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMeInfosAncientMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31))
+                    .addComponent(jLabel31)
+                    .addComponent(txtInfosNvMDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelInfoCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMeInfosNvMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel34))
+                    .addComponent(jLabel34)
+                    .addComponent(txtInfosNvRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelInfoCptLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,12 +259,28 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
 
     private void btModCptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModCptActionPerformed
         // TODO add your handling code here:
-        if(((JButton)evt.getSource()).getText().equals("Modifier Compte")){
+        if (((JButton) evt.getSource()).getText().equals("Modifier Compte")) {
+            GUIUtils.enAllTextField(panelInfoCpt);
             GUIUtils.enAllTextField(panelInfoCpt);
             btModCpt.setText("Enregistrer Modification");
-        }else{
-            GUIUtils.disAllTextField(panelInfoCpt);
-            btModCpt.setText("Modifier Compte");
+        } else {
+            if (GUIUtils.checkForm(panelInfoCpt)) {
+                if (GUIUtils.showConfBox("Voulez-vous enregistrer les modification ?")) {
+                    GUIUtils.disAllTextField(panelInfoCpt);
+                    String pass = String.valueOf(txtInfosNvMDP.getPassword(), 0, txtInfosNvMDP.getPassword().length);
+                    Compte cpt = new Compte(cptInfo.getId_cpt(), txtMesInfosNom.getText(),
+                            txtMesInfosPrenom.getText(),
+                            txtMesInfosAddresse.getText(),
+                            txtMesInfosEmail.getText(),
+                            pass,
+                            Integer.parseInt(txtMesInfosTel.getText()),
+                            cptInfo.getType_cpt(),
+                            cptInfo.isEtat_cpt());
+                    ComptesDAO.getInstance().update(cpt);
+                    //GUIUtils.showMsgBox(cpt.toString());
+                    btModCpt.setText("Modifier Compte");
+                }
+            }
         }
     }//GEN-LAST:event_btModCptActionPerformed
 
@@ -306,18 +321,14 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Compte c;
-                try {
-                    c = ComptesDAO.getInstance().readById((int) id);
-                    if (c != null) {
-                        System.out.println("Compte not Null");
-                        //new InterfaceInfoCompte("Information Comptes - " + c.getNom_cpt() + " " + c.getPrenom_cpt(), c).setVisible(true);
-                    } else {
-                        GUIUtils.showMsgBox("Compte Invalid !!");
-                    }
-                    GUIUtils.showMsgBox(c.getClass().getName());
-                } catch (SQLException ex) {
-                    Logger.getLogger(InterfaceInfoCompte.class.getName()).log(Level.SEVERE, null, ex);
+                c = ComptesDAO.getInstance().readById((int) id);
+                if (c != null) {
+                    System.out.println("Compte not Null");
+                    //new InterfaceInfoCompte("Information Comptes - " + c.getNom_cpt() + " " + c.getPrenom_cpt(), c).setVisible(true);
+                } else {
+                    GUIUtils.showMsgBox("Compte Invalid !!");
                 }
+                GUIUtils.showMsgBox(c.getClass().getName());
 
             }
         });
@@ -337,9 +348,9 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JPanel panelInfoCpt;
-    private javax.swing.JTextArea txtMeInfosAddresse;
-    private javax.swing.JTextField txtMeInfosAncientMDP;
-    private javax.swing.JTextField txtMeInfosNvMDP;
+    private javax.swing.JPasswordField txtInfosNvMDP;
+    private javax.swing.JPasswordField txtInfosNvRMDP;
+    private javax.swing.JTextArea txtMesInfosAddresse;
     private javax.swing.JTextField txtMesInfosEmail;
     private javax.swing.JTextField txtMesInfosNom;
     private javax.swing.JTextField txtMesInfosPrenom;

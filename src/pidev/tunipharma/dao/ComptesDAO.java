@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -30,9 +32,13 @@ public class ComptesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static ComptesDAO getInstance() throws SQLException {
+    public static ComptesDAO getInstance() {
         if (instance == null) {
-            instance = new ComptesDAO();
+            try {
+                instance = new ComptesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(ComptesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
@@ -81,6 +87,43 @@ public class ComptesDAO {
         return (l);
     }
 
+    public List<Compte> readAllPharmacienDisp() {
+        List< Compte> l = new ArrayList<Compte>();
+        Compte ad;
+        String sql = "SELECT c.id_cpt,c.nom_cpt,c.prenom_cpt,c.email_cpt,c.pass_cpt,c.addresse_cpt,c.tel_cpt,c.type_cpt,c.etat_cpt FROM Comptes c WHERE c.type_cpt = 2 "
+                + "AND c.id_cpt NOT IN (SELECT p.id_resp FROM Pharmacies p) ;";
+        System.out.println("Req SQL readAllPharmacienDisp : " + sql);
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Compte( id_cpt,  nom_cpt,  prenom_cpt,  addresse_cpt,  email_cpt,  tel_cpt,  type_cpt,  etat_cpt,  pass_cpt) 
+                ad = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));
+                l.add(ad);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
+
+    public List<Compte> readAllClient() {
+        List< Compte> l = new ArrayList<Compte>();
+        Compte ad;
+        String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,email_cpt,pass_cpt,addresse_cpt,tel_cpt,type_cpt,etat_cpt FROM Comptes"
+                + "WHERE type_cpt = 3";
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Compte( id_cpt,  nom_cpt,  prenom_cpt,  addresse_cpt,  email_cpt,  tel_cpt,  type_cpt,  etat_cpt,  pass_cpt) 
+                ad = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));
+                l.add(ad);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
+
     public Compte readById(Integer id) {
         Compte cpt = null;
         String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,addresse_cpt,email_cpt,pass_cpt,tel_cpt,type_cpt,etat_cpt FROM Comptes WHERE id_cpt='" + id + "'";
@@ -103,7 +146,8 @@ public class ComptesDAO {
         String sql = "SELECT * FROM Comptes WHERE "
                 + " nom_cpt LIKE \"" + (!nom.isEmpty() ? nom + "%" : "%") + "\""
                 + " AND prenom_cpt LIKE \"" + (!prenom.isEmpty() ? prenom + "%" : "%") + "\""
-                + " AND type_cpt" + (type > 0 ? "=" + type : "!=-1") + " ;";
+                + " AND type_cpt" + (type > 0 ? "=" + type : "!=-1") + " "
+                + " AND etat_cpt=1;";
         System.out.println("Req SQL : " + sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
@@ -124,7 +168,28 @@ public class ComptesDAO {
     public List<Compte> readInactif() {
         List< Compte> l = new ArrayList<Compte>();
         Compte cpt = null;
-        String sql = "SELECT * FROM Comptes c WHERE c=etat_cpt=0 AND (SELECT COUNT (*) FROM Demandes d WHERE d.id_concerne_dmd = c.id_cpt AND d.id_cpt_dmd = c.id_cpt) = 0;";
+        String sql = "SELECT * FROM Comptes c WHERE c.etat_cpt = 0 AND (SELECT COUNT(*) FROM Demandes d WHERE d.id_concerne_dmd = c.id_cpt AND d.id_cpt_dmd = c.id_cpt AND d.id_type_dmd=1 ) = 0;";
+        System.out.println("Req SQL : " + sql);
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+
+            while (res.next()) {
+                //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                cpt = new Compte(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8), res.getBoolean(9));;
+//                 System.out.println(cpt.toString());
+                l.add(cpt);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
+
+    public List<Compte> readActif() {
+        List< Compte> l = new ArrayList<Compte>();
+        Compte cpt = null;
+        String sql = "SELECT * FROM Comptes WHERE etat_cpt=1;";
         System.out.println("Req SQL : " + sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
@@ -145,40 +210,41 @@ public class ComptesDAO {
     public void update(Compte obj) {
         String sql;
         sql = "UPDATE Comptes SET "
-                + "nom_cpt = '?',"
-                + "prenom_cpt = '?',"
-                + "email_cpt = '?',"
-                + "pass_cpt = '?',"
-                + "addresse_cpt = '?' "
-                + "tel_cpt = '?' "
-                + "type_cpt = '?' "
-                + "etat_cpt = '?' "
-                + "WHERE id_event = '" + obj.getId_cpt() + "';";
+                + "nom_cpt = ?,"
+                + "prenom_cpt = ?,"
+                + "email_cpt = ?,"
+                + "pass_cpt = md5(?),"
+                + "addresse_cpt = ? ,"
+                + "tel_cpt = ? ,"
+                + "type_cpt = ? ,"
+                + "etat_cpt = ? "
+                + "WHERE id_cpt = " + obj.getId_cpt() + " ;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
 
-            pstmt.setInt(1, obj.getId_cpt());
-            pstmt.setString(2, obj.getNom_cpt());
-            pstmt.setString(3, obj.getPrenom_cpt());
-            pstmt.setString(4, obj.getEmail_cpt());
-            pstmt.setString(5, obj.getPass_cpt());
-            pstmt.setString(6, obj.getAddresse_cpt());
-            pstmt.setInt(7, obj.getTel_cpt());
-            pstmt.setInt(8, obj.getType_cpt());
-            pstmt.setBoolean(9, obj.isEtat_cpt());
-
+            pstmt.setString(1, obj.getNom_cpt());
+            pstmt.setString(2, obj.getPrenom_cpt());
+            pstmt.setString(3, obj.getEmail_cpt());
+            pstmt.setString(4, obj.getPass_cpt());
+            pstmt.setString(5, obj.getAddresse_cpt());
+            pstmt.setInt(6, obj.getTel_cpt());
+            pstmt.setInt(7, obj.getType_cpt());
+            pstmt.setBoolean(8, obj.isEtat_cpt());
+            System.out.println("Update Compte SQL : " + pstmt.toString());
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void delete(Compte obj) {
+    public void delete(int id) {
         String sql;
         sql = "DELETE FROM Comptes WHERE id_cpt = ?;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, obj.getId_cpt());
-
+            pstmt.setInt(1, id);
+            System.out.println("SQL Delete Compte : " + pstmt);
+            pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

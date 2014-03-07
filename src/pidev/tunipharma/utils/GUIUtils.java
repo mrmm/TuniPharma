@@ -11,11 +11,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JButton;
@@ -33,11 +30,14 @@ import javax.swing.JViewport;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.text.JTextComponent;
 import pidev.tunipharma.classes.Compte;
+import pidev.tunipharma.classes.Demande;
 import pidev.tunipharma.classes.Gouvernorat;
+import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.classes.Ville;
+import pidev.tunipharma.dao.ComptesDAO;
+import pidev.tunipharma.dao.DemandesDAO;
 import pidev.tunipharma.dao.GouvernoratsDAO;
 import pidev.tunipharma.dao.VillesDAO;
 import pidev.tunipharma.gui.TableButton;
@@ -51,34 +51,25 @@ public class GUIUtils {
     // <editor-fold defaultstate="collapsed" desc="Traitement - Gouvernorat & Villes ">
     // Remplissage des Villes dans ComboBox, selon ID Gouvernorat selectionné
     public static void fillVillesCB(JComboBox cb, int id, boolean all) {
-        try {
-            cb.removeAllItems();
-            if (all) {
-                cb.addItem(new Ville(-1, -1, "Tous"));
-            }
-            List<Ville> lv = (id > 0 ? VillesDAO.getInstance().readAllByIdGouv(id) : VillesDAO.getInstance().readAll());
-            for (Ville v : lv) {
-                cb.addItem(v);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(GUIUtils.class.getName()).log(Level.SEVERE, null, ex);
+        cb.removeAllItems();
+        if (all) {
+            cb.addItem(new Ville(-1, -1, "Tous"));
+        }
+        List<Ville> lv = (id > 0 ? VillesDAO.getInstance().readAllByIdGouv(id) : VillesDAO.getInstance().readAll());
+        for (Ville v : lv) {
+            cb.addItem(v);
         }
 
     }
 
     // Remplissage des Gouvernorats dans ComboBox
     public static void fillGouvsCB(JComboBox cb, boolean all) {
-        try {
-            if (all) {
-                cb.addItem(new Gouvernorat(-1, "Tous"));
-            }
-
-            for (Gouvernorat g : GouvernoratsDAO.getInstance().readAll()) {
-                cb.addItem(g);
-            }
-            //cb.setSelectedIndex(1);
-        } catch (SQLException ex) {
-            Logger.getLogger(GUIUtils.class.getName()).log(Level.SEVERE, null, ex);
+        cb.removeAllItems();
+        if (all) {
+            cb.addItem(new Gouvernorat(-1, "Tous"));
+        }
+        for (Gouvernorat g : GouvernoratsDAO.getInstance().readAll()) {
+            cb.addItem(g);
         }
 
     }
@@ -93,6 +84,16 @@ public class GUIUtils {
                 }
             }
         });
+    }
+
+    public static void fillPharmacienCB(JComboBox cb) {
+        cb.removeAllItems();
+        for (Compte c : ComptesDAO.getInstance().readAllPharmacienDisp()) {
+            cb.addItem(c);
+        }
+        System.out.println("Taille de la liste [fillPharmacienCB] : "+cb.getItemCount());
+        System.out.println(cb.getItemCount());
+
     }
     // </editor-fold>
 
@@ -129,14 +130,17 @@ public class GUIUtils {
                 if (cb.getSelectedIndex() == -1) {
                     test = false;
                     showMsgBox("Le " + cb.getName() + " n'est pas encore choisi !!");
+                    System.out.println("Le " + cb.getName() + " n'est pas encore choisi !! -> " + cb.getItemCount());
                 }
             } else if (comp[i] instanceof JScrollPane) {
                 JScrollPane js = (JScrollPane) comp[i];
                 Component[] jsComp = js.getViewport().getComponents();
-                JTextArea ta = (JTextArea) jsComp[0];
-                if (ta.getText().isEmpty()) {
-                    test = false;
-                    showMsgBox("Le champs " + ta.getName() + " est vide !!");
+                if (jsComp[0] instanceof JTextArea) {
+                    JTextArea ta = (JTextArea) jsComp[0];
+                    if (ta.getText().isEmpty()) {
+                        test = false;
+                        showMsgBox("Le champs " + ta.getName() + " est vide !!");
+                    }
                 }
             } else if (comp[i] instanceof JTextArea) {
                 JTextArea ta = (JTextArea) comp[i];
@@ -177,12 +181,16 @@ public class GUIUtils {
                 // Reset des zone de texte dans ScrollPane - Text Area
                 JScrollPane js = (JScrollPane) comp[i];
                 Component[] jsComp = js.getViewport().getComponents();
-                JTextArea ta = (JTextArea) jsComp[0];
-                ta.setText("");
-                JViewport jvp = new JViewport();
-                jvp.setView(ta);
-                js.setViewport(jvp);
-                c.add(js);
+                if (jsComp[0] instanceof JTextArea) {
+                    JTextArea ta = (JTextArea) jsComp[0];
+                    ta.setText("");
+                    JViewport jvp = new JViewport();
+                    jvp.setView(ta);
+                    js.setViewport(jvp);
+                    c.add(js);
+                } else {
+                    c.add(comp[i]);
+                }
             } else if (comp[i] instanceof JCheckBox) {
                 // Reset des case a cocher - Check Box
                 JCheckBox cb = (JCheckBox) comp[i];
@@ -217,7 +225,6 @@ public class GUIUtils {
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Ajout de Listener - onChange">
     public static void onChangeEmpty(final JTextComponent c, final JButton b) {
         c.addCaretListener(new CaretListener() {
@@ -342,8 +349,8 @@ public class GUIUtils {
         }
 
         //t.getColumnModel().getColumn(4).setCellRenderer(null);
-        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer());
-        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t));
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(1));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 1));
 //        System.out.println(t.getColumnModel().getColumn(4).getCellRenderer().getClass().getName());
     }
 
@@ -352,24 +359,38 @@ public class GUIUtils {
         System.out.println("Taille de liste " + l.size());
         Iterator<Compte> it = l.iterator();
         DefaultTableModel model = (DefaultTableModel) t.getModel();
+        Demande d;
         Compte c;
         while (it.hasNext()) {
             c = it.next();
-            model.addRow(new Object[]{c.getNom_cpt(), c.getPrenom_cpt(), c.getTypeCptNom(), ""});
+            d = DemandesDAO.getInstance().readByIdConcern(c.getId_cpt(),2);
+            model.addRow(new Object[]{d.getId_dmd(),c.getNom_cpt(),c.getPrenom_cpt(),d.getDate_dmd().toString(),""});
         }
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(1));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 1));
     }
 
-    public static void rempTablePha(JTable t, List<Compte> l) {
+    public static void rempTablePha(JTable t, List<Pharmacie> l) {
         remAllRows(t);
         System.out.println("Taille de liste " + l.size());
-        Iterator<Compte> it = l.iterator();
+        Iterator<Pharmacie> it = l.iterator();
         DefaultTableModel model = (DefaultTableModel) t.getModel();
-        Compte c;
+        Pharmacie p;
+        Gouvernorat g;
+        Ville v;
+        Compte r;
         while (it.hasNext()) {
-            c = it.next();
-            model.addRow(new Object[]{c.getNom_cpt(), c.getPrenom_cpt(), c.getTypeCptNom(), ""});
+            p = it.next();
+            g = GouvernoratsDAO.getInstance().readById(p.getGouv_pha());
+            v = VillesDAO.getInstance().readById(p.getVille_pha());
+            r = ComptesDAO.getInstance().readById(p.getId_resp());
+            model.addRow(new Object[]{p.getId_pha(), p.getNom_pha(),r.getNom_cpt()+" "+r.getPrenom_cpt(), g.getNom_gouv(), v.getNom_ville(), p});
         }
+        t.getColumnModel().getColumn(5).setCellRenderer(TableButton.getBtRenderer(1));
+        t.getColumnModel().getColumn(5).setCellEditor(TableButton.getBtEditor(t, 1));
     }
+    
+    
 
     public static void remAllRows(JTable t) {
         DefaultTableModel dm = (DefaultTableModel) t.getModel();

@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -29,9 +31,13 @@ public class GouvernoratsDAO {
         stmt = connexion.createStatement();
     }
 
-    public static GouvernoratsDAO getInstance() throws SQLException {
+    public static GouvernoratsDAO getInstance() {
         if (instance == null) {
-            instance = new GouvernoratsDAO();
+            try {
+                instance = new GouvernoratsDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(GouvernoratsDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
