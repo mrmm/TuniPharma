@@ -57,6 +57,13 @@ public class BoitesMessagesDAO {
             pstmt.setInt(1, obj.getId_cpt());
 
             obj.setId_bt(pstmt.executeUpdate());
+            int last_inserted_id=-1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_bt(last_inserted_id);
+            System.out.println("SQL create - Info Boite Message : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

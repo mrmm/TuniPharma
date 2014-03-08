@@ -50,6 +50,13 @@ public class TypesDemandesDAO {
             pstmt.setString(1, obj.getDmd_table());
 
             obj.setId_type_dmd(pstmt.executeUpdate());
+            int last_inserted_id = -1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_type_dmd(last_inserted_id);
+            System.out.println("SQL TypesDemandeDAO - create - Info TypeDemande : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

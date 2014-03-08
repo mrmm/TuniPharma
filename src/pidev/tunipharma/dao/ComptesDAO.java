@@ -64,6 +64,13 @@ public class ComptesDAO {
             pstmt.setBoolean(8, obj.isEtat_cpt());
 
             obj.setId_cpt(pstmt.executeUpdate());
+            int last_inserted_id=-1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_cpt(last_inserted_id);
+            System.out.println("SQL ComptesDAO - create - Info Compte : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

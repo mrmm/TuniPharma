@@ -53,6 +53,13 @@ public class VotesDAO {
             pstmt.setInt(3, obj.getValeur_vote());
 
             obj.setId_vote(pstmt.executeUpdate());
+            int last_inserted_id = -1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_vote(last_inserted_id);
+            System.out.println("SQL VotesDAO - create - Info Vote : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

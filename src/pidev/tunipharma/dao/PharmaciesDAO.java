@@ -66,8 +66,16 @@ public class PharmaciesDAO {
             pstmt.setInt(9, obj.getType_pha());
             pstmt.setInt(10, obj.getVille_pha());
             pstmt.setInt(11, obj.getGouv_pha());
-            System.out.println("SQL : "+pstmt);
+            
+            System.out.println("SQL PharmaciesDAO - create: " + pstmt);
             obj.setId_pha(pstmt.executeUpdate());
+            int last_inserted_id = -1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_pha(last_inserted_id);
+            System.out.println("SQL PharmaciesDAO - create - Info Pharmacies : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -120,7 +128,7 @@ public class PharmaciesDAO {
         }
         return (pha);
     }
-    
+
     public void update(Pharmacie obj) {
         String sql;
         //id_pha,id_resp,nom_pha,addresse_pha,tel_pha,fax_pha,id_cal,lat_gm_pha,long_gm_pha,email_pha,type_pha
@@ -166,9 +174,9 @@ public class PharmaciesDAO {
         String sql = "SELECT * FROM Pharmacies WHERE "
                 + "ville_pha" + (ville > 0 ? "=" + ville : "!=-1")
                 + " AND gouv_pha" + (gouv > 0 ? "=" + gouv : "!=-1")
-                + " AND nom_pha LIKE \"" + (!nom.isEmpty() ? nom+"%" : "%")
+                + " AND nom_pha LIKE \"" + (!nom.isEmpty() ? nom + "%" : "%")
                 + "\" AND type_pha" + (type > 0 ? "=" + type : "!=-1");
-        System.out.println("SQL : "+sql);
+        System.out.println("SQL : " + sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -192,6 +200,5 @@ public class PharmaciesDAO {
             ex.printStackTrace();
         }
     }
-    
-    
+
 }

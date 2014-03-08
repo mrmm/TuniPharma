@@ -59,8 +59,15 @@ public class MessagesDAO {
             pstmt.setString(4, obj.getCorps_msg());
             pstmt.setDate(5, obj.getDate_msg());
             pstmt.setBoolean(6, obj.isEtat_msg());
-
+            
             obj.setId_msg(pstmt.executeUpdate());
+            int last_inserted_id=-1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_msg(last_inserted_id);
+            System.out.println("SQL MessagesDAO - create - Info Message : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

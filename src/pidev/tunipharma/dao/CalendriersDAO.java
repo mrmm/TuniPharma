@@ -56,6 +56,13 @@ public class CalendriersDAO {
             pstmt.setInt(6, obj.getAnnee());
 
             obj.setId_cal(pstmt.executeUpdate());
+            int last_inserted_id=-1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_cal(last_inserted_id);
+            System.out.println("SQL CalendrierDAO - create - Info Calendrier : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

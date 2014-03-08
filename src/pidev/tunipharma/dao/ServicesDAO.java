@@ -60,6 +60,13 @@ public class ServicesDAO {
             pstmt.setString(4, obj.getNom_srv());
 
             obj.setId_srv(pstmt.executeUpdate());
+            int last_inserted_id=-1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_srv(last_inserted_id);
+            System.out.println("SQL ServicesDAO - create - Info Service : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

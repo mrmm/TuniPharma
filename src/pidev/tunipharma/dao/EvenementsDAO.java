@@ -58,9 +58,15 @@ public class EvenementsDAO {
             pstmt.setString(3, obj.getNom_event());
             pstmt.setString(4, obj.getDesc_event());
             pstmt.setBoolean(5, obj.isEtat_event());
-            System.out.println("SQL EvenementDAO - create : "+pstmt.toString());
+            System.out.println("SQL EvenementsDAO - create : "+pstmt.toString());
             obj.setId_event(pstmt.executeUpdate());
-            System.out.println(""+obj);
+            int last_inserted_id=-1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_event(last_inserted_id);
+            System.out.println("SQL EvenementsDAO - create - Info Evenement : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

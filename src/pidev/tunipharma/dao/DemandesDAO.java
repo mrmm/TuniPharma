@@ -56,9 +56,16 @@ public class DemandesDAO {
             //pstmt.setDate(2, obj.getDate_dmd());
             pstmt.setInt(2, obj.getId_cpt_dmd());
             pstmt.setInt(3, obj.getId_concerne_dmd());
-            System.out.println("SQL create - Demmande DAO : "+pstmt.toString());
+            System.out.println("SQL create - Demmande DAO : " + pstmt.toString());
 
-            obj.setId_dmd(pstmt.executeUpdate());
+            pstmt.executeUpdate();
+            int last_inserted_id=-1;
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                last_inserted_id = rs.getInt(1);
+            }
+            obj.setId_dmd(last_inserted_id);
+            System.out.println("SQL create - Info Demande : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -127,7 +134,7 @@ public class DemandesDAO {
     public Demande readByIdConcern(int id, int type) {
         Demande dmd = null;
         String sql = "SELECT * FROM Demandes WHERE id_type_dmd = " + type + " AND id_concerne_dmd = " + id;
-        System.out.println("SQL readByIdConcern : "+sql);
+        System.out.println("SQL readByIdConcern : " + sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
