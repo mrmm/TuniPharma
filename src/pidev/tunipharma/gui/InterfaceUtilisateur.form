@@ -29,7 +29,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabMyPharmacie" max="32767" attributes="0"/>
+              <Component id="tabPaneMonCompte" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -38,14 +38,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabMyPharmacie" max="32767" attributes="0"/>
+              <Component id="tabPaneMonCompte" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabMyPharmacie">
+    <Container class="javax.swing.JTabbedPane" name="tabPaneMonCompte">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
@@ -413,8 +413,10 @@
                 <Component class="javax.swing.JTable" name="tableMesMsg">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="0">
+                      <Table columnCount="7" rowCount="0">
+                        <Column editable="true" title="ID" type="java.lang.Object"/>
                         <Column editable="true" title="De" type="java.lang.Object"/>
+                        <Column editable="true" title="&#xc0;" type="java.lang.Object"/>
                         <Column editable="true" title="Date" type="java.lang.Object"/>
                         <Column editable="true" title="Objet" type="java.lang.Object"/>
                         <Column editable="true" title="Message" type="java.lang.Object"/>
@@ -422,6 +424,9 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableMesMsg.setToolTipText(&quot;&quot;);&#xa;tableMesMsg = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;De&quot;, &quot;&#xc0;&quot;, &quot;Date&quot;, &quot;Objet&quot;, &quot;Message&quot;, &quot;Options&quot;&#xa;    }),6,2);&#xa;tableMesMsg.setName(&quot;tableMesMsg&quot;);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -986,7 +991,7 @@
                                 <DimensionLayout dim="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -996,17 +1001,17 @@
                                                       <Component id="jLabel44" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                       <Group type="102" attributes="0">
-                                                          <Component id="spMaPhaAjoutEventHeure" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                                          <Component id="spMaPhaAjoutEventHeure" min="-2" pref="80" max="-2" attributes="0"/>
+                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                           <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                                          <Component id="spMaPhaAjoutEventMin" min="-2" pref="50" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="spMaPhaAjoutEventMin" min="-2" pref="80" max="-2" attributes="0"/>
                                                       </Group>
-                                                      <Component id="jScrollPane11" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                                      <Component id="txtMaPhaAjoutEventNom" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                                      <Component id="jCalendar1" alignment="0" pref="0" max="32767" attributes="0"/>
+                                                      <Component id="calendarAjoutEvent" max="32767" attributes="0"/>
+                                                      <Component id="jScrollPane11" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="txtMaPhaAjoutEventNom" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
@@ -1016,7 +1021,7 @@
                                                   <Component id="btMaPhaAjoutEventAnnuler" min="-2" pref="135" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace pref="353" max="32767" attributes="0"/>
+                                          <EmptySpace pref="303" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1037,11 +1042,11 @@
                                               <Group type="102" attributes="0">
                                                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                                   <Component id="jLabel36" min="-2" pref="23" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <EmptySpace pref="119" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace pref="31" max="32767" attributes="0"/>
-                                                  <Component id="jCalendar1" min="-2" pref="141" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="calendarAjoutEvent" min="-2" pref="156" max="-2" attributes="0"/>
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1071,6 +1076,9 @@
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Confirmer ajout"/>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMaPhaAjoutEventConfirmerActionPerformed"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel33">
                                   <Properties>
@@ -1111,7 +1119,7 @@
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                                   <SubComponents>
-                                    <Component class="javax.swing.JTextArea" name="txtadresse3">
+                                    <Component class="javax.swing.JTextArea" name="txtMaPhaAjoutEventDesc">
                                       <Properties>
                                         <Property name="columns" type="int" value="20"/>
                                         <Property name="rows" type="int" value="5"/>
@@ -1157,7 +1165,7 @@
                                     <Property name="text" type="java.lang.String" value=":"/>
                                   </Properties>
                                 </Component>
-                                <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
+                                <Component class="com.toedter.calendar.JCalendar" name="calendarAjoutEvent">
                                 </Component>
                               </SubComponents>
                             </Container>
@@ -1307,10 +1315,10 @@
                                           <Component id="jLabel49" alignment="0" min="-2" pref="114" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtnom10" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="comboBoxMaPhaAjoutSrvType" alignment="0" pref="170" max="32767" attributes="0"/>
-                                          <Component id="jScrollPane14" alignment="0" pref="0" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="comboBoxMaPhaAjoutSrvType" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane14" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtnom10" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>

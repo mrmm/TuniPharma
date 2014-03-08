@@ -59,10 +59,8 @@
                               <Component id="jLabel28" alignment="0" pref="170" max="32767" attributes="0"/>
                               <Component id="jLabel27" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
                               <Component id="jLabel32" alignment="0" max="32767" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel31" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="jLabel29" alignment="1" pref="169" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel31" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jLabel29" alignment="1" pref="169" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

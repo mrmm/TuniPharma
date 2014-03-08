@@ -106,6 +106,21 @@ public class PharmaciesDAO {
         return (pha);
     }
 
+    public Pharmacie readByIdResp(Integer id) {
+        Pharmacie pha = null;
+        String sql = "SELECT * FROM Pharmacies WHERE id_resp='" + id + "'";
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Event(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                pha = new Pharmacie(res.getInt(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getString(7), res.getString(8), res.getString(9), res.getInt(10), res.getInt(11), res.getInt(12));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (pha);
+    }
+    
     public void update(Pharmacie obj) {
         String sql;
         //id_pha,id_resp,nom_pha,addresse_pha,tel_pha,fax_pha,id_cal,lat_gm_pha,long_gm_pha,email_pha,type_pha

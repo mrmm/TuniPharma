@@ -6,9 +6,7 @@
 package pidev.tunipharma.gui;
 
 import javax.swing.JButton;
-import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Pharmacie;
-import pidev.tunipharma.dao.ComptesDAO;
 import pidev.tunipharma.dao.PharmaciesDAO;
 import pidev.tunipharma.utils.GUIUtils;
 

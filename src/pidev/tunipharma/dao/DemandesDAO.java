@@ -49,14 +49,14 @@ public class DemandesDAO {
         String sql;
         sql = "INSERT INTO Demandes (id_type_dmd ,date_dmd ,id_cpt_dmd ,id_concerne_dmd)"
                 + "VALUES"
-                + "(?,?,?,?);";
+                + "(?,NOW( ),?,?);";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setInt(1, obj.getType_dmd());
-            pstmt.setDate(2, obj.getDate_dmd());
-            pstmt.setInt(3, obj.getId_cpt_dmd());
-            pstmt.setInt(4, obj.getId_concerne_dmd());
+            //pstmt.setDate(2, obj.getDate_dmd());
+            pstmt.setInt(2, obj.getId_cpt_dmd());
+            pstmt.setInt(3, obj.getId_concerne_dmd());
 
             obj.setId_dmd(pstmt.executeUpdate());
         } catch (SQLException ex) {

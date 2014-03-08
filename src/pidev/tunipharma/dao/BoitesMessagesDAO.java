@@ -31,7 +31,7 @@ public class BoitesMessagesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static BoitesMessagesDAO getInstance() throws SQLException {
+    public static BoitesMessagesDAO getInstance() {
         if (instance == null) {
             instance = new BoitesMessagesDAO();
         }

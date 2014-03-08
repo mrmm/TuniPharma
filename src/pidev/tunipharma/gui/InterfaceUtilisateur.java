@@ -3,8 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pidev.tunipharma.gui;
+
+import java.util.List;
+import pidev.tunipharma.classes.BoiteMessages;
+import pidev.tunipharma.classes.Compte;
+import pidev.tunipharma.classes.Demande;
+import pidev.tunipharma.classes.Evenement;
+import pidev.tunipharma.classes.Message;
+import pidev.tunipharma.classes.Pharmacie;
+import pidev.tunipharma.dao.BoitesMessagesDAO;
+import pidev.tunipharma.dao.EvenementsDAO;
+import pidev.tunipharma.dao.MessagesDAO;
+import pidev.tunipharma.dao.PharmaciesDAO;
+import pidev.tunipharma.utils.GUIUtils;
+import pidev.tunipharma.utils.Session;
+import static pidev.tunipharma.gui.TableButton.makeTable;
 
 /**
  *
@@ -15,13 +29,29 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     /**
      * Creates new form PharmacienAjouterService
      */
+    private Compte connUser = Session.getCptConn();
+
     public InterfaceUtilisateur() {
         initComponents();
+        connUser = new Compte(1, "Mourad", "Maatoug", "Fouchana", "mourad@gmail.com", "112233", 12345678, 3, true);
+        if (connUser.getType_cpt() == 3) {
+            System.out.println("Compte Client");
+            jTabMyPhaInfo.setVisible(false);
+            panelMaPha.setVisible(false);
+        }
         // Remplissage de tableau des messages
+
+        GUIUtils.onChangeEmpty(txtMaPhaAjoutEventNom, btMaPhaAjoutEventConfirmer);
+        GUIUtils.onChangeEmpty(txtMaPhaAjoutEventDesc, btMaPhaAjoutEventConfirmer);
         
         
     }
 
+    private void fillTableMesMsg() {
+        BoiteMessages bm = BoitesMessagesDAO.getInstance().readById(connUser.getId_cpt());
+        List<Message> l = MessagesDAO.getInstance().
+        GUIUtils.rempTableCompte(tableModCpt, l);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +61,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabMyPharmacie = new javax.swing.JTabbedPane();
+        tabPaneMonCompte = new javax.swing.JTabbedPane();
         panelInfoPerso = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -95,12 +125,12 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         txtMaPhaAjoutEventNom = new javax.swing.JTextField();
         jScrollPane11 = new javax.swing.JScrollPane();
-        txtadresse3 = new javax.swing.JTextArea();
+        txtMaPhaAjoutEventDesc = new javax.swing.JTextArea();
         jLabel44 = new javax.swing.JLabel();
         spMaPhaAjoutEventHeure = new javax.swing.JSpinner();
         spMaPhaAjoutEventMin = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        jCalendar1 = new com.toedter.calendar.JCalendar();
+        calendarAjoutEvent = new com.toedter.calendar.JCalendar();
         tabbedPaneServices = new javax.swing.JTabbedPane();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -121,7 +151,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         setTitle("Interface Pharmacien");
         setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jTabMyPharmacie.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tabPaneMonCompte.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mes informations", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -310,16 +340,21 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addGap(0, 36, Short.MAX_VALUE))
         );
 
-        jTabMyPharmacie.addTab("Informations personnelles", panelInfoPerso);
+        tabPaneMonCompte.addTab("Informations personnelles", panelInfoPerso);
 
         tableMesMsg.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "De", "Date", "Objet", "Message", "Options"
+                "ID", "De", "À", "Date", "Objet", "Message", "Options"
             }
         ));
+        tableMesMsg.setToolTipText("");
+        tableMesMsg = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
+            "ID", "De", "À", "Date", "Objet", "Message", "Options"
+        }),6,2);
+        tableMesMsg.setName("tableMesMsg");
         jScrollPane2.setViewportView(tableMesMsg);
 
         javax.swing.GroupLayout panelMsgLayout = new javax.swing.GroupLayout(panelMsg);
@@ -339,7 +374,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabMyPharmacie.addTab("Mes messages", panelMsg);
+        tabPaneMonCompte.addTab("Mes messages", panelMsg);
 
         panelMaPha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -587,6 +622,11 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         btMaPhaAjoutEventAnnuler.setText("Annuler");
 
         btMaPhaAjoutEventConfirmer.setText("Confirmer ajout");
+        btMaPhaAjoutEventConfirmer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMaPhaAjoutEventConfirmerActionPerformed(evt);
+            }
+        });
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel33.setText("Nom evenement : ");
@@ -604,10 +644,10 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             }
         });
 
-        txtadresse3.setColumns(20);
-        txtadresse3.setRows(5);
-        txtadresse3.setName("txtadresse"); // NOI18N
-        jScrollPane11.setViewportView(txtadresse3);
+        txtMaPhaAjoutEventDesc.setColumns(20);
+        txtMaPhaAjoutEventDesc.setRows(5);
+        txtMaPhaAjoutEventDesc.setName("txtadresse"); // NOI18N
+        jScrollPane11.setViewportView(txtMaPhaAjoutEventDesc);
 
         jLabel44.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel44.setText("Heure evenement : ");
@@ -627,7 +667,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -636,22 +676,22 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                             .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(spMaPhaAjoutEventHeure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
+                                .addComponent(spMaPhaAjoutEventHeure, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)
-                                .addComponent(spMaPhaAjoutEventMin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMaPhaAjoutEventNom, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spMaPhaAjoutEventMin, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(calendarAjoutEvent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane11)
+                            .addComponent(txtMaPhaAjoutEventNom)))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(btMaPhaAjoutEventConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(72, 72, 72)
                         .addComponent(btMaPhaAjoutEventAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(353, Short.MAX_VALUE))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,10 +708,10 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(calendarAjoutEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -774,10 +814,10 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                     .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtnom10)
-                    .addComponent(comboBoxMaPhaAjoutSrvType, 0, 170, Short.MAX_VALUE)
-                    .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(comboBoxMaPhaAjoutSrvType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane14, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtnom10))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                 .addContainerGap(192, Short.MAX_VALUE)
@@ -844,7 +884,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabMyPharmacie.addTab("Ma pharmacie", panelMaPha);
+        tabPaneMonCompte.addTab("Ma pharmacie", panelMaPha);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -852,14 +892,14 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabMyPharmacie)
+                .addComponent(tabPaneMonCompte)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabMyPharmacie)
+                .addComponent(tabPaneMonCompte)
                 .addContainerGap())
         );
 
@@ -904,8 +944,17 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
 
     private void btMesInfoConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMesInfoConfirmerActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btMesInfoConfirmerActionPerformed
+
+    private void btMaPhaAjoutEventConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMaPhaAjoutEventConfirmerActionPerformed
+        // TODO add your handling code here:
+        Pharmacie p = PharmaciesDAO.getInstance().readByIdResp(connUser.getId_cpt());
+        Evenement event = new Evenement(-1, p.getId_pha(), calendarAjoutEvent.getDate(), txtMaPhaAjoutEventNom.getText(), txtMaPhaAjoutEventDesc.getText(), false);
+        EvenementsDAO.getInstance().create(event);
+        Demande d = new Demande(-1, Demande.DEMANDE_EVENEMENT, null, connUser.getId_cpt(), event.getId_event());
+
+    }//GEN-LAST:event_btMaPhaAjoutEventConfirmerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -951,9 +1000,9 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JButton btMesInfoConfirmer;
     private javax.swing.JButton buttonMaPhaAjoutSrvAnnuler;
     private javax.swing.JButton buttonMaPhaAjoutSrvConfirmer;
+    private com.toedter.calendar.JCalendar calendarAjoutEvent;
     private javax.swing.JComboBox comboBoxMaPhaAjoutSrvType;
     private javax.swing.JComboBox comboBoxMaPhaInfoType;
-    private com.toedter.calendar.JCalendar jCalendar1;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel24;
@@ -996,7 +1045,6 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabMyPhaInfo;
-    private javax.swing.JTabbedPane jTabMyPharmacie;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JPanel panelAjoutEvent;
     private javax.swing.JPanel panelEvents;
@@ -1007,10 +1055,12 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JPanel panelMsg;
     private javax.swing.JSpinner spMaPhaAjoutEventHeure;
     private javax.swing.JSpinner spMaPhaAjoutEventMin;
+    private javax.swing.JTabbedPane tabPaneMonCompte;
     private javax.swing.JTabbedPane tabbedPaneServices;
     private javax.swing.JTable tableMaPhaMesEvent;
     private javax.swing.JTable tableMaPhaMesSrv;
     private javax.swing.JTable tableMesMsg;
+    private javax.swing.JTextArea txtMaPhaAjoutEventDesc;
     private javax.swing.JTextField txtMaPhaAjoutEventNom;
     private javax.swing.JTextArea txtMaPhaAjoutSrvDesc;
     private javax.swing.JTextArea txtMaPhaInfoAddresse;
@@ -1026,7 +1076,6 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JTextField txtMesInfosNom;
     private javax.swing.JTextField txtMesInfosPrenom;
     private javax.swing.JTextField txtMesInfosTel;
-    private javax.swing.JTextArea txtadresse3;
     private javax.swing.JTextField txtnom10;
     // End of variables declaration//GEN-END:variables
 }

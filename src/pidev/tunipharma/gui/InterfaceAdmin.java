@@ -9,12 +9,12 @@ import pidev.tunipharma.utils.GUIUtils;
 import java.util.Date;
 import java.util.List;
 import pidev.tunipharma.classes.Compte;
-import pidev.tunipharma.classes.Demande;
+import pidev.tunipharma.classes.Evenement;
 import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.ComptesDAO;
-import pidev.tunipharma.dao.DemandesDAO;
+import pidev.tunipharma.dao.EvenementsDAO;
 import pidev.tunipharma.dao.PharmaciesDAO;
 import static pidev.tunipharma.gui.TableButton.makeTable;
 
@@ -520,7 +520,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         });
         tableModCpt = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
             "ID", "Nom", "Prenom", "Type", "Option"
-        }),4,1);
+        }),4,ButtonsPanel.AFFFICHER_SUPPRIMER);
         tableModCpt.setName("tableModCpt");
         scrollPaneTableModCpt.setViewportView(tableModCpt);
 
@@ -576,7 +576,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         tableNouvInscriCpt.setToolTipText("");
         tableNouvInscriCpt = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
             "ID", "Nom", "Prenom", "Type", "Option"
-        }),4,2);
+        }),4,ButtonsPanel.AFFFICHER_ACCEPTER_REFUSER);
         tableNouvInscriCpt.setName("tableNouvInscriCpt");
         jScrollPane9.setViewportView(tableNouvInscriCpt);
 
@@ -1002,7 +1002,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         ));
         tableModPha.setToolTipText("");
         tableModPha = makeTable(GUIUtils.getModel(new Object[][]{{"","","","","",""}},
-            new String [] {"ID", "Non", "Responsable", "Gouvernement", "Ville", "Option"}),5,1);
+            new String [] {"ID", "Non", "Responsable", "Gouvernement", "Ville", "Option"}),5,ButtonsPanel.AFFFICHER_SUPPRIMER);
     tableModPha.setName("tableModPha");
     jScrollPane11.setViewportView(tableModPha);
 
@@ -1038,11 +1038,15 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
         },
         new String [] {
-            "ID", "Pharmacie Hote", "Responsable", "Date/Horaire", "Option"
+            "ID", "Pharmacie Hote", "Date Demande", "Date/Horaire Evenement", "Option"
         }
     ));
     tableDemandesPha.setName("tableDemandesPha");
     tableDemandesPha.setToolTipText("");
+    tableDemandesPha = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
+        "ID", "Pharmacie Hote", "Date Demande", "Date/Horaire Evenement", "Option"
+    }),4,ButtonsPanel.AFFFICHER_ACCEPTER_REFUSER);
+    tableDemandesPha.setName("tableDemandesPha");
     scrollPaneDemandes.setViewportView(tableDemandesPha);
 
     javax.swing.GroupLayout panelDemandesLayout = new javax.swing.GroupLayout(panelDemandes);
@@ -1263,6 +1267,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         GUIUtils.fillPharmacienCB(comboBoxAjoutPhaResponsable);
         fillTableModPha(0, 0, 0, "");
+        fillTableDmdEvent();
     }//GEN-LAST:event_tabbedPaneGestionPhaMouseClicked
 
     /**
@@ -1281,6 +1286,13 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     private void fillTableDmdCpt() {
         List<Compte> l = ComptesDAO.getInstance().readInactif();
         GUIUtils.rempTableNouvInscri(tableNouvInscriCpt, l);
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Table Demande Evenement">
+    private void fillTableDmdEvent() {
+        List<Evenement> l = EvenementsDAO.getInstance().readAll();
+        GUIUtils.rempTableDmdEvent(tableDemandesPha, l);
     }
     // </editor-fold>
     

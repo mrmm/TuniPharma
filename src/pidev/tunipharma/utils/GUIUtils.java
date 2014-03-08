@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -33,12 +34,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Demande;
+import pidev.tunipharma.classes.Evenement;
 import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.ComptesDAO;
 import pidev.tunipharma.dao.DemandesDAO;
 import pidev.tunipharma.dao.GouvernoratsDAO;
+import pidev.tunipharma.dao.PharmaciesDAO;
 import pidev.tunipharma.dao.VillesDAO;
 import pidev.tunipharma.gui.TableButton;
 
@@ -377,14 +380,43 @@ public class GUIUtils {
         while (it.hasNext()) {
             c = it.next();
             d = DemandesDAO.getInstance().readByIdConcern(c.getId_cpt(), 2);
-            System.out.println("Compte !!!!!!!!!!!!! " + c);
-            model.addRow(new Object[]{
-                d.getId_dmd(),
-                c.getNom_cpt(),
-                c.getPrenom_cpt(),
-                d.getDate_dmd().toString(),
-                ""
-            });
+            if (d != null) {
+                System.out.println("Compte !!!!!!!!!!!!! " + c);
+                model.addRow(new Object[]{
+                    d.getId_dmd(),
+                    c.getNom_cpt(),
+                    c.getPrenom_cpt(),
+                    d.getDate_dmd().toString(),
+                    ""
+                });
+            }
+        }
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(2));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 2));
+    }
+
+    public static void rempTableDmdEvent(JTable t, List<Evenement> l) {
+        remAllRows(t);
+        System.out.println("Taille de liste rempTableDmdEvent : " + l.size());
+        Iterator<Evenement> it = l.iterator();
+        DefaultTableModel model = (DefaultTableModel) t.getModel();
+        Demande d;
+        Evenement e;
+        Pharmacie p;
+        while (it.hasNext()) {
+            e = it.next();
+            d = DemandesDAO.getInstance().readByIdConcern(e.getId_event(), 1);
+            p = PharmaciesDAO.getInstance().readById(e.getId_pha());
+            if (d != null) {
+                Date de = e.getDate_event();
+                model.addRow(new Object[]{
+                    d.getId_dmd(),
+                    p.getNom_pha(),
+                    d.getDate_dmd(),
+                    de+"/"+de.getTime(),
+                    ""
+                });
+            }
         }
         t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(2));
         t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 2));

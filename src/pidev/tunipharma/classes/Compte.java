@@ -24,6 +24,11 @@ public class Compte {
     int tel_cpt;
     int type_cpt;
     boolean etat_cpt;
+    
+    // Static Variable
+    public final static int COMPTE_ADMINISTRATEUR = 1;
+    public final static int COMPTE_PHARMACIEN = 2;
+    public final static int COMPTE_CLIENT = 3;
 
     public Compte(int id_cpt, String nom_cpt, String prenom_cpt, String addresse_cpt, String email_cpt, String pass_cpt, int tel_cpt, int type_cpt, boolean etat_cpt) {
         this.id_cpt = id_cpt;
@@ -109,11 +114,11 @@ public class Compte {
 
     public String getTypeCptNom() {
         switch (type_cpt) {
-            case 1:
+            case Compte.COMPTE_ADMINISTRATEUR:
                 return "Administrateur";
-            case 2:
+            case Compte.COMPTE_PHARMACIEN:
                 return "Pharmacien";
-            case 3:
+            case Compte.COMPTE_CLIENT:
                 return "Client";
             default:
                 return "Inconnu";
@@ -125,13 +130,13 @@ public class Compte {
         String nomImg = "";
         String path = "img/";
         switch (type_c) {
-            case 1:
+            case Compte.COMPTE_ADMINISTRATEUR:
                 nomImg = path + "admin.png";
                 break;
-            case 2:
+            case Compte.COMPTE_PHARMACIEN:
                 nomImg = path + "pharmacien.png";
                 break;
-            case 3:
+            case Compte.COMPTE_CLIENT:
                 nomImg = path + "utilisateur.png";
                 break;
             default:

@@ -19,6 +19,9 @@ public class Demande {
     int id_cpt_dmd;
     int id_concerne_dmd;
 
+    public final static int DEMANDE_EVENEMENT = 1;
+    public final static int DEMANDE_COMPTE = 2;
+    
     public Demande(int id_dmd, int type_dmd, Date date_dmd, int id_cpt_dmd, int id_concerne_dmd) {
         this.id_dmd = id_dmd;
         this.type_dmd = type_dmd;

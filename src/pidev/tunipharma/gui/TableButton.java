@@ -79,10 +79,13 @@ public class TableButton extends JPanel {
 }
 
 class ButtonsPanel extends JPanel {
-
+    
     public List<JButton> buttons;
     public int type;
-
+    public final static int AFFFICHER_SUPPRIMER = 1;
+    public final static int AFFFICHER_ACCEPTER_REFUSER = 2;
+    public final static int AFFFICHER_REPONDRE_SUPPRIMER = 3;
+    
     public ButtonsPanel(int type) {
         super();
         this.type = type;
@@ -183,7 +186,7 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
 
         //Au cas de la modification 
         final Object[] daoInstances = new Object[]{ComptesDAO.getInstance(), PharmaciesDAO.getInstance(), EvenementsDAO.getInstance()};
-        if (this.type == 1) {
+        if (this.type == ButtonsPanel.AFFFICHER_SUPPRIMER) {
             buttons.get(0).addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

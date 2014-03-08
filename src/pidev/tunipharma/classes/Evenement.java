@@ -5,7 +5,7 @@
  */
 package pidev.tunipharma.classes;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
