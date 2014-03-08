@@ -32,7 +32,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         //Pour mettre le fenetre dans le centre de l'ecran 
         setLocationRelativeTo(null);
         // Aggrendir la feneter lors de l'ouverture
-//        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         // Remplir Les ComboBox des Gouvernorats & Villes de la base de donnée
         GUIUtil.villeGouvListener(comboBoxModPhaGouv, comboBoxModPhaVille, true);
@@ -518,7 +518,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableModCpt = makeTable(GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
+        tableModCpt = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
             "ID", "Nom", "Prenom", "Type", "Option"
         }),4,TableButton.AFFFICHER_SUPPRIMER);
         tableModCpt.setName("tableModCpt");
@@ -574,7 +574,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             }
         ));
         tableNouvInscriCpt.setToolTipText("");
-        tableNouvInscriCpt = makeTable(GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
+        tableNouvInscriCpt = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
             "ID", "Nom", "Prenom", "Type", "Option"
         }),4,TableButton.AFFFICHER_ACCEPTER_REFUSER);
         tableNouvInscriCpt.setName("tableNouvInscriCpt");
@@ -1001,7 +1001,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             }
         ));
         tableModPha.setToolTipText("");
-        tableModPha = makeTable(GUIUtil.getModel(new Object[][]{{"","","","","",""}},
+        tableModPha = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{"","","","","",""}},
             new String [] {"ID", "Non", "Responsable", "Gouvernement", "Ville", "Option"}),5,TableButton.AFFFICHER_SUPPRIMER);
     tableModPha.setName("tableModPha");
     jScrollPane11.setViewportView(tableModPha);
@@ -1043,7 +1043,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     ));
     tableDemandesPha.setName("tableDemandesPha");
     tableDemandesPha.setToolTipText("");
-    tableDemandesPha = makeTable(GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
+    tableDemandesPha = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
         "ID", "Pharmacie Hote", "Date Demande", "Date/Horaire Evenement", "Option"
     }),4,TableButton.AFFFICHER_ACCEPTER_REFUSER);
     tableDemandesPha.setName("tableDemandesPha");
@@ -1103,7 +1103,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAjoutPhaTelActionPerformed
 
-    // <editor-fold defaultstate="collapsed" desc="Formulaire Ajout Pharmacie">
+    // <editor-fold defaultstate="collapsed" desc="Formulaire Ajout Compte">
     private void btAjoutCptConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptConfirmerActionPerformed
         // TODO add your handling code here:
         if (GUIUtil.checkForm(panelAjoutCpt)) {
@@ -1211,8 +1211,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
         fillTableDmdCpt();
     }//GEN-LAST:event_tabbedPaneGestionCptMouseClicked
 
-    private void fillTableModCpt(int i, String n, String p) {
-        List<Compte> l = ComptesDAO.getInstance().readByNomPreType(i, n, p);
+    private void fillTableModCpt(int type, String nom, String prenom) {
+        List<Compte> l = ComptesDAO.getInstance().readByNomPreType(type, nom, prenom);
         GUIUtil.rempTableCompte(tableModCpt, l);
     }
     // </editor-fold>
@@ -1274,28 +1274,28 @@ public class InterfaceAdmin extends javax.swing.JFrame {
      * @param t type de pharmacie
      * @param g id gouvernorat
      * @param v id ville
-     * @param n nom  pharmacie
+     * @param n nom pharmacie
      */
     private void fillTableModPha(int t, int g, int v, String n) {
         List<Pharmacie> l = PharmaciesDAO.getInstance().readByTypeVilleGouvTypeNom(t, g, v, n);
         GUIUtil.rempTablePha(tableModPha, l);
     }
     //</editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Table Nouvelles Inscriptions">
     private void fillTableDmdCpt() {
         List<Compte> l = ComptesDAO.getInstance().readInactif();
         GUIUtil.rempTableNouvInscri(tableNouvInscriCpt, l);
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Table Demande Evenement">
     private void fillTableDmdEvent() {
         List<Evenement> l = EvenementsDAO.getInstance().readAll();
         GUIUtil.rempTableDmdEvent(tableDemandesPha, l);
     }
     // </editor-fold>
-    
+
     /**
      * @param args the command line arguments
      *

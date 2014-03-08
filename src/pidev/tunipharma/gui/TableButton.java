@@ -52,10 +52,9 @@ public class TableButton extends JPanel {
     }
 
     public static JTable makeTable(DefaultTableModel tableModel, int btColumn, int type) {
-
         final JTable table = new JTable(tableModel);
         table.setRowHeight(50);
-        table.setAutoCreateRowSorter(true);
+        //table.setAutoCreateRowSorter(true);
         TableColumn column = table.getColumnModel().getColumn(btColumn);
         column.setCellRenderer(new ButtonsRenderer(type));
         column.setCellEditor(new ButtonsEditor(table, type));
@@ -151,29 +150,29 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                     new InterfaceInfoCompte((int) id).setVisible(true);
                 }
                 res[0] += "supprimer le compte de " + table.getModel().getValueAt(row, 1) + " " + table.getModel().getValueAt(row, 2);
-                res[2] = "" + 1;
+                res[2] = "1";
                 break;
             case "tableNouvInscriCpt":
                 res[0] += "le compte de " + table.getModel().getValueAt(row, 1) + " " + table.getModel().getValueAt(row, 2);
-                res[2] = "" + 1;
+                res[2] = "1";
                 break;
             case "tableDemandesPha":
                 res[0] += "l'evenement de la pharmacie " + table.getModel().getValueAt(row, 1) + " le " + table.getModel().getValueAt(row, 2);
-                res[2] = "" + 3;
+                res[2] = "3";
                 break;
             case "tableModPha":
                 if (disp) {
                     new InterfaceInfoPharmacie((int) id).setVisible(true);
                 }
                 res[0] += "supprimer la pharmacie " + table.getModel().getValueAt(row, 1);
-                res[2] = "" + 2;
+                res[2] = "2";
                 break;
             case "tableMesMsg":
                 if (disp) {
                     new InterfaceInfoPharmacie((int) id).setVisible(true);
                 }
                 res[0] += "supprimer ce message";
-                res[2] = "" + 2;
+                res[2] = "2";
                 break;
         }
         res[1] = String.valueOf(id);
@@ -202,7 +201,6 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
             buttons.get(0).addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                     //JOptionPane.showMessageDialog(table, "Afficher/Modifier");
                     int row = table.convertRowIndexToModel(table.getEditingRow());
                     Object id = table.getModel().getValueAt(row, 0);
@@ -213,10 +211,7 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
             buttons.get(1).addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //JOptionPane.showMessageDialog(table, "Suppri");
-                    //Object o = table.getModel().getValueAt(table.getSelectedRow(), 0);
                     int row = table.convertRowIndexToModel(table.getEditingRow());
-                    //int n = getRowToObject(table.getName());
                     fireEditingStopped();
 
                     String[] res = getTableInfosMod(table, row, false);

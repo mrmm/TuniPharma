@@ -40,7 +40,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
 
     public InterfaceUtilisateur() {
         initComponents();
-        connUser = new Compte(1, "Mourad", "Maatoug", "Fouchana", "mourad@gmail.com", "112233", 12345678, Compte.COMPTE_PHARMACIEN, true);
+        connUser = new Compte(1, "Mourad", "Maatoug", "El Fahs", "mourad@gmail.com", "112233", 12345678, Compte.COMPTE_PHARMACIEN, true);
         if (connUser.getType_cpt() == Compte.COMPTE_CLIENT) {
             System.out.println("Compte COMPTE_CLIENT");
             jTabMyPhaInfo.setVisible(false);
@@ -48,9 +48,9 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         } else if (connUser.getType_cpt() == Compte.COMPTE_PHARMACIEN) {
             System.out.println("Compte COMPTE_PHARMACIEN");
             maPharmacie = PharmaciesDAO.getInstance().readByIdResp(connUser.getId_cpt());
-            System.out.println("Ma Pharmacie : "+maPharmacie);
+            System.out.println("Ma Pharmacie : " + maPharmacie);
         }
-        System.out.println("Mon Compte : "+connUser);
+        System.out.println("Mon Compte : " + connUser);
 
         // Remplissage de tableau des messages
         fillTableMesMsg();
@@ -77,8 +77,8 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         txtMesInfosNom.setText(connUser.getNom_cpt());
         txtMesInfosPrenom.setText(connUser.getPrenom_cpt());
         txtMeInfosAddresse.setText(connUser.getAddresse_cpt());
-        txtMaPhaInfoTel.setText(String.valueOf(connUser.getTel_cpt())+" Tellllll");
-        txtMesInfosEmail.setText(connUser.getEmail_cpt()+" Emaiiiiil");
+        txtMaPhaInfoTel.setText(String.valueOf(connUser.getTel_cpt()) + " Tellllll");
+        txtMesInfosEmail.setText(connUser.getEmail_cpt() + " Emaiiiiil");
     }
 
     /**
@@ -985,14 +985,14 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private void btMaPhaAjoutEventConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMaPhaAjoutEventConfirmerActionPerformed
         // TODO add your handling code here:
         if (GUIUtil.checkForm(panelAjoutEvent) && maPharmacie != null) {
-            System.out.println("Mon Compte event : "+connUser);
+            System.out.println("Mon Compte event : " + connUser);
             JDateChooser jc = dateChooserAjoutEvent;
-            java.sql.Date date = new java.sql.Date(new Date(jc.getDate().getYear(), jc.getDate().getMonth(), jc.getDate().getDate(), (int)spMaPhaAjoutEventHeure.getValue(), (int)spMaPhaAjoutEventMin.getValue()).getTime());
+            java.sql.Date date = new java.sql.Date(new Date(jc.getDate().getYear(), jc.getDate().getMonth(), jc.getDate().getDate(), (int) spMaPhaAjoutEventHeure.getValue(), (int) spMaPhaAjoutEventMin.getValue()).getTime());
             Evenement event = new Evenement(-1, maPharmacie.getId_pha(), date, txtMaPhaAjoutEventNom.getText(), txtMaPhaAjoutEventDesc.getText(), false);
             EvenementsDAO.getInstance().create(event);
-            GUIUtil.showMsgBox(this,event.toString());
+            GUIUtil.showMsgBox(this, event.toString());
             Demande d = new Demande(-1, Demande.DEMANDE_EVENEMENT, date, connUser.getId_cpt(), event.getId_event());
-            System.out.println("Demande : "+d);
+            System.out.println("Demande : " + d);
             DemandesDAO.getInstance().create(d);
             GUIUtil.resetForm(panelAjoutEvent);
         }

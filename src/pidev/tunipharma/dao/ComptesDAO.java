@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pidev.tunipharma.classes.Compte;
+import pidev.tunipharma.classes.Demande;
 import pidev.tunipharma.connection.DBConnection;
 
 /**
@@ -48,9 +49,9 @@ public class ComptesDAO {
 
         String sql;
         sql = "INSERT INTO Comptes "
-                + "(nom_cpt,prenom_cpt,email_cpt,pass_cpt,addresse_cpt,tel_cpt,type_cpt,etat_cpt)"
-                + "VALUES "
-                + "(?,?,?,md5(?),?,?,?,?)";
+                + " (nom_cpt,prenom_cpt,email_cpt,pass_cpt,addresse_cpt,tel_cpt,type_cpt,etat_cpt)"
+                + " VALUES "
+                + " (?,?,?,md5(?),?,?,?,?)";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -63,14 +64,17 @@ public class ComptesDAO {
             pstmt.setInt(7, obj.getType_cpt());
             pstmt.setBoolean(8, obj.isEtat_cpt());
 
-            obj.setId_cpt(pstmt.executeUpdate());
-            int last_inserted_id=-1;
+            pstmt.executeUpdate();
+
+            int last_inserted_id = -1;
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 last_inserted_id = rs.getInt(1);
             }
             obj.setId_cpt(last_inserted_id);
+
             System.out.println("SQL ComptesDAO - create - Info Compte : " + obj);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -78,9 +82,9 @@ public class ComptesDAO {
     }
 
     public List<Compte> readAll() {
-        List< Compte> l = new ArrayList<Compte>();
+        List<Compte> l = new ArrayList<Compte>();
         Compte ad;
-        String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,email_cpt,pass_cpt,addresse_cpt,tel_cpt,type_cpt,etat_cpt FROM Comptes";
+        String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,email_cpt,pass_cpt,addresse_cpt,tel_cpt,type_cpt,etat_cpt FROM Comptes;";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -97,7 +101,7 @@ public class ComptesDAO {
     public List<Compte> readAllPharmacienDisp() {
         List< Compte> l = new ArrayList<Compte>();
         Compte ad;
-        String sql = "SELECT c.id_cpt,c.nom_cpt,c.prenom_cpt,c.email_cpt,c.pass_cpt,c.addresse_cpt,c.tel_cpt,c.type_cpt,c.etat_cpt FROM Comptes c WHERE c.type_cpt = 2 "
+        String sql = "SELECT c.id_cpt,c.nom_cpt,c.prenom_cpt,c.email_cpt,c.pass_cpt,c.addresse_cpt,c.tel_cpt,c.type_cpt,c.etat_cpt FROM Comptes c WHERE c.type_cpt = " + Compte.COMPTE_PHARMACIEN
                 + "AND c.id_cpt NOT IN (SELECT p.id_resp FROM Pharmacies p) ;";
         System.out.println("Req SQL readAllPharmacienDisp : " + sql);
         try {
@@ -133,7 +137,8 @@ public class ComptesDAO {
 
     public Compte readById(Integer id) {
         Compte cpt = null;
-        String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,addresse_cpt,email_cpt,pass_cpt,tel_cpt,type_cpt,etat_cpt FROM Comptes WHERE id_cpt='" + id + "'";
+        String sql = "SELECT id_cpt,nom_cpt,prenom_cpt,addresse_cpt,email_cpt,pass_cpt,tel_cpt,type_cpt,etat_cpt "
+                + "FROM Comptes WHERE id_cpt='" + id + "'";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -151,8 +156,8 @@ public class ComptesDAO {
         List< Compte> l = new ArrayList<Compte>();
         Compte cpt = null;
         String sql = "SELECT * FROM Comptes WHERE "
-                + " nom_cpt LIKE \"" + (!nom.isEmpty() ? nom + "%" : "%") + "\""
-                + " AND prenom_cpt LIKE \"" + (!prenom.isEmpty() ? prenom + "%" : "%") + "\""
+                + " nom_cpt LIKE \"" + ( ! nom.isEmpty() ? nom + "%" : "%") + "\""
+                + " AND prenom_cpt LIKE \"" + ( ! prenom.isEmpty() ? prenom + "%" : "%") + "\""
                 + " AND type_cpt" + (type > 0 ? "=" + type : "!=-1") + " "
                 + " AND etat_cpt=1;";
         System.out.println("Req SQL : " + sql);
@@ -175,7 +180,8 @@ public class ComptesDAO {
     public List<Compte> readInactif() {
         List< Compte> l = new ArrayList<Compte>();
         Compte cpt = null;
-        String sql = "SELECT * FROM Comptes c WHERE c.etat_cpt = 0 AND (SELECT COUNT(*) FROM Demandes d WHERE d.id_concerne_dmd = c.id_cpt AND d.id_cpt_dmd = c.id_cpt AND d.id_type_dmd=1 ) = 0;";
+        String sql = "SELECT * FROM Comptes c WHERE c.etat_cpt = 0 AND "
+                + "(SELECT COUNT(*) FROM Demandes d WHERE d.id_concerne_dmd = c.id_cpt AND d.id_cpt_dmd = c.id_cpt AND d.id_type_dmd=" + Demande.DEMANDE_COMPTE + " ) > 0;";
         System.out.println("Req SQL : " + sql);
         try {
             ResultSet res = stmt.executeQuery(sql);
@@ -186,7 +192,6 @@ public class ComptesDAO {
 //                 System.out.println(cpt.toString());
                 l.add(cpt);
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -245,7 +250,7 @@ public class ComptesDAO {
     }
 
     public void delete(int id) {
-        String sql = "DELETE FROM Comptes WHERE id_cpt = ?;";
+        String sql = "DELETE FROM Comptes WHERE id_cpt = ? ;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
@@ -256,7 +261,7 @@ public class ComptesDAO {
         }
     }
 
-    public void changeEtat(int id,boolean etat) {
+    public void changeEtat(int id, boolean etat) {
         String sql = "UPDATE Comptes SET etat_cpt = ? "
                 + "WHERE id_cpt =  ? ;";
         try {

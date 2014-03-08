@@ -69,10 +69,14 @@ public class GUIUtil {
 
     // Remplissage des Gouvernorats dans ComboBox
     public static void fillGouvsCB(JComboBox cb, boolean all) {
+        // Supprier le contenu de combobox courant
         cb.removeAllItems();
+        //Ajouter de choix Tous dans la liste 
         if (all) {
             cb.addItem(new Gouvernorat(-1, "Tous"));
         }
+
+        //remplissage de la liste des gouvernorat
         for (Gouvernorat g : GouvernoratsDAO.getInstance().readAll()) {
             cb.addItem(g);
         }
@@ -97,8 +101,7 @@ public class GUIUtil {
             cb.addItem(c);
         }
         System.out.println("Taille de la liste [fillPharmacienCB] : " + cb.getItemCount());
-        System.out.println(cb.getItemCount());
-
+        //System.out.println(cb.getItemCount());
     }
     // </editor-fold>
 
@@ -230,7 +233,6 @@ public class GUIUtil {
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Ajout de Listener - onChange">
     public static void onChangeEmpty(final JTextComponent c, final JButton b) {
         c.addCaretListener(new CaretListener() {
@@ -345,7 +347,6 @@ public class GUIUtil {
     }
 
     //</editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Manipulation des JTables">
     public static DefaultTableModel getModel(Object[][] data, Object[] cols) {
         DefaultTableModel model = new DefaultTableModel(data, cols) {
@@ -369,8 +370,8 @@ public class GUIUtil {
         }
 
         //t.getColumnModel().getColumn(4).setCellRenderer(null);
-        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(1));
-        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 1));
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_SUPPRIMER));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_SUPPRIMER));
 //        System.out.println(t.getColumnModel().getColumn(4).getCellRenderer().getClass().getName());
     }
 
@@ -483,16 +484,14 @@ public class GUIUtil {
                 ""
             });
         }
-        System.out.println("Nombres de column : "+t.getColumnCount());
+        System.out.println("Nombres de column : " + t.getColumnCount());
         t.getColumnModel().getColumn(6).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_REPONDRE_SUPPRIMER));
         t.getColumnModel().getColumn(6).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_REPONDRE_SUPPRIMER));
     }
 
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="JTable Manipulation">
 // </editor-fold>
-
     public static void addCompPanel(JPanel p, Component[] c) {
         if (c[0] instanceof JRootPane) {
             addCompPanel(p, ((JRootPane) c[0]).getComponents());

@@ -8,9 +8,12 @@
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/classes/Demande.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/EvenementsDAO.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/DemandesDAO.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/MessagesDAO.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceUtilisateur.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/classes/Compte.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/ComptesDAO.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceInfoPharmacie.java</file>
-            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/utils/GUIUtils.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/utils/GUIUtil.java</file>
         </group>
     </open-files>
 </project-private>

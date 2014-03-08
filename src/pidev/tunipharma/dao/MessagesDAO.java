@@ -59,9 +59,9 @@ public class MessagesDAO {
             pstmt.setString(4, obj.getCorps_msg());
             pstmt.setDate(5, obj.getDate_msg());
             pstmt.setBoolean(6, obj.isEtat_msg());
-            
+
             obj.setId_msg(pstmt.executeUpdate());
-            int last_inserted_id=-1;
+            int last_inserted_id = -1;
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 last_inserted_id = rs.getInt(1);
@@ -90,13 +90,14 @@ public class MessagesDAO {
         }
         return (l);
     }
+
     public List<Message> readAllByIdUser(int id) {
         List< Message> l = new ArrayList<Message>();
         Message msg;
-        String sql = "SELECT * FROM Messages WHERE id_bt_src="+id+" OR id_bt_dst="+id;
-        System.out.println("Requette SQL MessagesDAO - readAllByIdUser : "+sql);
+        String sql = "SELECT * FROM Messages WHERE id_bt_src=" + id + " OR id_bt_dst=" + id;
+        System.out.println("Requette SQL MessagesDAO - readAllByIdUser : " + sql);
         try {
-            
+
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 //public Message(int id_Message, int id_pha, Date date_Message, String nom_Message, String desc_Message, Boolean etat_Message) {
