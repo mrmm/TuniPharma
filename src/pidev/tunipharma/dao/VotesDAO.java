@@ -130,4 +130,20 @@ public class VotesDAO {
             ex.printStackTrace();
         }
     }
+    
+     public int readByIdPha(Integer id) {
+         
+       int val=0;
+        String sql = "SELECT valeur_vote FROM Votes WHERE id_vote='" + id + "'";
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while(res.next()){
+            res.getInt(1);
+            }
+            }
+         catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (val);
+    }
 }

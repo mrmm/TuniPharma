@@ -23,17 +23,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="panelInfoPha" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="panelInfoPha" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Component id="panelInfoPha" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -53,7 +49,7 @@
                       <Component id="jLabel35" min="-2" pref="169" max="-2" attributes="0"/>
                       <Component id="jLabel36" min="-2" pref="169" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="jLabel30" min="-2" pref="169" max="-2" attributes="0"/>
+                          <Component id="jLabel30" min="-2" pref="128" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel26" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
                               <Component id="jLabel28" alignment="0" pref="170" max="32767" attributes="0"/>
@@ -65,19 +61,21 @@
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtMesInfosEmail" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtMesInfosTel" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jScrollPane10" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtInfosNvMDP" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtInfosNvRMDP" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtInfosNvRMDP1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtInfosNvRMDP2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtMesInfosNom" max="32767" attributes="0"/>
-                      <Component id="txtMesInfosPrenom" alignment="1" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtMesInfosEmail" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtMesInfosVille" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane10" alignment="0" pref="577" max="32767" attributes="0"/>
+                          <Component id="txtInfosGouvernorat" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtInfosTel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtInfosFax" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtInfosType" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtMesInfosNom" max="32767" attributes="0"/>
+                          <Component id="txtMesInfosResponsable" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="PanelVote" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="56" max="32767" attributes="0"/>
+                  <EmptySpace pref="76" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -97,17 +95,17 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel30" pref="23" max="32767" attributes="0"/>
-                      <Component id="jPanel2" max="32767" attributes="0"/>
+                  <EmptySpace pref="55" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel30" alignment="1" min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="PanelVote" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="txtMesInfosNom" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txtMesInfosPrenom" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="txtMesInfosResponsable" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txtMesInfosEmail" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
@@ -115,7 +113,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtMesInfosTel" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="txtMesInfosVille" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -128,22 +126,22 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtInfosNvMDP" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtInfosGouvernorat" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtInfosNvRMDP" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtInfosTel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtInfosNvRMDP1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtInfosFax" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel36" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtInfosNvRMDP2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtInfosType" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -187,14 +185,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMesInfosNomActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMesInfosPrenom">
+        <Component class="javax.swing.JTextField" name="txtMesInfosResponsable">
           <Properties>
             <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="&quot;Pr&#xe9;nom&quot;" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMesInfosPrenomActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMesInfosResponsableActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel27">
@@ -231,7 +229,7 @@
             <Property name="text" type="java.lang.String" value="Ville : "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMesInfosTel">
+        <Component class="javax.swing.JTextField" name="txtMesInfosVille">
           <Properties>
             <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="&quot;Num T&#xe9;l&quot;" type="code"/>
@@ -246,7 +244,7 @@
             <Property name="text" type="java.lang.String" value="Gouvenorat :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosNvMDP">
+        <Component class="javax.swing.JPasswordField" name="txtInfosGouvernorat">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel34">
           <Properties>
@@ -256,7 +254,7 @@
             <Property name="text" type="java.lang.String" value="Tel : "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosNvRMDP">
+        <Component class="javax.swing.JPasswordField" name="txtInfosTel">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel32">
           <Properties>
@@ -308,16 +306,16 @@
             <Property name="text" type="java.lang.String" value="Fax : "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosNvRMDP1">
+        <Component class="javax.swing.JPasswordField" name="txtInfosFax">
         </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosNvRMDP2">
+        <Component class="javax.swing.JPasswordField" name="txtInfosType">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel36">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Tel : "/>
+            <Property name="text" type="java.lang.String" value="Type : "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel30">
@@ -328,20 +326,87 @@
             <Property name="text" type="java.lang.String" value="Note : "/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="PanelVote">
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="Etoile1" min="-2" pref="46" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Etoile2" min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="Etoile3" min="-2" pref="43" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Etoile4" min="-2" pref="32" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Etoile5" min="-2" pref="41" max="-2" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="Etoile2" pref="42" max="32767" attributes="0"/>
+                          <Component id="Etoile1" pref="0" max="32767" attributes="0"/>
+                          <Component id="Etoile3" pref="0" max="32767" attributes="0"/>
+                          <Component id="Etoile4" pref="0" max="32767" attributes="0"/>
+                          <Component id="Etoile5" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="Etoile1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/pidev/tunipharma/gui/etoile2.jpg"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Etoile1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="Etoile2">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/pidev/tunipharma/gui/etoile2.jpg"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Etoile2ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="Etoile3">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/pidev/tunipharma/gui/etoile2.jpg"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Etoile3ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="Etoile4">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/pidev/tunipharma/gui/etoile2.jpg"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="Etoile5">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/pidev/tunipharma/gui/etoile2.jpg"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
