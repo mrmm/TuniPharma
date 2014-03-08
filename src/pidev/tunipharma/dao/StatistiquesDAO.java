@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pidev.tunipharma.classes.BoiteMessages;
-import pidev.tunipharma.classes.Statistiques;
 import pidev.tunipharma.classes.Statistiques;
 import pidev.tunipharma.connection.DBConnection;
 
