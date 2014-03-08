@@ -64,7 +64,7 @@ public class StatistiquesDAO {
                 last_inserted_id = rs.getInt(1);
             }
             obj.setId_stat(last_inserted_id);
-            System.out.println("SQL create - Info Boite Message : " + obj);
+            System.out.println("SQL create - Info Statistiques : " + obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class StatistiquesDAO {
     }
     
     public List<Statistiques> readAll() {
-        List< Statistiques> l = new ArrayList<Statistiques>();
+        List<Statistiques> l = new ArrayList<Statistiques>();
         Statistiques stat;
         String sql = "SELECT * FROM Statistiquess";
         try {
@@ -108,7 +108,6 @@ public class StatistiquesDAO {
         String sql;
 
         sql = "UPDATE Statistiquess SET "
-                + "id_stat = '?',"
                 + "type_stat = '?',"
                 + "valeur = '?',"
                 + "id_pha = '?',"
@@ -116,10 +115,9 @@ public class StatistiquesDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
 
-            pstmt.setInt(1, obj.getId_stat());
-            pstmt.setInt(2, obj.getType_stat());
-            pstmt.setInt(3, obj.getValeur());
-            pstmt.setInt(4, obj.getId_pha());
+            pstmt.setInt(1, obj.getType_stat());
+            pstmt.setInt(2, obj.getValeur());
+            pstmt.setInt(3, obj.getId_pha());
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
