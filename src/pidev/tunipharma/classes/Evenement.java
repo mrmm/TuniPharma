@@ -5,7 +5,7 @@
  */
 package pidev.tunipharma.classes;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -33,6 +33,10 @@ public class Evenement {
     // Teste sur le boutton de la formulaire d'acceuil
     public void setId_pha(int id_pha) {
         this.id_pha = id_pha;
+    }
+
+    public void setId_event(int id_event) {
+        this.id_event = id_event;
     }
 
     public void setDate_event(Date date_event) {
@@ -74,6 +78,11 @@ public class Evenement {
     public Boolean isEtat_event() {
         return etat_event;
     }
+
     // </editor-fold>
+    @Override
+    public String toString() {
+        return "Evenement{" + "id_event=" + id_event + ", id_pha=" + id_pha + ", date_event=" + date_event + ", nom_event=" + nom_event + ", desc_event=" + desc_event + ", etat_event=" + etat_event + '}';
+    }
     
 }

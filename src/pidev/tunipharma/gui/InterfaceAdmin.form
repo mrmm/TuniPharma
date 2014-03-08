@@ -759,7 +759,7 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableModCpt = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4,ButtonsPanel.AFFFICHER_SUPPRIMER);&#xa;tableModCpt.setName(&quot;tableModCpt&quot;);"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableModCpt = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4,TableButton.AFFFICHER_SUPPRIMER);&#xa;tableModCpt.setName(&quot;tableModCpt&quot;);"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -871,7 +871,7 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableNouvInscriCpt = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4,ButtonsPanel.AFFFICHER_ACCEPTER_REFUSER);&#xa;tableNouvInscriCpt.setName(&quot;tableNouvInscriCpt&quot;);"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableNouvInscriCpt = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Nom&quot;, &quot;Prenom&quot;, &quot;Type&quot;, &quot;Option&quot;&#xa;    }),4,TableButton.AFFFICHER_ACCEPTER_REFUSER);&#xa;tableNouvInscriCpt.setName(&quot;tableNouvInscriCpt&quot;);"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -1672,7 +1672,7 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableModPha = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, &#xa;    new String [] {&quot;ID&quot;, &quot;Non&quot;, &quot;Responsable&quot;, &quot;Gouvernement&quot;, &quot;Ville&quot;, &quot;Option&quot;}),5,ButtonsPanel.AFFFICHER_SUPPRIMER);&#xa;tableModPha.setName(&quot;tableModPha&quot;);"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableModPha = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, &#xa;    new String [] {&quot;ID&quot;, &quot;Non&quot;, &quot;Responsable&quot;, &quot;Gouvernement&quot;, &quot;Ville&quot;, &quot;Option&quot;}),5,TableButton.AFFFICHER_SUPPRIMER);&#xa;tableModPha.setName(&quot;tableModPha&quot;);"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -1735,7 +1735,7 @@
                             <Column editable="true" title="Option" type="java.lang.Object"/>
                           </Table>
                         </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="" postCode="tableDemandesPha = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Pharmacie Hote&quot;, &quot;Date Demande&quot;, &quot;Date/Horaire Evenement&quot;, &quot;Option&quot;&#xa;    }),4,ButtonsPanel.AFFFICHER_ACCEPTER_REFUSER);&#xa;tableDemandesPha.setName(&quot;tableDemandesPha&quot;);"/>
+                        <Property name="toolTipText" type="java.lang.String" value="" postCode="tableDemandesPha = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;Pharmacie Hote&quot;, &quot;Date Demande&quot;, &quot;Date/Horaire Evenement&quot;, &quot;Option&quot;&#xa;    }),4,TableButton.AFFFICHER_ACCEPTER_REFUSER);&#xa;tableDemandesPha.setName(&quot;tableDemandesPha&quot;);"/>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>

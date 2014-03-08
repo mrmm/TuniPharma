@@ -10,7 +10,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import pidev.tunipharma.classes.Compte;
-import pidev.tunipharma.utils.GUIUtils;
+import pidev.tunipharma.utils.GUIUtil;
 import pidev.tunipharma.utils.Session;
 
 /**
@@ -201,7 +201,7 @@ public class TuniPharmaMain extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
         panelCorps.removeAll();
-        GUIUtils.addCompPanel(panelCorps, new InterfaceUtilisateur().getComponents());
+        GUIUtil.addCompPanel(panelCorps, new InterfaceUtilisateur().getComponents());
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void menuItemQuiterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemQuiterActionPerformed
@@ -212,7 +212,7 @@ public class TuniPharmaMain extends javax.swing.JFrame {
     private void menuItemRechPhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRechPhaActionPerformed
         // TODO add your handling code here:
         panelCorps.removeAll();
-        GUIUtils.addCompPanel(panelCorps, new InterfaceRecherchePharmacie().getComponents());
+        GUIUtil.addCompPanel(panelCorps, new InterfaceRecherchePharmacie().getComponents());
     }//GEN-LAST:event_menuItemRechPhaActionPerformed
 
     /**

@@ -5,7 +5,7 @@
  */
 package pidev.tunipharma.gui;
 
-import pidev.tunipharma.utils.GUIUtils;
+import pidev.tunipharma.utils.GUIUtil;
 import java.util.Date;
 import java.util.List;
 import pidev.tunipharma.classes.Compte;
@@ -35,29 +35,29 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 //        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         // Remplir Les ComboBox des Gouvernorats & Villes de la base de donnée
-        GUIUtils.villeGouvListener(comboBoxModPhaGouv, comboBoxModPhaVille, true);
-        GUIUtils.villeGouvListener(comboBoxAjoutPhaGouv, comboBoxAjoutPhaVille, false);
-        GUIUtils.fillGouvsCB(comboBoxModPhaGouv, true);
-        GUIUtils.fillGouvsCB(comboBoxAjoutPhaGouv, false);
+        GUIUtil.villeGouvListener(comboBoxModPhaGouv, comboBoxModPhaVille, true);
+        GUIUtil.villeGouvListener(comboBoxAjoutPhaGouv, comboBoxAjoutPhaVille, false);
+        GUIUtil.fillGouvsCB(comboBoxModPhaGouv, true);
+        GUIUtil.fillGouvsCB(comboBoxAjoutPhaGouv, false);
 
         // Ajout de listener - Ajout Compte Form
-        GUIUtils.onChangeEmpty(txtAjoutCptNom, btAjoutCptConfirmer);
-        GUIUtils.onChangeEmpty(txtAjoutCptPrenom, btAjoutCptConfirmer);
-        GUIUtils.onChangeEmpty(txtAjoutCptAddresse, btAjoutCptConfirmer);
-        GUIUtils.onChangeEmail(txtAjoutCptEmail, btAjoutCptConfirmer);
-        GUIUtils.onChangeNumber(txtAjoutCptTel, btAjoutCptConfirmer);
-        GUIUtils.onChangeMDP(txtAjoutCptMDP, txtAjoutCptRMDP, btAjoutCptConfirmer);
+        GUIUtil.onChangeEmpty(txtAjoutCptNom, btAjoutCptConfirmer);
+        GUIUtil.onChangeEmpty(txtAjoutCptPrenom, btAjoutCptConfirmer);
+        GUIUtil.onChangeEmpty(txtAjoutCptAddresse, btAjoutCptConfirmer);
+        GUIUtil.onChangeEmail(txtAjoutCptEmail, btAjoutCptConfirmer);
+        GUIUtil.onChangeNumber(txtAjoutCptTel, btAjoutCptConfirmer);
+        GUIUtil.onChangeMDP(txtAjoutCptMDP, txtAjoutCptRMDP, btAjoutCptConfirmer);
 
         // Ajout de listener - Ajout Pharmacie Form
-        GUIUtils.onChangeEmpty(txtAjoutPhaNom, btAjoutPhaConfirmer);
-        GUIUtils.onChangeEmpty(txtAjoutPhaAddresse, btAjoutPhaConfirmer);
-        GUIUtils.onChangeEmail(txtAjoutPhaEmail, btAjoutPhaConfirmer);
-        GUIUtils.onChangeNumber(txtAjoutPhaFax, btAjoutPhaConfirmer);
-        GUIUtils.onChangeNumber(txtAjoutPhaTel, btAjoutPhaConfirmer);
+        GUIUtil.onChangeEmpty(txtAjoutPhaNom, btAjoutPhaConfirmer);
+        GUIUtil.onChangeEmpty(txtAjoutPhaAddresse, btAjoutPhaConfirmer);
+        GUIUtil.onChangeEmail(txtAjoutPhaEmail, btAjoutPhaConfirmer);
+        GUIUtil.onChangeNumber(txtAjoutPhaFax, btAjoutPhaConfirmer);
+        GUIUtil.onChangeNumber(txtAjoutPhaTel, btAjoutPhaConfirmer);
         //GUIUtils.setFieldListener(panelAjoutCpt);
 
         // Remplissage de combo box des repsonsable pharmacie
-        GUIUtils.fillPharmacienCB(comboBoxAjoutPhaResponsable);
+        GUIUtil.fillPharmacienCB(comboBoxAjoutPhaResponsable);
     }
 
     /**
@@ -518,9 +518,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableModCpt = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
+        tableModCpt = makeTable(GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
             "ID", "Nom", "Prenom", "Type", "Option"
-        }),4,ButtonsPanel.AFFFICHER_SUPPRIMER);
+        }),4,TableButton.AFFFICHER_SUPPRIMER);
         tableModCpt.setName("tableModCpt");
         scrollPaneTableModCpt.setViewportView(tableModCpt);
 
@@ -574,9 +574,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             }
         ));
         tableNouvInscriCpt.setToolTipText("");
-        tableNouvInscriCpt = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
+        tableNouvInscriCpt = makeTable(GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
             "ID", "Nom", "Prenom", "Type", "Option"
-        }),4,ButtonsPanel.AFFFICHER_ACCEPTER_REFUSER);
+        }),4,TableButton.AFFFICHER_ACCEPTER_REFUSER);
         tableNouvInscriCpt.setName("tableNouvInscriCpt");
         jScrollPane9.setViewportView(tableNouvInscriCpt);
 
@@ -1001,8 +1001,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
             }
         ));
         tableModPha.setToolTipText("");
-        tableModPha = makeTable(GUIUtils.getModel(new Object[][]{{"","","","","",""}},
-            new String [] {"ID", "Non", "Responsable", "Gouvernement", "Ville", "Option"}),5,ButtonsPanel.AFFFICHER_SUPPRIMER);
+        tableModPha = makeTable(GUIUtil.getModel(new Object[][]{{"","","","","",""}},
+            new String [] {"ID", "Non", "Responsable", "Gouvernement", "Ville", "Option"}),5,TableButton.AFFFICHER_SUPPRIMER);
     tableModPha.setName("tableModPha");
     jScrollPane11.setViewportView(tableModPha);
 
@@ -1043,9 +1043,9 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     ));
     tableDemandesPha.setName("tableDemandesPha");
     tableDemandesPha.setToolTipText("");
-    tableDemandesPha = makeTable(GUIUtils.getModel(new Object[][]{{"","","","",""}}, new String [] {
+    tableDemandesPha = makeTable(GUIUtil.getModel(new Object[][]{{"","","","",""}}, new String [] {
         "ID", "Pharmacie Hote", "Date Demande", "Date/Horaire Evenement", "Option"
-    }),4,ButtonsPanel.AFFFICHER_ACCEPTER_REFUSER);
+    }),4,TableButton.AFFFICHER_ACCEPTER_REFUSER);
     tableDemandesPha.setName("tableDemandesPha");
     scrollPaneDemandes.setViewportView(tableDemandesPha);
 
@@ -1106,7 +1106,7 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Formulaire Ajout Pharmacie">
     private void btAjoutCptConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptConfirmerActionPerformed
         // TODO add your handling code here:
-        if (GUIUtils.checkForm(panelAjoutCpt)) {
+        if (GUIUtil.checkForm(panelAjoutCpt)) {
             //Ajout du compte dans la base de donnée
             String pass = String.valueOf(txtAjoutCptMDP.getPassword(), 0, txtAjoutCptMDP.getPassword().length);
             Compte cpt = new Compte(-1, txtAjoutCptNom.getText(),
@@ -1118,8 +1118,8 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     comboBoxAjoutCptTypeCpt.getSelectedIndex() + 2,
                     true);
             ComptesDAO.getInstance().create(cpt);
-            GUIUtils.showMsgBox(cpt.toString());
-            GUIUtils.resetForm(panelAjoutCpt);
+            GUIUtil.showMsgBox(cpt.toString());
+            GUIUtil.resetForm(panelAjoutCpt);
         }
     }//GEN-LAST:event_btAjoutCptConfirmerActionPerformed
     // </editor-fold>
@@ -1143,15 +1143,15 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
     private void btAjoutCptAnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutCptAnulerActionPerformed
         // TODO add your handling code here:
-        if (GUIUtils.showConfBox("Voulez vous reinitialiser les champs ?")) {
-            GUIUtils.resetForm(panelAjoutCpt);
-//            GUIUtils.showMsgBox("Done");
+        if (GUIUtil.showConfBox("Voulez vous reinitialiser les champs ?")) {
+            GUIUtil.resetForm(panelAjoutCpt);
+//            GUIUtil.showMsgBox("Done");
         }
     }//GEN-LAST:event_btAjoutCptAnulerActionPerformed
 
     private void btAjoutPhaConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutPhaConfirmerActionPerformed
         // TODO add your handling code here:
-        if (GUIUtils.checkForm(panelAjoutPha)) {
+        if (GUIUtil.checkForm(panelAjoutPha)) {
             //Ajout du compte dans la base de donnée
             System.out.println("[Log] Gouvernorat et ville choisi : " + ((Gouvernorat) comboBoxModPhaGouv.getSelectedItem()).getNom_gouv() + " - " + ((Ville) comboBoxModPhaVille.getSelectedItem()));
             Pharmacie pha = new Pharmacie(-1,
@@ -1167,17 +1167,17 @@ public class InterfaceAdmin extends javax.swing.JFrame {
                     ((Ville) comboBoxAjoutPhaVille.getSelectedItem()).getId_ville(),
                     ((Gouvernorat) comboBoxAjoutPhaGouv.getSelectedItem()).getId_gouv()
             );
-            GUIUtils.showMsgBox(pha.toString());
+            GUIUtil.showMsgBox(pha.toString());
             PharmaciesDAO.getInstance().create(pha);
-            GUIUtils.resetForm(panelAjoutPha);
+            GUIUtil.resetForm(panelAjoutPha);
         }
     }//GEN-LAST:event_btAjoutPhaConfirmerActionPerformed
 
     private void btAjoutPhaAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutPhaAnnulerActionPerformed
         // TODO add your handling code here:
-        if (GUIUtils.showConfBox("Voulez vous reinitialiser les champs ?")) {
-            GUIUtils.resetForm(panelAjoutPha);
-//            GUIUtils.showMsgBox("Done");
+        if (GUIUtil.showConfBox("Voulez vous reinitialiser les champs ?")) {
+            GUIUtil.resetForm(panelAjoutPha);
+//            GUIUtil.showMsgBox("Done");
         }
     }//GEN-LAST:event_btAjoutPhaAnnulerActionPerformed
 
@@ -1213,18 +1213,18 @@ public class InterfaceAdmin extends javax.swing.JFrame {
 
     private void fillTableModCpt(int i, String n, String p) {
         List<Compte> l = ComptesDAO.getInstance().readByNomPreType(i, n, p);
-        GUIUtils.rempTableCompte(tableModCpt, l);
+        GUIUtil.rempTableCompte(tableModCpt, l);
     }
     // </editor-fold>
 
     private void btAjoutJourGardeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutJourGardeActionPerformed
-//        GUIUtils.showMsgBox(evt.getSource().getClass().getName());
+//        GUIUtil.showMsgBox(evt.getSource().getClass().getName());
         try {
             Date d = dateGarde.getDate();
             String s = d.getDate() + "/" + d.getMonth() + "/" + (d.getYear() + 1900);
             String nJ[] = {"Dimamche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
             String nM[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Novembre", "Decembre"};
-            GUIUtils.addRow(tableJourDeGarde, new Object[]{nJ[d.getDay()], d.getDate() + " " + nM[d.getMonth()], (d.getYear() + 1900), s});
+            GUIUtil.addRow(tableJourDeGarde, new Object[]{nJ[d.getDay()], d.getDate() + " " + nM[d.getMonth()], (d.getYear() + 1900), s});
         } catch (Exception e) {
             System.out.println("JDateChooser Exception");
         }
@@ -1248,24 +1248,24 @@ public class InterfaceAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxModPhaGouvItemStateChanged
 
     private void comboBoxModPhaVilleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxModPhaVilleItemStateChanged
-        // TODO add your handling code here:
-        Gouvernorat g = (Gouvernorat) comboBoxModPhaGouv.getSelectedItem();
-        Ville v = (Ville) comboBoxModPhaVille.getSelectedItem();
-        String nom = txtModPhaNom.getText();
-        fillTableModPha(comboBoxModCptType.getSelectedIndex(), g.getId_gouv(), v.getId_ville(), nom);
+//        // TODO add your handling code here:
+//        Gouvernorat g = (Gouvernorat) comboBoxModPhaGouv.getSelectedItem();
+//        Ville v = (Ville) comboBoxModPhaVille.getSelectedItem();
+//        String nom = txtModPhaNom.getText();
+//        fillTableModPha(comboBoxModCptType.getSelectedIndex(), g.getId_gouv(), v.getId_ville(), nom);
     }//GEN-LAST:event_comboBoxModPhaVilleItemStateChanged
 
     private void comboBoxModPhaTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxModPhaTypeItemStateChanged
         // TODO add your handling code here:
-        Gouvernorat g = (Gouvernorat) comboBoxModPhaGouv.getSelectedItem();
-        Ville v = (Ville) comboBoxModPhaVille.getSelectedItem();
-        String nom = txtModPhaNom.getText();
-        fillTableModPha(comboBoxModCptType.getSelectedIndex(), g.getId_gouv(), v.getId_ville(), nom);
+//        Gouvernorat g = (Gouvernorat) comboBoxModPhaGouv.getSelectedItem();
+//        Ville v = (Ville) comboBoxModPhaVille.getSelectedItem();
+//        String nom = txtModPhaNom.getText();
+//        fillTableModPha(comboBoxModCptType.getSelectedIndex(), g.getId_gouv(), v.getId_ville(), nom);
     }//GEN-LAST:event_comboBoxModPhaTypeItemStateChanged
 
     private void tabbedPaneGestionPhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabbedPaneGestionPhaMouseClicked
         // TODO add your handling code here:
-        GUIUtils.fillPharmacienCB(comboBoxAjoutPhaResponsable);
+        GUIUtil.fillPharmacienCB(comboBoxAjoutPhaResponsable);
         fillTableModPha(0, 0, 0, "");
         fillTableDmdEvent();
     }//GEN-LAST:event_tabbedPaneGestionPhaMouseClicked
@@ -1278,21 +1278,21 @@ public class InterfaceAdmin extends javax.swing.JFrame {
      */
     private void fillTableModPha(int t, int g, int v, String n) {
         List<Pharmacie> l = PharmaciesDAO.getInstance().readByTypeVilleGouvTypeNom(t, g, v, n);
-        GUIUtils.rempTablePha(tableModPha, l);
+        GUIUtil.rempTablePha(tableModPha, l);
     }
     //</editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Table Nouvelles Inscriptions">
     private void fillTableDmdCpt() {
         List<Compte> l = ComptesDAO.getInstance().readInactif();
-        GUIUtils.rempTableNouvInscri(tableNouvInscriCpt, l);
+        GUIUtil.rempTableNouvInscri(tableNouvInscriCpt, l);
     }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Table Demande Evenement">
     private void fillTableDmdEvent() {
         List<Evenement> l = EvenementsDAO.getInstance().readAll();
-        GUIUtils.rempTableDmdEvent(tableDemandesPha, l);
+        GUIUtil.rempTableDmdEvent(tableDemandesPha, l);
     }
     // </editor-fold>
     

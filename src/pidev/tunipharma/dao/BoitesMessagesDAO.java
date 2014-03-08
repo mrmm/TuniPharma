@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.BoiteMessages;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -33,7 +35,11 @@ public class BoitesMessagesDAO {
 
     public static BoitesMessagesDAO getInstance() {
         if (instance == null) {
-            instance = new BoitesMessagesDAO();
+            try {
+                instance = new BoitesMessagesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(BoitesMessagesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
@@ -76,7 +82,7 @@ public class BoitesMessagesDAO {
 
     public BoiteMessages readById(Integer id) {
         BoiteMessages bt_msg = null;
-        String sql = "SELECT * FROM Boites_Message WHERE id_bt ='" + id + "'";
+        String sql = "SELECT * FROM Boites_Message WHERE id_bt =" + id + "";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {

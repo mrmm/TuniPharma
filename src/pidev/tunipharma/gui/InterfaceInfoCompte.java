@@ -8,7 +8,7 @@ package pidev.tunipharma.gui;
 import javax.swing.JButton;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.dao.ComptesDAO;
-import pidev.tunipharma.utils.GUIUtils;
+import pidev.tunipharma.utils.GUIUtil;
 
 /**
  *
@@ -31,7 +31,7 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
             System.out.println("Compte not Null");
             titre = "Information Compte - " + c.getNom_cpt() + " " + c.getPrenom_cpt();
         } else {
-            GUIUtils.showMsgBox("Compte Invalid !!");
+            GUIUtil.showMsgBox("Compte Invalid !!");
             this.dispose();
         }
         this.setTitle(titre);
@@ -41,13 +41,13 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
         txtMesInfosEmail.setText(c.getEmail_cpt());
         txtMesInfosTel.setText(String.valueOf(c.getTel_cpt()));
         txtMesInfosAddresse.setText(c.getAddresse_cpt());
-        GUIUtils.disAllTextField(panelInfoCpt);
+        GUIUtil.disAllTextField(panelInfoCpt);
 
-        GUIUtils.onChangeEmpty(txtMesInfosNom, btModCpt);
-        GUIUtils.onChangeEmpty(txtMesInfosPrenom, btModCpt);
-        GUIUtils.onChangeNumber(txtMesInfosTel, btModCpt);
-        GUIUtils.onChangeEmail(txtMesInfosEmail, btModCpt);
-        GUIUtils.onChangeMDP(txtInfosNvMDP, txtInfosNvRMDP, btModCpt);
+        GUIUtil.onChangeEmpty(txtMesInfosNom, btModCpt);
+        GUIUtil.onChangeEmpty(txtMesInfosPrenom, btModCpt);
+        GUIUtil.onChangeNumber(txtMesInfosTel, btModCpt);
+        GUIUtil.onChangeEmail(txtMesInfosEmail, btModCpt);
+        GUIUtil.onChangeMDP(txtInfosNvMDP, txtInfosNvRMDP, btModCpt);
         setLocationRelativeTo(null);
     }
 
@@ -264,13 +264,13 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
     private void btModCptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModCptActionPerformed
         // TODO add your handling code here:
         if (((JButton) evt.getSource()).getText().equals("Modifier Compte")) {
-            GUIUtils.enAllTextField(panelInfoCpt);
-            GUIUtils.enAllTextField(panelInfoCpt);
+            GUIUtil.enAllTextField(panelInfoCpt);
+            GUIUtil.enAllTextField(panelInfoCpt);
             btModCpt.setText("Enregistrer Modification");
         } else {
-            if (GUIUtils.checkForm(panelInfoCpt)) {
-                if (GUIUtils.showConfBox("Voulez-vous enregistrer les modification ?")) {
-                    GUIUtils.disAllTextField(panelInfoCpt);
+            if (GUIUtil.checkForm(panelInfoCpt)) {
+                if (GUIUtil.showConfBox("Voulez-vous enregistrer les modification ?")) {
+                    GUIUtil.disAllTextField(panelInfoCpt);
                     String pass = String.valueOf(txtInfosNvMDP.getPassword(), 0, txtInfosNvMDP.getPassword().length);
                     Compte cpt = new Compte(cptInfo.getId_cpt(), txtMesInfosNom.getText(),
                             txtMesInfosPrenom.getText(),
@@ -330,9 +330,9 @@ public class InterfaceInfoCompte extends javax.swing.JFrame {
                     System.out.println("Compte not Null");
                     //new InterfaceInfoCompte("Information Comptes - " + c.getNom_cpt() + " " + c.getPrenom_cpt(), c).setVisible(true);
                 } else {
-                    GUIUtils.showMsgBox("Compte Invalid !!");
+                    GUIUtil.showMsgBox("Compte Invalid !!");
                 }
-                GUIUtils.showMsgBox(c.getClass().getName());
+                GUIUtil.showMsgBox(c.getClass().getName());
 
             }
         });

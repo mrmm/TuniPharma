@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.Message;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -30,9 +32,13 @@ public class MessagesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static MessagesDAO getInstance() throws SQLException {
+    public static MessagesDAO getInstance() {
         if (instance == null) {
-            instance = new MessagesDAO();
+            try {
+                instance = new MessagesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(MessagesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
@@ -66,6 +72,24 @@ public class MessagesDAO {
         Message msg;
         String sql = "SELECT * FROM Messages";
         try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Message(int id_Message, int id_pha, Date date_Message, String nom_Message, String desc_Message, Boolean etat_Message) {
+                msg = new Message(res.getInt(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getDate(6), res.getBoolean(7));
+                l.add(msg);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
+    public List<Message> readAllByIdUser(int id) {
+        List< Message> l = new ArrayList<Message>();
+        Message msg;
+        String sql = "SELECT * FROM Messages WHERE id_bt_src="+id+" OR id_bt_dst="+id;
+        System.out.println("Requette SQL MessagesDAO - readAllByIdUser : "+sql);
+        try {
+            
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 //public Message(int id_Message, int id_pha, Date date_Message, String nom_Message, String desc_Message, Boolean etat_Message) {

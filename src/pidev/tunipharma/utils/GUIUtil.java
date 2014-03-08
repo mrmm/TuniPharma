@@ -36,8 +36,10 @@ import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Demande;
 import pidev.tunipharma.classes.Evenement;
 import pidev.tunipharma.classes.Gouvernorat;
+import pidev.tunipharma.classes.Message;
 import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.classes.Ville;
+import pidev.tunipharma.dao.BoitesMessagesDAO;
 import pidev.tunipharma.dao.ComptesDAO;
 import pidev.tunipharma.dao.DemandesDAO;
 import pidev.tunipharma.dao.GouvernoratsDAO;
@@ -49,7 +51,7 @@ import pidev.tunipharma.gui.TableButton;
  *
  * @author elron
  */
-public class GUIUtils {
+public class GUIUtil {
 
     // <editor-fold defaultstate="collapsed" desc="Traitement - Gouvernorat & Villes ">
     // Remplissage des Villes dans ComboBox, selon ID Gouvernorat selectionné
@@ -83,7 +85,7 @@ public class GUIUtils {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    GUIUtils.fillVillesCB(cbVille, ((Gouvernorat) e.getItem()).getId_gouv(), all);
+                    GUIUtil.fillVillesCB(cbVille, ((Gouvernorat) e.getItem()).getId_gouv(), all);
                 }
             }
         });
@@ -228,6 +230,7 @@ public class GUIUtils {
     }
 
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Ajout de Listener - onChange">
     public static void onChangeEmpty(final JTextComponent c, final JButton b) {
         c.addCaretListener(new CaretListener() {
@@ -342,6 +345,7 @@ public class GUIUtils {
     }
 
     //</editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Manipulation des JTables">
     public static DefaultTableModel getModel(Object[][] data, Object[] cols) {
         DefaultTableModel model = new DefaultTableModel(data, cols) {
@@ -391,8 +395,8 @@ public class GUIUtils {
                 });
             }
         }
-        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(2));
-        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 2));
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_ACCEPTER_REFUSER));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_ACCEPTER_REFUSER));
     }
 
     public static void rempTableDmdEvent(JTable t, List<Evenement> l) {
@@ -413,13 +417,13 @@ public class GUIUtils {
                     d.getId_dmd(),
                     p.getNom_pha(),
                     d.getDate_dmd(),
-                    de+"/"+de.getTime(),
+                    de + "/" + de.getTime(),
                     ""
                 });
             }
         }
-        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(2));
-        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, 2));
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_ACCEPTER_REFUSER));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_ACCEPTER_REFUSER));
     }
 
     public static void rempTablePha(JTable t, List<Pharmacie> l) {
@@ -436,10 +440,10 @@ public class GUIUtils {
             g = GouvernoratsDAO.getInstance().readById(p.getGouv_pha());
             v = VillesDAO.getInstance().readById(p.getVille_pha());
             r = ComptesDAO.getInstance().readById(p.getId_resp());
-            model.addRow(new Object[]{p.getId_pha(), p.getNom_pha(), r.getNom_cpt() + " " + r.getPrenom_cpt(), g.getNom_gouv(), v.getNom_ville(), p});
+            model.addRow(new Object[]{p.getId_pha(), p.getNom_pha(), r.getNom_cpt() + " " + r.getPrenom_cpt(), g.getNom_gouv(), v.getNom_ville(), p.getTypePhaNom(), p});
         }
-        t.getColumnModel().getColumn(5).setCellRenderer(TableButton.getBtRenderer(1));
-        t.getColumnModel().getColumn(5).setCellEditor(TableButton.getBtEditor(t, 1));
+        t.getColumnModel().getColumn(5).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_SUPPRIMER));
+        t.getColumnModel().getColumn(5).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_SUPPRIMER));
     }
 
     public static void remAllRows(JTable t) {
@@ -459,9 +463,36 @@ public class GUIUtils {
         t.setModel(dm);
     }
 
+    public static void rempTableMesMsg(JTable t, List<Message> l) {
+        remAllRows(t);
+        System.out.println("Taille de liste rempTableMesMsg " + l.size());
+        Iterator<Message> it = l.iterator();
+        DefaultTableModel model = (DefaultTableModel) t.getModel();
+        Message m;
+        while (it.hasNext()) {
+            m = it.next();
+            Compte cSrc = ComptesDAO.getInstance().readById(BoitesMessagesDAO.getInstance().readById(m.getId_bt_src()).getId_cpt());
+            Compte cDst = ComptesDAO.getInstance().readById(BoitesMessagesDAO.getInstance().readById(m.getId_bt_dst()).getId_cpt());
+            model.addRow(new Object[]{
+                m.getId_msg(),
+                cSrc,
+                cDst,
+                m.getDate_msg(),
+                m.getSujet_msg(),
+                m.getCorps_msg(),
+                ""
+            });
+        }
+        System.out.println("Nombres de column : "+t.getColumnCount());
+        t.getColumnModel().getColumn(6).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_REPONDRE_SUPPRIMER));
+        t.getColumnModel().getColumn(6).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_REPONDRE_SUPPRIMER));
+    }
+
     // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="JTable Manipulation">
 // </editor-fold>
+
     public static void addCompPanel(JPanel p, Component[] c) {
         if (c[0] instanceof JRootPane) {
             addCompPanel(p, ((JRootPane) c[0]).getComponents());
@@ -503,14 +534,14 @@ public class GUIUtils {
     public static void disAllTextField(JPanel p) {
         Component[] comp = p.getComponents();
         p.removeAll();
-        for (int i = 0; i < comp.length; i++) {
-            if (comp[i] instanceof JTextField) {
-                JTextField tf = (JTextField) comp[i];
+        for (Component comp1 : comp) {
+            if (comp1 instanceof JTextField) {
+                JTextField tf = (JTextField) comp1;
                 tf.setEnabled(false);
                 p.add(tf);
-            } else if (comp[i] instanceof JScrollPane) {
+            } else if (comp1 instanceof JScrollPane) {
                 // Reset des zone de texte dans ScrollPane - Text Area
-                JScrollPane js = (JScrollPane) comp[i];
+                JScrollPane js = (JScrollPane) comp1;
                 Component[] jsComp = js.getViewport().getComponents();
                 JTextArea ta = (JTextArea) jsComp[0];
                 ta.setEnabled(false);
@@ -519,7 +550,7 @@ public class GUIUtils {
                 js.setViewport(jvp);
                 p.add(js);
             } else {
-                p.add(comp[i]);
+                p.add(comp1);
             }
         }
     }

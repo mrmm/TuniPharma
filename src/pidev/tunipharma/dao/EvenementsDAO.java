@@ -6,6 +6,7 @@
 package pidev.tunipharma.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,12 +54,13 @@ public class EvenementsDAO {
             PreparedStatement pstmt = connexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setInt(1, obj.getId_pha());
-            pstmt.setDate(2, obj.getDate_event());
+            pstmt.setDate(2, (Date) obj.getDate_event());
             pstmt.setString(3, obj.getNom_event());
             pstmt.setString(4, obj.getDesc_event());
             pstmt.setBoolean(5, obj.isEtat_event());
-
-            obj.setId_pha(pstmt.executeUpdate());
+            System.out.println("SQL EvenementDAO - create : "+pstmt.toString());
+            obj.setId_event(pstmt.executeUpdate());
+            System.out.println(""+obj);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -111,7 +113,7 @@ public class EvenementsDAO {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
 
             pstmt.setInt(1, obj.getId_pha());
-            pstmt.setDate(2, obj.getDate_event());
+            pstmt.setDate(2, (Date) obj.getDate_event());
             pstmt.setString(3, obj.getNom_event());
             pstmt.setString(4, obj.getDesc_event());
             pstmt.setBoolean(5, obj.isEtat_event());

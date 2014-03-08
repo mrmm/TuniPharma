@@ -32,7 +32,7 @@ public class Session {
     public static void deconnecter() {
         ses = null;
         cptConn = null;
-        GUIUtils.showMsgBox("Vous êtes deconnecté !");
+        GUIUtil.showMsgBox("Vous êtes deconnecté !");
     }
 
     public static Compte getCptConn() {

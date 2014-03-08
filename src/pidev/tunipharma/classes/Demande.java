@@ -26,7 +26,7 @@ public class Demande {
         this.id_dmd = id_dmd;
         this.type_dmd = type_dmd;
         this.date_dmd = date_dmd;
-        this.date_dmd = date_dmd;
+        this.id_cpt_dmd = id_cpt_dmd;
         this.id_concerne_dmd = id_concerne_dmd;
     }
 

@@ -54,7 +54,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="panelInfoPerso">
+        <Container class="javax.swing.JPanel" name="jPanel787">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Informations personnelles">
@@ -73,7 +73,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="36" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -94,17 +94,20 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel11" alignment="1" max="32767" attributes="0"/>
+                      <Component id="panelInfoPerso" alignment="1" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="panelInfoPerso" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="jPanel11">
+                <Container class="javax.swing.JPanel" name="panelInfoPerso">
                   <Properties>
                     <Property name="name" type="java.lang.String" value="" noResource="true"/>
                   </Properties>
@@ -115,50 +118,52 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel26" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
-                                                  <Component id="jLabel32" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                                                  <Component id="jLabel28" min="-2" pref="170" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel31" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel34" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel30" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
-                                                  <Component id="jLabel29" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
-                                                  <Component id="jLabel27" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="txtMesInfosNom" max="32767" attributes="0"/>
-                                              <Component id="txtMesInfosPrenom" max="32767" attributes="0"/>
-                                              <Component id="txtMesInfosEmail" max="32767" attributes="0"/>
-                                              <Component id="txtMesInfosTel" max="32767" attributes="0"/>
-                                              <Component id="txtMeInfosAncientMDP" max="32767" attributes="0"/>
-                                              <Component id="txtMeInfosNvRMDP" max="32767" attributes="0"/>
-                                              <Component id="txtMeInfosNvMDP" min="-2" pref="242" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jScrollPane10" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel24" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
-                                      <Component id="btMesInfoConfirmer" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btMesInfoAnnuler" min="-2" pref="191" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jLabel26" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
+                                                          <Component id="jLabel32" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                                                          <Component id="jLabel28" min="-2" pref="170" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="jLabel31" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jLabel34" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="jLabel30" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
+                                                          <Component id="jLabel29" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
+                                                          <Component id="jLabel27" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="txtMesInfosNom" max="32767" attributes="0"/>
+                                                      <Component id="txtMesInfosPrenom" max="32767" attributes="0"/>
+                                                      <Component id="txtMesInfosEmail" max="32767" attributes="0"/>
+                                                      <Component id="txtMesInfosTel" max="32767" attributes="0"/>
+                                                      <Component id="txtMeInfosAncientMDP" max="32767" attributes="0"/>
+                                                      <Component id="txtMeInfosNvRMDP" max="32767" attributes="0"/>
+                                                      <Component id="txtMeInfosNvMDP" min="-2" pref="242" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="jScrollPane10" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="btMesInfoConfirmer" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="btMesInfoAnnuler" min="-2" pref="191" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace pref="506" max="32767" attributes="0"/>
@@ -207,22 +212,17 @@
                                   <Component id="txtMeInfosNvRMDP" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="157" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="btMesInfoConfirmer" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btMesInfoAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jScrollPane10" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane10" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace pref="79" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btMesInfoConfirmer" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btMesInfoAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -353,6 +353,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Annuler"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMesInfoAnnulerActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtMeInfosNvRMDP">
                       <Properties>
@@ -425,7 +428,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableMesMsg.setToolTipText(&quot;&quot;);&#xa;tableMesMsg = makeTable(GUIUtils.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;De&quot;, &quot;&#xc0;&quot;, &quot;Date&quot;, &quot;Objet&quot;, &quot;Message&quot;, &quot;Options&quot;&#xa;    }),6,2);&#xa;tableMesMsg.setName(&quot;tableMesMsg&quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableMesMsg.setToolTipText(&quot;&quot;);&#xa;tableMesMsg = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}}, new String [] {&#xa;        &quot;ID&quot;, &quot;De&quot;, &quot;&#xc0;&quot;, &quot;Date&quot;, &quot;Objet&quot;, &quot;Message&quot;, &quot;Options&quot;&#xa;    }),6,TableButton.AFFFICHER_REPONDRE_SUPPRIMER);&#xa;tableMesMsg.setName(&quot;tableMesMsg&quot;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -979,7 +982,7 @@
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                    <TitledBorder justification="2" title="Evenement">
+                                    <TitledBorder justification="2" title="Ajout Evenement">
                                       <Font PropertyName="font" name="Tahoma" size="14" style="1"/>
                                       <Color PropertyName="color" blue="66" green="0" red="0" type="rgb"/>
                                     </TitledBorder>
@@ -993,7 +996,7 @@
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                       <Component id="jLabel35" pref="186" max="32767" attributes="0"/>
                                                       <Component id="jLabel36" alignment="0" max="32767" attributes="0"/>
@@ -1004,14 +1007,14 @@
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                       <Group type="102" attributes="0">
                                                           <Component id="spMaPhaAjoutEventHeure" min="-2" pref="80" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
                                                           <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <EmptySpace max="32767" attributes="0"/>
                                                           <Component id="spMaPhaAjoutEventMin" min="-2" pref="80" max="-2" attributes="0"/>
                                                       </Group>
-                                                      <Component id="calendarAjoutEvent" max="32767" attributes="0"/>
                                                       <Component id="jScrollPane11" alignment="0" max="32767" attributes="0"/>
                                                       <Component id="txtMaPhaAjoutEventNom" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="dateChooserAjoutEvent" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
@@ -1021,7 +1024,7 @@
                                                   <Component id="btMaPhaAjoutEventAnnuler" min="-2" pref="135" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace pref="303" max="32767" attributes="0"/>
+                                          <EmptySpace pref="353" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1033,35 +1036,29 @@
                                               <Component id="jLabel33" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                               <Component id="txtMaPhaAjoutEventNom" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jScrollPane11" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel35" min="-2" pref="23" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                                  <Component id="jLabel36" min="-2" pref="23" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="119" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="calendarAjoutEvent" min="-2" pref="156" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jLabel36" min="-2" pref="23" max="-2" attributes="0"/>
+                                              <Component id="dateChooserAjoutEvent" min="-2" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jLabel44" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                                               <Component id="spMaPhaAjoutEventMin" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="spMaPhaAjoutEventHeure" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="btMaPhaAjoutEventConfirmer" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="btMaPhaAjoutEventAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1165,7 +1162,7 @@
                                     <Property name="text" type="java.lang.String" value=":"/>
                                   </Properties>
                                 </Component>
-                                <Component class="com.toedter.calendar.JCalendar" name="calendarAjoutEvent">
+                                <Component class="com.toedter.calendar.JDateChooser" name="dateChooserAjoutEvent">
                                 </Component>
                               </SubComponents>
                             </Container>
@@ -1222,10 +1219,10 @@
                               <Properties>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="5" rowCount="0">
-                                    <Column editable="true" title="Source" type="java.lang.Object"/>
-                                    <Column editable="true" title="Date" type="java.lang.Object"/>
-                                    <Column editable="true" title="Objet" type="java.lang.Object"/>
-                                    <Column editable="true" title="Message" type="java.lang.Object"/>
+                                    <Column editable="true" title="ID" type="java.lang.Object"/>
+                                    <Column editable="true" title="Type" type="java.lang.Object"/>
+                                    <Column editable="true" title="Nom" type="java.lang.Object"/>
+                                    <Column editable="true" title="Descriptions" type="java.lang.Object"/>
                                     <Column editable="true" title="Options" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
@@ -1279,20 +1276,20 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel15" alignment="0" max="32767" attributes="0"/>
+                              <Component id="panelAjoutService" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
+                                  <Component id="panelAjoutService" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Container class="javax.swing.JPanel" name="jPanel15">
+                        <Container class="javax.swing.JPanel" name="panelAjoutService">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -1317,8 +1314,8 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="comboBoxMaPhaAjoutSrvType" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtMaPhaAjoutSrvNom" max="32767" attributes="0"/>
                                           <Component id="jScrollPane14" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txtnom10" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
@@ -1337,7 +1334,7 @@
                                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel48" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                          <Component id="txtnom10" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                          <Component id="txtMaPhaAjoutSrvNom" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -1347,7 +1344,7 @@
                                               <Component id="comboBoxMaPhaAjoutSrvType" pref="25" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel47" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
                                           <Component id="jScrollPane14" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
@@ -1357,18 +1354,18 @@
                                           <Component id="buttonMaPhaAjoutSrvAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="buttonMaPhaAjoutSrvConfirmer" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="239" max="32767" attributes="0"/>
+                                      <EmptySpace pref="221" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JTextField" name="txtnom10">
+                            <Component class="javax.swing.JTextField" name="txtMaPhaAjoutSrvNom">
                               <Properties>
                                 <Property name="name" type="java.lang.String" value="txtnom" noResource="true"/>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtnom10ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMaPhaAjoutSrvNomActionPerformed"/>
                               </Events>
                             </Component>
                             <Container class="javax.swing.JScrollPane" name="jScrollPane14">
@@ -1422,6 +1419,9 @@
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Confirmer ajout"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMaPhaAjoutSrvConfirmerActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JButton" name="buttonMaPhaAjoutSrvAnnuler">
                               <Properties>

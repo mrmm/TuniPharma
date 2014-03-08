@@ -24,6 +24,9 @@ public class Pharmacie {
     int ville_pha;
     int gouv_pha;
 
+    public final static int PHARMACIE_DE_JOUR=1;
+    public final static int PHARMACIE_DE_NUIT=2;
+    
     public Pharmacie(int id_pha, int id_resp, String nom_pha, String addresse_pha, int tel_pha, int fax_pha, String lat_gm_pha, String long_gm_pha, String email_pha, int type_pha, int ville_pha, int gouv_pha) {
         this.id_pha = id_pha;
         this.id_resp = id_resp;
@@ -169,9 +172,9 @@ public class Pharmacie {
     
     public String getTypePhaNom() {
         switch (type_pha) {
-            case 1:
+            case PHARMACIE_DE_JOUR:
                 return "Jour";
-            case 2:
+            case PHARMACIE_DE_NUIT:
                 return "Nuit";
             default:
                 return "Inconnu";

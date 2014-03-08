@@ -52,11 +52,11 @@ public class DemandesDAO {
                 + "(?,NOW( ),?,?);";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
             pstmt.setInt(1, obj.getType_dmd());
             //pstmt.setDate(2, obj.getDate_dmd());
             pstmt.setInt(2, obj.getId_cpt_dmd());
             pstmt.setInt(3, obj.getId_concerne_dmd());
+            System.out.println("SQL create - Demmande DAO : "+pstmt.toString());
 
             obj.setId_dmd(pstmt.executeUpdate());
         } catch (SQLException ex) {

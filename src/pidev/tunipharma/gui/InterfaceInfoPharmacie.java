@@ -8,7 +8,7 @@ package pidev.tunipharma.gui;
 import javax.swing.JButton;
 import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.dao.PharmaciesDAO;
-import pidev.tunipharma.utils.GUIUtils;
+import pidev.tunipharma.utils.GUIUtil;
 
 /**
  *
@@ -30,7 +30,7 @@ public class InterfaceInfoPharmacie extends javax.swing.JFrame {
             System.out.println("Pharmacie not Null");
             titre = "Information Pharmacie - " + p.getNom_pha();
         } else {
-            GUIUtils.showMsgBox("Pharmacie Invalid !!");
+            GUIUtil.showMsgBox("Pharmacie Invalid !!");
             this.dispose();
         }
         this.setTitle(titre);
@@ -285,13 +285,12 @@ public class InterfaceInfoPharmacie extends javax.swing.JFrame {
     private void btModCptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModCptActionPerformed
         // TODO add your handling code here:
         if (((JButton) evt.getSource()).getText().equals("Modifier Compte")) {
-            GUIUtils.enAllTextField(panelInfoPha);
-            GUIUtils.enAllTextField(panelInfoPha);
+            GUIUtil.enAllTextField(panelInfoPha);
             btModCpt.setText("Enregistrer Modification");
         } else {
-            if (GUIUtils.checkForm(panelInfoPha)) {
-                if (GUIUtils.showConfBox("Voulez-vous enregistrer les modification ?")) {
-                    GUIUtils.disAllTextField(panelInfoPha);
+            if (GUIUtil.checkForm(panelInfoPha)) {
+                if (GUIUtil.showConfBox("Voulez-vous enregistrer les modification ?")) {
+                    GUIUtil.enAllTextField(panelInfoPha);
                     String pass = String.valueOf(txtInfosNvMDP.getPassword(), 0, txtInfosNvMDP.getPassword().length);
 //                    Compte cpt = new Compte(phaInfo.getId_cpt(), txtMesInfosNom.getText(),
 //                        txtMesInfosPrenom.getText(),

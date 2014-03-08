@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.Service;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -30,9 +32,13 @@ public class ServicesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static ServicesDAO getInstance() throws SQLException {
+    public static ServicesDAO getInstance() {
         if (instance == null) {
-            instance = new ServicesDAO();
+            try {
+                instance = new ServicesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(ServicesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
