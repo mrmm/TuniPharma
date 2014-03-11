@@ -66,7 +66,7 @@ public class PharmaciesDAO {
             pstmt.setInt(9, obj.getType_pha());
             pstmt.setInt(10, obj.getVille_pha());
             pstmt.setInt(11, obj.getGouv_pha());
-            
+
             System.out.println("SQL PharmaciesDAO - create: " + pstmt);
             obj.setId_pha(pstmt.executeUpdate());
             int last_inserted_id = -1;
@@ -168,8 +168,8 @@ public class PharmaciesDAO {
         }
     }
 
-    public List<Pharmacie> readByTypeVilleGouvTypeNom(int type, int ville, int gouv, String nom) {
-        List< Pharmacie> l = new ArrayList<Pharmacie>();
+    public List<Pharmacie> readByTypeVilleGouvTypeNom(int type, int gouv, int ville, String nom) {
+        List<Pharmacie> l = new ArrayList<Pharmacie>();
         Pharmacie pha;
         String sql = "SELECT * FROM Pharmacies WHERE "
                 + "ville_pha" + (ville > 0 ? "=" + ville : "!=-1")

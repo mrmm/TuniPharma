@@ -23,7 +23,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelInfoPha" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="panelInfoPha" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -54,28 +57,37 @@
                               <Component id="jLabel26" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
                               <Component id="jLabel28" alignment="0" pref="170" max="32767" attributes="0"/>
                               <Component id="jLabel27" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
-                              <Component id="jLabel32" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel31" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jLabel29" alignment="1" pref="169" max="32767" attributes="0"/>
+                              <Component id="jLabel29" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <Component id="jLabel32" min="-2" pref="170" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtMesInfosEmail" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtMesInfosVille" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jScrollPane10" alignment="0" pref="577" max="32767" attributes="0"/>
-                          <Component id="txtInfosGouvernorat" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtInfosTel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtInfosFax" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtInfosType" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtMesInfosNom" max="32767" attributes="0"/>
-                          <Component id="txtMesInfosResponsable" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jScrollPane10" alignment="0" max="32767" attributes="0"/>
+                          <Component id="PanelVote" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtMesInfosResponsable" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtMesInfosNom" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtInfosGouvernorat" max="32767" attributes="0"/>
+                          <Component id="txtInfosTel" max="32767" attributes="0"/>
+                          <Component id="txtInfosFax" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="PanelVote" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbImgTypePha" min="-2" pref="60" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="76" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="dateGarde" min="-2" pref="222" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btAjoutJourGarde" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane2" alignment="0" min="-2" pref="340" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -94,66 +106,82 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="55" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel30" alignment="1" min="-2" pref="56" max="-2" attributes="0"/>
-                      <Component id="PanelVote" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="txtMesInfosNom" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel30" alignment="1" min="-2" pref="56" max="-2" attributes="0"/>
+                              <Component id="PanelVote" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="txtMesInfosNom" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="txtMesInfosResponsable" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtMesInfosEmail" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtMesInfosVille" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
+                                  <Component id="jLabel27" min="-2" pref="20" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel26" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txtMesInfosResponsable" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtInfosGouvernorat" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtMesInfosEmail" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtMesInfosVille" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                              <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtInfosTel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
-                          <Component id="jLabel27" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="btAjoutJourGarde" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="dateGarde" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="239" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLabel26" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtInfosGouvernorat" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtInfosTel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtInfosFax" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel36" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtInfosType" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane10" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="lbImgTypePha" min="-2" pref="60" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane10" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="33" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                          <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btModCpt" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btAnnuler" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -244,8 +272,6 @@
             <Property name="text" type="java.lang.String" value="Gouvenorat :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosGouvernorat">
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel34">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -253,8 +279,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Tel : "/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosTel">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel32">
           <Properties>
@@ -286,9 +310,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Modifier Pharmacie"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btModCptActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btAnnuler">
           <Properties>
@@ -305,10 +326,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Fax : "/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosFax">
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="txtInfosType">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel36">
           <Properties>
@@ -331,17 +348,18 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="Etoile1" min="-2" pref="46" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="Etoile1" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Etoile2" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                      <Component id="Etoile3" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="Etoile2" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="Etoile3" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Etoile4" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="Etoile4" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Etoile5" min="-2" pref="41" max="-2" attributes="0"/>
-                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                      <Component id="Etoile5" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -350,13 +368,13 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="Etoile2" pref="42" max="32767" attributes="0"/>
-                          <Component id="Etoile1" pref="0" max="32767" attributes="0"/>
-                          <Component id="Etoile3" pref="0" max="32767" attributes="0"/>
-                          <Component id="Etoile4" pref="0" max="32767" attributes="0"/>
-                          <Component id="Etoile5" pref="0" max="32767" attributes="0"/>
+                          <Component id="Etoile2" pref="40" max="32767" attributes="0"/>
+                          <Component id="Etoile1" pref="40" max="32767" attributes="0"/>
+                          <Component id="Etoile3" pref="40" max="32767" attributes="0"/>
+                          <Component id="Etoile4" pref="40" max="32767" attributes="0"/>
+                          <Component id="Etoile5" pref="40" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -408,6 +426,46 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="lbImgTypePha">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtInfosGouvernorat">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtInfosTel">
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtInfosFax">
+        </Component>
+        <Component class="javax.swing.JButton" name="btAjoutJourGarde">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ajouter garde"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAjoutJourGardeActionPerformed"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="tableJourDeGarde">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="2" rowCount="0">
+                    <Column editable="false" title="Jour" type="java.lang.Object"/>
+                    <Column editable="false" title="Options" type="java.lang.Object"/>
+                  </Table>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tableJourDeGarde = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{}, new String [] {&#xa;        &quot;Jour&quot;, &quot;Options&quot;&#xa;    }),1,TableButton.SUPPRIMER);&#xa;tableJourDeGarde.setName(&quot;tableJourDeGarde&quot;);"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="com.toedter.calendar.JDateChooser" name="dateGarde">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

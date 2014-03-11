@@ -32,18 +32,23 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
+import pidev.tunipharma.classes.Calendrier;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Demande;
 import pidev.tunipharma.classes.Evenement;
 import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.classes.Message;
 import pidev.tunipharma.classes.Pharmacie;
+import pidev.tunipharma.classes.Service;
+import pidev.tunipharma.classes.TypeService;
 import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.BoitesMessagesDAO;
+import pidev.tunipharma.dao.CalendriersDAO;
 import pidev.tunipharma.dao.ComptesDAO;
 import pidev.tunipharma.dao.DemandesDAO;
 import pidev.tunipharma.dao.GouvernoratsDAO;
 import pidev.tunipharma.dao.PharmaciesDAO;
+import pidev.tunipharma.dao.TypesServiceDAO;
 import pidev.tunipharma.dao.VillesDAO;
 import pidev.tunipharma.gui.TableButton;
 
@@ -63,6 +68,15 @@ public class GUIUtil {
         List<Ville> lv = (id > 0 ? VillesDAO.getInstance().readAllByIdGouv(id) : VillesDAO.getInstance().readAll());
         for (Ville v : lv) {
             cb.addItem(v);
+        }
+
+    }
+
+    public static void fillTypeSrvCB(JComboBox cb) {
+        cb.removeAllItems();
+        List<TypeService> lTypeService = TypesServiceDAO.getInstance().readAll();
+        for (TypeService ts : lTypeService) {
+            cb.addItem(ts);
         }
 
     }
@@ -233,6 +247,7 @@ public class GUIUtil {
     }
 
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Ajout de Listener - onChange">
     public static void onChangeEmpty(final JTextComponent c, final JButton b) {
         c.addCaretListener(new CaretListener() {
@@ -375,6 +390,41 @@ public class GUIUtil {
 //        System.out.println(t.getColumnModel().getColumn(4).getCellRenderer().getClass().getName());
     }
 
+    public static void rempTableSrv(JTable t, List<Service> l) {
+        remAllRows(t);
+        System.out.println("Taille de liste " + l.size());
+        Iterator<Service> it = l.iterator();
+        DefaultTableModel model = (DefaultTableModel) t.getModel();
+        Service s;
+        while (it.hasNext()) {
+            s = it.next();
+            TypeService ts = TypesServiceDAO.getInstance().readById(s.getId_type_srv());
+            model.addRow(new Object[]{s.getId_srv(), ts.getNom_type_srv(), s.getNom_srv(), s.getDescription_srv(), s});
+        }
+
+        //t.getColumnModel().getColumn(4).setCellRenderer(null);
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(TableButton.SUPPRIMER));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, TableButton.SUPPRIMER));
+//        System.out.println(t.getColumnModel().getColumn(4).getCellRenderer().getClass().getName());
+    }
+
+    public static void rempTableEvent(JTable t, List<Evenement> l) {
+        remAllRows(t);
+        System.out.println("Taille de liste " + l.size());
+        Iterator<Evenement> it = l.iterator();
+        DefaultTableModel model = (DefaultTableModel) t.getModel();
+        Evenement e;
+        while (it.hasNext()) {
+            e = it.next();
+            model.addRow(new Object[]{e.getId_event(), e.getNom_event(), e.getDesc_event(), e.getDate_event(), e});
+        }
+
+        //t.getColumnModel().getColumn(4).setCellRenderer(null);
+        t.getColumnModel().getColumn(4).setCellRenderer(TableButton.getBtRenderer(TableButton.SUPPRIMER));
+        t.getColumnModel().getColumn(4).setCellEditor(TableButton.getBtEditor(t, TableButton.SUPPRIMER));
+//        System.out.println(t.getColumnModel().getColumn(4).getCellRenderer().getClass().getName());
+    }
+
     public static void rempTableNouvInscri(JTable t, List<Compte> l) {
         remAllRows(t);
         System.out.println("Taille de liste rempTableNouvInscri : " + l.size());
@@ -418,7 +468,7 @@ public class GUIUtil {
                     d.getId_dmd(),
                     p.getNom_pha(),
                     d.getDate_dmd(),
-                    de + "/" + de.getTime(),
+                    de,
                     ""
                 });
             }
@@ -443,8 +493,8 @@ public class GUIUtil {
             r = ComptesDAO.getInstance().readById(p.getId_resp());
             model.addRow(new Object[]{p.getId_pha(), p.getNom_pha(), r.getNom_cpt() + " " + r.getPrenom_cpt(), g.getNom_gouv(), v.getNom_ville(), p.getTypePhaNom(), p});
         }
-        t.getColumnModel().getColumn(5).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_SUPPRIMER));
-        t.getColumnModel().getColumn(5).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_SUPPRIMER));
+        t.getColumnModel().getColumn(6).setCellRenderer(TableButton.getBtRenderer(TableButton.AFFFICHER_SUPPRIMER));
+        t.getColumnModel().getColumn(6).setCellEditor(TableButton.getBtEditor(t, TableButton.AFFFICHER_SUPPRIMER));
     }
 
     public static void remAllRows(JTable t) {
@@ -454,13 +504,63 @@ public class GUIUtil {
         for (int i = 0; i < colCount; i++) {
             tab[i] = dm.getColumnName(i);
         }
+        //System.out.println("JTable Name "+ t.getName());
         dm = new DefaultTableModel(tab, 0);
         t.setModel(dm);
+    }
+
+    public static void addAllDateToDB(JTable t, int id_pha) {
+        DefaultTableModel dm = (DefaultTableModel) t.getModel();
+        for (int i = 0; i < dm.getRowCount(); i++) {
+            Date dateToInsert = (Date) t.getModel().getValueAt(i, 1);
+            CalendriersDAO.getInstance().create(new Calendrier(-1, id_pha, 0, 0, dateToInsert.getDate(), dateToInsert.getMonth(), dateToInsert.getYear()));
+        }
+    }
+
+    public static void addAllDateFromDB(JTable t, int id_pha) {
+        remAllRows(t);
+        String nJ[] = {"Dimamche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+        String nM[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Novembre", "Decembre"};
+        DefaultTableModel dm = (DefaultTableModel) t.getModel();
+
+        int i = 0;
+        for (Calendrier c : CalendriersDAO.getInstance().readAllByIdPha(id_pha)) {
+            Date dateToInsert = new Date(c.getAnnee(), c.getMois(), c.getJour());
+            String dateString = nJ[dateToInsert.getDay()] + " " + c.getJour() + " " + nM[c.getMois()] + " " + (c.getAnnee() + 1900);
+            dm.addRow(new Object[]{dateString, c});
+        }
+        t.getColumnModel().getColumn(1).setCellRenderer(TableButton.getBtRenderer(TableButton.SUPPRIMER));
+        t.getColumnModel().getColumn(1).setCellEditor(TableButton.getBtEditor(t, TableButton.SUPPRIMER));
     }
 
     public static void addRow(JTable t, Object[] o) {
         DefaultTableModel dm = (DefaultTableModel) t.getModel();
         dm.addRow(o);
+        t.setModel(dm);
+    }
+
+    public static void addRowCallTable(JTable t, Date d) {
+        //String s = d.getDate() + "/" + d.getMonth() + "/" + (d.getYear() + 1900);
+        String nJ[] = {"Dimamche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+        String nM[] = {"Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Novembre", "Decembre"};
+        DefaultTableModel dm = (DefaultTableModel) t.getModel();
+        boolean test = true;
+        int i = 0;
+        String dateInser = nJ[d.getDay()] + " " + d.getDate() + " " + nM[d.getMonth()] + " " + (d.getYear() + 1900);
+        while (i < dm.getRowCount() && test) {
+            String dateTest = (String) t.getModel().getValueAt(i, 0);
+            if (dateTest.equals(dateInser)) {
+                test = false;
+            }
+            i++;
+        }
+        if (test) {
+            dm.addRow(new Object[]{dateInser, d});
+        } else {
+            showMsgBox(t, "La date existe deja dans le tableau !!");
+        }
+        t.getColumnModel().getColumn(1).setCellRenderer(TableButton.getBtRenderer(TableButton.SUPPRIMER));
+        t.getColumnModel().getColumn(1).setCellEditor(TableButton.getBtEditor(t, TableButton.SUPPRIMER));
         t.setModel(dm);
     }
 
@@ -473,7 +573,9 @@ public class GUIUtil {
         while (it.hasNext()) {
             m = it.next();
             Compte cSrc = ComptesDAO.getInstance().readById(BoitesMessagesDAO.getInstance().readById(m.getId_bt_src()).getId_cpt());
+            cSrc = (cSrc != null ? cSrc : new Compte(-1, "Inconnu", null, null, null, null, 1, -1, true));
             Compte cDst = ComptesDAO.getInstance().readById(BoitesMessagesDAO.getInstance().readById(m.getId_bt_dst()).getId_cpt());
+            cDst = (cDst != null ? cDst : new Compte(-1, "Inconnu", null, null, null, null, 1, -1, true));
             model.addRow(new Object[]{
                 m.getId_msg(),
                 cSrc,
@@ -491,7 +593,7 @@ public class GUIUtil {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="JTable Manipulation">
-// </editor-fold>
+    // </editor-fold>
     public static void addCompPanel(JPanel p, Component[] c) {
         if (c[0] instanceof JRootPane) {
             addCompPanel(p, ((JRootPane) c[0]).getComponents());
@@ -532,51 +634,24 @@ public class GUIUtil {
 
     public static void disAllTextField(JPanel p) {
         Component[] comp = p.getComponents();
-        p.removeAll();
-        for (Component comp1 : comp) {
-            if (comp1 instanceof JTextField) {
-                JTextField tf = (JTextField) comp1;
-                tf.setEnabled(false);
-                p.add(tf);
-            } else if (comp1 instanceof JScrollPane) {
-                // Reset des zone de texte dans ScrollPane - Text Area
-                JScrollPane js = (JScrollPane) comp1;
-                Component[] jsComp = js.getViewport().getComponents();
-                JTextArea ta = (JTextArea) jsComp[0];
-                ta.setEnabled(false);
-                JViewport jvp = new JViewport();
-                jvp.setView(ta);
-                js.setViewport(jvp);
-                p.add(js);
-            } else {
-                p.add(comp1);
+        //p.removeAll();
+        for (int i = 0; i < comp.length; i++) {
+            if (comp[i] instanceof JTextField) {
+                p.getComponent(i).setEnabled(false);
+            } else if (comp[i] instanceof JScrollPane) {
+                p.getComponent(i).setEnabled(false);
+            } else if (comp[i] instanceof JComboBox) {
+                p.getComponent(i).setEnabled(true);
             }
         }
     }
 
     public static void enAllTextField(JPanel p) {
         Component[] comp = p.getComponents();
-        p.removeAll();
+        //p.removeAll();
         for (int i = 0; i < comp.length; i++) {
-            if (comp[i] instanceof JTextField) {
-                JTextField tf = (JTextField) comp[i];
-                tf.setBackground(Color.WHITE);
-                tf.setForeground(Color.BLACK);
-                tf.setEnabled(true);
-                p.add(tf);
-            } else if (comp[i] instanceof JScrollPane) {
-                // Reset des zone de texte dans ScrollPane - Text Area
-                JScrollPane js = (JScrollPane) comp[i];
-                Component[] jsComp = js.getViewport().getComponents();
-                JTextArea ta = (JTextArea) jsComp[0];
-                ta.setEnabled(true);
-                JViewport jvp = new JViewport();
-                jvp.setView(ta);
-                js.setViewport(jvp);
-                p.add(js);
-            } else {
-                p.add(comp[i]);
-            }
+            p.getComponent(i).setEnabled(true);
+            System.out.println("Enabling component " + p.getComponent(i).getClass().getName());
         }
     }
 }

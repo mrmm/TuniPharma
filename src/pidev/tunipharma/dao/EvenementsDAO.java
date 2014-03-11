@@ -89,6 +89,22 @@ public class EvenementsDAO {
         }
         return (l);
     }
+    public List<Evenement> readAllByIdPha(int id_pha) {
+        List< Evenement> l = new ArrayList<Evenement>();
+        Evenement event;
+        String sql = "SELECT * FROM Evenements WHERE id_pha="+id_pha;
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Evenement(int id_event, int id_pha, Date date_event, String nom_event, String desc_event, Boolean etat_event) {
+                event = new Evenement(res.getInt(1), res.getInt(2), res.getDate(3), res.getString(4), res.getString(5), res.getBoolean(6));
+                l.add(event);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (l);
+    }
 
     public Evenement readById(Integer id) {
         Evenement event = null;
@@ -136,6 +152,17 @@ public class EvenementsDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void deleteByIdPha(int id_pha) {
+        String sql;
+        sql = "DELETE FROM Evenements WHERE id_pha = ?;";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id_pha);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

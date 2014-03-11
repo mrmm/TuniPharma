@@ -3,17 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfacLoginInscrit.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceRepMessage.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceRecherchePharmacie.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/classes/Statistiques.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/utils/Session.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/BoitesMessagesDAO.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceAdmin.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceInfoCompte.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/TableButton.java</file>
-            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/classes/Demande.java</file>
-            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/EvenementsDAO.java</file>
-            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/DemandesDAO.java</file>
-            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/MessagesDAO.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceInscription.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/utils/CharUtil.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/connection/DBConnection.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceUtilisateur.java</file>
-            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/classes/Compte.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/ComptesDAO.java</file>
-            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceInfoPharmacie.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/classes/Compte.java</file>
             <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/utils/GUIUtil.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/gui/InterfaceInfoPharmacie.java</file>
+            <file>file:/home/elron/NetBeansProjects/ProjetPIDevJava%20-%20xInit/src/pidev/tunipharma/dao/PharmaciesDAO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -18,8 +19,6 @@ public class DBConnection {
 //    $mysql_database = "a8131179_pidev";
 //    $mysql_user = "a8131179_pidev";
 //    $mysql_password = "xinit2013";
-
-    
     private String url;
     private String user;
     private String password;

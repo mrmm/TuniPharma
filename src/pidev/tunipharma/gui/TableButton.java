@@ -11,13 +11,18 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+import pidev.tunipharma.classes.Calendrier;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Demande;
 import pidev.tunipharma.classes.Evenement;
+import pidev.tunipharma.classes.Service;
+import pidev.tunipharma.dao.CalendriersDAO;
 import pidev.tunipharma.dao.ComptesDAO;
 import pidev.tunipharma.dao.DemandesDAO;
 import pidev.tunipharma.dao.EvenementsDAO;
 import pidev.tunipharma.dao.PharmaciesDAO;
+import pidev.tunipharma.dao.ServicesDAO;
+import pidev.tunipharma.dao.VotesDAO;
 import pidev.tunipharma.utils.GUIUtil;
 
 public class TableButton extends JPanel {
@@ -25,6 +30,7 @@ public class TableButton extends JPanel {
     public final static int AFFFICHER_SUPPRIMER = 1;
     public final static int AFFFICHER_ACCEPTER_REFUSER = 2;
     public final static int AFFFICHER_REPONDRE_SUPPRIMER = 3;
+    public final static int SUPPRIMER = 4;
 
     public TableButton() {
         super(new BorderLayout());
@@ -99,7 +105,10 @@ class ButtonsPanel extends JPanel {
                 buttons = Arrays.asList(new JButton(new ImageIcon("img/edit.png")), new JButton(new ImageIcon("img/accept.png")), new JButton(new ImageIcon("img/deny.png")));
                 break;
             case TableButton.AFFFICHER_REPONDRE_SUPPRIMER:
-                buttons = Arrays.asList(new JButton(new ImageIcon("img/edit.png")), new JButton(new ImageIcon("img/accept.png")), new JButton(new ImageIcon("img/deny.png")));
+                buttons = Arrays.asList(new JButton(new ImageIcon("img/respond.png")), new JButton(new ImageIcon("img/delete.png")));
+                break;
+            case TableButton.SUPPRIMER:
+                buttons = Arrays.asList(new JButton(new ImageIcon("img/delete.png")));
                 break;
         }
 
@@ -149,7 +158,7 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                 if (disp) {
                     new InterfaceInfoCompte((int) id).setVisible(true);
                 }
-                res[0] += "supprimer le compte de " + table.getModel().getValueAt(row, 1) + " " + table.getModel().getValueAt(row, 2);
+                res[0] += " le compte de " + table.getModel().getValueAt(row, 1) + " " + table.getModel().getValueAt(row, 2);
                 res[2] = "1";
                 break;
             case "tableNouvInscriCpt":
@@ -164,12 +173,12 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                 if (disp) {
                     new InterfaceInfoPharmacie((int) id).setVisible(true);
                 }
-                res[0] += "supprimer la pharmacie " + table.getModel().getValueAt(row, 1);
+                res[0] += " la pharmacie " + table.getModel().getValueAt(row, 1);
                 res[2] = "2";
                 break;
             case "tableMesMsg":
                 if (disp) {
-                    new InterfaceInfoPharmacie((int) id).setVisible(true);
+                    new InterfaceRepMessage((int) id).setVisible(true);
                 }
                 res[0] += "supprimer ce message";
                 res[2] = "2";
@@ -192,12 +201,14 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                 }
             }
         };
-        buttons.get(0).addMouseListener(ml);
-        buttons.get(1).addMouseListener(ml);
 
         //Au cas de la modification 
         final Object[] daoInstances = new Object[]{ComptesDAO.getInstance(), PharmaciesDAO.getInstance(), EvenementsDAO.getInstance()};
         if (this.type == TableButton.AFFFICHER_SUPPRIMER) {
+
+            // Si le cas des Deux boutton AFFFICHER et SUPPRIMER (dans le cas des table de validation d'inscription et des evenement)
+            buttons.get(0).addMouseListener(ml);
+            buttons.get(1).addMouseListener(ml);
             buttons.get(0).addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -208,6 +219,7 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                     fireEditingStopped();
                 }
             });
+            //Au cas de clique sur les boutton supprimer
             buttons.get(1).addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -216,22 +228,36 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
 
                     String[] res = getTableInfosMod(table, row, false);
 
-                    if (GUIUtil.showConfBox("Voullez-vous " + res[0] + " ?")) {
-                        if (daoInstances[Integer.parseInt(res[2]) - 1] instanceof ComptesDAO) {
-                            ((ComptesDAO) daoInstances[Integer.parseInt(res[2]) - 1]).delete(Integer.parseInt(res[1]));
-                            //GUIUtils.showMsgBox("CompteDAO delete : "+Integer.parseInt(res[1]));
+                    if (GUIUtil.showConfBox(table, "Voullez-vous supprimer" + res[0] + " ?")) {
+                        if (res[2].equals("1")) {
+                            int id_cpt = Integer.parseInt(res[1]);
+                            
+                            
+                            
+                            ((ComptesDAO) daoInstances[Integer.parseInt(res[2]) - 1]).delete(id_cpt);
+                        
+                        
+                        
+                        
                         } else if (daoInstances[Integer.parseInt(res[2]) - 1] instanceof PharmaciesDAO) {
-                            ((PharmaciesDAO) daoInstances[Integer.parseInt(res[2]) - 1]).delete(Integer.parseInt(res[1]));
-                            //GUIUtils.showMsgBox("PharmaciesDAO dalete : "+Integer.parseInt(res[1]) );
+                            int id_pha = Integer.parseInt(res[1]);
+                            EvenementsDAO.getInstance().deleteByIdPha(id_pha);
+                            VotesDAO.getInstance().deleteByIdPha(id_pha);
+                            CalendriersDAO.getInstance().deleteByIdPha(id_pha);
+                            ((PharmaciesDAO) daoInstances[Integer.parseInt(res[2]) - 1]).delete(id_pha);
                         } else {
                             GUIUtil.showMsgBox("Ni Pharmacie, Ni Compte !! ");
                         }
-
+                        ((DefaultTableModel) table.getModel()).removeRow(row);
                     }
                 }
             });
 
         } else if (this.type == TableButton.AFFFICHER_ACCEPTER_REFUSER) {
+
+            // Si le cas des Trois boutton (dans le cas des table de validation d'inscription et des evenement)
+            buttons.get(0).addMouseListener(ml);
+            buttons.get(1).addMouseListener(ml);
             //Au cas de la vaidation de demande 
             buttons.get(2).addMouseListener(ml);
 
@@ -254,9 +280,10 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                             ((EvenementsDAO) daoInstances[Integer.parseInt(res[2]) - 1]).delete(d.getId_concerne_dmd());
                             //GUIUtils.showMsgBox("PharmaciesDAO dalete : "+Integer.parseInt(res[1]) );
                         } else {
-                            GUIUtil.showMsgBox(table, "Ni Pharmacie, Ni Compte !! ");
+                            //GUIUtil.showMsgBox(table, "Ni Pharmacie, Ni Compte !! ");
                         }
-
+                        // Suppression de la ligne de JTable
+                        ((DefaultTableModel) table.getModel()).removeRow(row);
                     }
                     fireEditingStopped();
                 }
@@ -292,7 +319,7 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                         msg += "Date de la demande : " + d.getDate_dmd().toString();
                         GUIUtil.showMsgBox(table, msg);
                     } else {
-                        GUIUtil.showMsgBox(table, "Ni Pharmacie, Ni Compte !! ");
+                        //GUIUtil.showMsgBox(table, "Ni Pharmacie, Ni Compte !! ");
                     }
 
                     fireEditingStopped();
@@ -320,13 +347,71 @@ class ButtonsEditor extends ButtonsPanel implements TableCellEditor {
                         } else {
                             GUIUtil.showMsgBox("Ni Pharmacie, Ni Compte !! ");
                         }
-
+                        // Suppression de la ligne de JTable
+                        ((DefaultTableModel) table.getModel()).removeRow(row);
                     }
                     fireEditingStopped();
                 }
             });
-        } else {
+        } else if (type == TableButton.SUPPRIMER) {
+            // Dans le cas d'un seul boutton 
+            buttons.get(0).addMouseListener(ml);
+            buttons.get(0).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int row = table.convertRowIndexToModel(table.getEditingRow());
+                    if (table.getName().equals("tableMaPhaJourDeGarde")) {
+                        if (GUIUtil.showConfBox(table, "Vouler-vous supprimer cette date ?")) {
+                            // Suppression de la ligne de JTable
+                            CalendriersDAO.getInstance().delete((Calendrier) table.getModel().getValueAt(row, 1));
+                            ((DefaultTableModel) table.getModel()).removeRow(row);
+                        }
+                    }
+                    if (table.getName().equals("tableMaPhaMesSrv")) {
+                        if (GUIUtil.showConfBox(table, "Vouler-vous supprimer ce service de votre pharmacie ?")) {
+                            // Suppression de la ligne de JTable
+                            ServicesDAO.getInstance().delete((int) table.getModel().getValueAt(row, 0));
+                            ((DefaultTableModel) table.getModel()).removeRow(row);
+                        }
+                    }
+                    if (table.getName().equals("tableMaPhaMesEvent")) {
+                        if (GUIUtil.showConfBox(table, "Vouler-vous supprimer cette événement de votre pharmacie ?")) {
+                            // Suppression de la ligne de JTable
+                            EvenementsDAO.getInstance().delete((int) table.getModel().getValueAt(row, 0));
+                            ((DefaultTableModel) table.getModel()).removeRow(row);
+                        }
+                    }
 
+                }
+            });
+        } else if (type == TableButton.AFFFICHER_REPONDRE_SUPPRIMER) {
+            buttons.get(0).addMouseListener(ml);
+            buttons.get(1).addMouseListener(ml);
+            buttons.get(0).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //JOptionPane.showMessageDialog(table, "Afficher/Modifier");
+                    int row = table.convertRowIndexToModel(table.getEditingRow());
+                    getTableInfosMod(table, row, true);
+                    Object id = table.getModel().getValueAt(row, 0);
+                    String msg = "";
+
+                    fireEditingStopped();
+                }
+            });
+            //Au cas de clique sur les boutton supprimer
+            buttons.get(1).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //JOptionPane.showMessageDialog(table, "Afficher/Modifier");
+                    int row = table.convertRowIndexToModel(table.getEditingRow());
+                    Object id = table.getModel().getValueAt(row, 0);
+                    getTableInfosMod(table, row, false);
+                    EvenementsDAO.getInstance().delete((int) table.getModel().getValueAt(row, 0));
+                    ((DefaultTableModel) table.getModel()).removeRow(row);
+                    fireEditingStopped();
+                }
+            });
         }
         //<----
 

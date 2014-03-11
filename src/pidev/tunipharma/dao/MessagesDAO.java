@@ -19,7 +19,7 @@ import pidev.tunipharma.connection.DBConnection;
 
 /**
  *
- * @author elron
+ * @author Hend
  */
 public class MessagesDAO {
 
@@ -112,7 +112,7 @@ public class MessagesDAO {
 
     public Message readById(Integer id) {
         Message msg = null;
-        String sql = "SELECT * FROM Messages WHERE id_mdg ='" + id + "'";
+        String sql = "SELECT * FROM Messages WHERE id_msg ='" + id + "'";
         try {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
@@ -145,19 +145,18 @@ public class MessagesDAO {
             pstmt.setString(4, obj.getCorps_msg());
             pstmt.setDate(5, obj.getDate_msg());
             pstmt.setBoolean(6, obj.isEtat_msg());
-            pstmt.setInt(7, obj.getId_msg());
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void delete(Message obj) {
+    public void delete(int id_msg) {
         String sql;
         sql = "DELETE FROM Messages WHERE id_msg = ?;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
-            pstmt.setInt(1, obj.getId_msg());
+            pstmt.setInt(1, id_msg);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

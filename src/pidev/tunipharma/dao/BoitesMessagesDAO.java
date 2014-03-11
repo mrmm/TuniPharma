@@ -101,6 +101,20 @@ public class BoitesMessagesDAO {
         }
         return (bt_msg);
     }
+    public BoiteMessages readByIdCpt(Integer id) {
+        BoiteMessages bt_msg = null;
+        String sql = "SELECT * FROM Boites_Message WHERE id_cpt =" + id + "";
+        try {
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                //public Message(int id_Message, int id_pha, Date date_Message, String nom_Message, String desc_Message, Boolean etat_Message) {
+                bt_msg = new BoiteMessages(res.getInt(1), res.getInt(2));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return (bt_msg);
+    }
 
     public void update(BoiteMessages obj) {
 
@@ -125,6 +139,18 @@ public class BoitesMessagesDAO {
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_bt());
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void deleteByIdCpt(int id_cpt) {
+        String sql;
+        sql = "DELETE FROM Boites_Message WHERE id_cpt = ?;";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id_cpt);
             pstmt.executeUpdate();
             
         } catch (SQLException ex) {

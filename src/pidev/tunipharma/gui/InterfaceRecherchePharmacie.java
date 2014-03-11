@@ -5,6 +5,10 @@
  */
 package pidev.tunipharma.gui;
 
+import pidev.tunipharma.classes.Gouvernorat;
+import pidev.tunipharma.classes.Ville;
+import static pidev.tunipharma.gui.TableButton.makeTable;
+
 /**
  *
  * @author elron
@@ -158,6 +162,8 @@ public class InterfaceRecherchePharmacie extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     /**
      * @param args the command line arguments
      */

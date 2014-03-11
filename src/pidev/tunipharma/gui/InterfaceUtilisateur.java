@@ -8,20 +8,25 @@ package pidev.tunipharma.gui;
 import com.toedter.calendar.JDateChooser;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JTextField;
 import pidev.tunipharma.classes.BoiteMessages;
 import pidev.tunipharma.classes.Compte;
 import pidev.tunipharma.classes.Demande;
 import pidev.tunipharma.classes.Evenement;
+import pidev.tunipharma.classes.Gouvernorat;
 import pidev.tunipharma.classes.Message;
 import pidev.tunipharma.classes.Pharmacie;
 import pidev.tunipharma.classes.Service;
 import pidev.tunipharma.classes.TypeService;
+import pidev.tunipharma.classes.Ville;
 import pidev.tunipharma.dao.BoitesMessagesDAO;
 import pidev.tunipharma.dao.DemandesDAO;
 import pidev.tunipharma.dao.EvenementsDAO;
+import pidev.tunipharma.dao.GouvernoratsDAO;
 import pidev.tunipharma.dao.MessagesDAO;
 import pidev.tunipharma.dao.PharmaciesDAO;
 import pidev.tunipharma.dao.ServicesDAO;
+import pidev.tunipharma.dao.VillesDAO;
 import pidev.tunipharma.utils.GUIUtil;
 import pidev.tunipharma.utils.Session;
 import static pidev.tunipharma.gui.TableButton.makeTable;
@@ -39,46 +44,101 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private Pharmacie maPharmacie;
 
     public InterfaceUtilisateur() {
-        initComponents();
-        connUser = new Compte(1, "Mourad", "Maatoug", "El Fahs", "mourad@gmail.com", "112233", 12345678, Compte.COMPTE_PHARMACIEN, true);
-        if (connUser.getType_cpt() == Compte.COMPTE_CLIENT) {
-            System.out.println("Compte COMPTE_CLIENT");
-            jTabMyPhaInfo.setVisible(false);
-            panelMaPha.setVisible(false);
-        } else if (connUser.getType_cpt() == Compte.COMPTE_PHARMACIEN) {
-            System.out.println("Compte COMPTE_PHARMACIEN");
-            maPharmacie = PharmaciesDAO.getInstance().readByIdResp(connUser.getId_cpt());
+
+        connUser = Session.getCptConn();
+        //connUser = new Compte(3, "Mourad", "Maatoug", "El Fahs", "mourad@gmail.com", "112233", 12345678, Compte.COMPTE_PHARMACIEN, true);
+        //connUser = ComptesDAO.getInstance().readById(1);
+        if (connUser == null) {
+            GUIUtil.showMsgBox(this, "Veuillez-connecter !");
+            this.dispose();
+        } else {
+
+            initComponents();
+            if (connUser.getType_cpt() == Compte.COMPTE_CLIENT) {
+                System.out.println("Compte COMPTE_CLIENT");
+                this.setTitle("Mon Compte [Client]");
+                tabPaneMonCompte.remove(tabPaneMonCompte.getComponents().length - 1);
+            } else if (connUser.getType_cpt() == Compte.COMPTE_PHARMACIEN) {
+                System.out.println("Compte COMPTE_PHARMACIEN");
+                this.setTitle("Mon Compte [Pharmacien]");
+                maPharmacie = PharmaciesDAO.getInstance().readByIdResp(connUser.getId_cpt());
+                System.out.println("Ma Pharmacie : " + maPharmacie);
+            }
+            setLocationRelativeTo(null);
+            System.out.println("Mon Compte : " + connUser);
             System.out.println("Ma Pharmacie : " + maPharmacie);
+            if (maPharmacie == null) {
+                btMaPhaConfirmer.setName("Ajout");
+                btMaPhaConfirmer.setText("Ajouter ma pharmacie");
+            } else {
+                fillMaPhaInformation();
+                btMaPhaConfirmer.setName("Affichage");
+                btMaPhaConfirmer.setText("Modifier les informations");
+                GUIUtil.disAllTextField(panelInfoMaPha);
+                fillTableMesSrv();
+            }
+            GUIUtil.villeGouvListener(comboBoxMaPhaGouv, comboBoxMaPhaVille, false);
+            GUIUtil.fillGouvsCB(comboBoxMaPhaGouv, false);
+            // Remplissage de tableau des messages
+            fillTableMesMsg();
+            //Remplissage des champs avec les information de compte
+            fillMesInformation();
+
+            // controlle de saisi - Ajout evenement
+            GUIUtil.onChangeEmpty(txtMaPhaAjoutEventNom, btMaPhaAjoutEventConfirmer);
+            GUIUtil.onChangeEmpty(txtMaPhaAjoutEventDesc, btMaPhaAjoutEventConfirmer);
+
+            // controlle de saisi - Ajout service
+            GUIUtil.onChangeEmpty(txtMaPhaAjoutSrvDesc, buttonMaPhaAjoutSrvConfirmer);
+            GUIUtil.onChangeEmpty(txtMaPhaAjoutSrvNom, buttonMaPhaAjoutSrvConfirmer);
+
+            //desactiver les champs de text des mes information
+            GUIUtil.disAllTextField(panelInfoPerso);
+
+            GUIUtil.fillTypeSrvCB(comboBoxMaPhaAjoutSrvType);
         }
-        System.out.println("Mon Compte : " + connUser);
 
-        // Remplissage de tableau des messages
-        fillTableMesMsg();
-        //Remplissage des champs avec les information de compte
-        fillMesInformation();
-        GUIUtil.disAllTextField(panelInfoPerso);
-
-        // controlle de saisi - Ajout evenement
-        GUIUtil.onChangeEmpty(txtMaPhaAjoutEventNom, btMaPhaAjoutEventConfirmer);
-        GUIUtil.onChangeEmpty(txtMaPhaAjoutEventDesc, btMaPhaAjoutEventConfirmer);
-
-        // controlle de saisi - Ajout service
-        GUIUtil.onChangeEmpty(txtMaPhaAjoutSrvDesc, buttonMaPhaAjoutSrvConfirmer);
-        GUIUtil.onChangeEmpty(txtMaPhaAjoutSrvNom, buttonMaPhaAjoutSrvConfirmer);
     }
 
     private void fillTableMesMsg() {
-        BoiteMessages bm = BoitesMessagesDAO.getInstance().readById(connUser.getId_cpt());
+        BoiteMessages bm = BoitesMessagesDAO.getInstance().readByIdCpt(connUser.getId_cpt());
         List<Message> l = MessagesDAO.getInstance().readAllByIdUser(bm.getId_bt());
         GUIUtil.rempTableMesMsg(tableMesMsg, l);
+        tableMesMsg.getColumnModel().getColumn(0).setPreferredWidth(2);
+    }
+
+    private void fillTableMesSrv() {
+        List<Service> l = ServicesDAO.getInstance().readAllByIdPha(maPharmacie.getId_pha());
+        GUIUtil.rempTableSrv(tableMaPhaMesSrv, l);
+    }
+
+    private void fillTableMesEvent() {
+        List<Evenement> l = EvenementsDAO.getInstance().readAllByIdPha(maPharmacie.getId_pha());
+        GUIUtil.rempTableEvent(tableMaPhaMesEvent, l);
     }
 
     private void fillMesInformation() {
         txtMesInfosNom.setText(connUser.getNom_cpt());
         txtMesInfosPrenom.setText(connUser.getPrenom_cpt());
+        txtMesInfosEmail.setText(connUser.getEmail_cpt());
+        txtMesInfosTel.setText(connUser.getTel_cpt() + "");
         txtMeInfosAddresse.setText(connUser.getAddresse_cpt());
-        txtMaPhaInfoTel.setText(String.valueOf(connUser.getTel_cpt()) + " Tellllll");
-        txtMesInfosEmail.setText(connUser.getEmail_cpt() + " Emaiiiiil");
+    }
+
+    private void fillMaPhaInformation() {
+        txtMaPhaNom.setText(maPharmacie.getNom_pha());
+        txtMaPhaTel.setText(maPharmacie.getTel_pha() + "");
+        txtMaPhaFax.setText(maPharmacie.getFax_pha() + "");
+        txtMaPhaAddresse.setText(connUser.getAddresse_cpt());
+        txtMaPhaLatitude.setText(maPharmacie.getLat_gm_pha());
+        txtMaPhaLongitude.setText(maPharmacie.getLong_gm_pha());
+        txtMaPhaEmail.setText(maPharmacie.getEmail_pha());
+        Gouvernorat gouvPha = GouvernoratsDAO.getInstance().readById(maPharmacie.getGouv_pha());
+        comboBoxMaPhaGouv.setSelectedItem(gouvPha);
+        Ville villePha = VillesDAO.getInstance().readById(maPharmacie.getVille_pha());
+        comboBoxMaPhaGouv.setSelectedItem(villePha);
+        comboBoxMaPhaType.setSelectedIndex(maPharmacie.getType_pha() - 1);
+        GUIUtil.addAllDateFromDB(tableMaPhaJourDeGarde, maPharmacie.getId_pha());
     }
 
     /**
@@ -99,14 +159,12 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         txtMesInfosNom = new javax.swing.JTextField();
         txtMesInfosPrenom = new javax.swing.JTextField();
         txtMesInfosEmail = new javax.swing.JTextField();
         txtMesInfosTel = new javax.swing.JTextField();
-        txtMeInfosAncientMDP = new javax.swing.JTextField();
         txtMeInfosNvMDP = new javax.swing.JTextField();
         jScrollPane10 = new javax.swing.JScrollPane();
         txtMeInfosAddresse = new javax.swing.JTextArea();
@@ -120,25 +178,35 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         panelMaPha = new javax.swing.JPanel();
         jTabMyPhaInfo = new javax.swing.JTabbedPane();
         panelInfoPha = new javax.swing.JPanel();
-        jPanel13 = new javax.swing.JPanel();
-        btMaPhaInfoAnnuler = new javax.swing.JButton();
-        btMaPhaInfoConfirmer = new javax.swing.JButton();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel37 = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
+        panelInfoMaPha = new javax.swing.JPanel();
+        jLabel45 = new javax.swing.JLabel();
+        txtMaPhaNom = new javax.swing.JTextField();
+        dateGarde = new com.toedter.calendar.JDateChooser();
         jLabel40 = new javax.swing.JLabel();
-        txtMaPhaInfoEmail = new javax.swing.JTextField();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
-        txtMaPhaInfoNom = new javax.swing.JTextField();
-        txtMaPhaInfoFax = new javax.swing.JTextField();
-        txtMaPhaInfoTel = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableMaPhaJourDeGarde = new javax.swing.JTable();
+        jLabel46 = new javax.swing.JLabel();
+        txtMaPhaEmail = new javax.swing.JTextField();
+        txtMaPhaTel = new javax.swing.JTextField();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        txtMaPhaFax = new javax.swing.JTextField();
+        comboBoxMaPhaGouv = new javax.swing.JComboBox();
+        jLabel50 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        comboBoxMaPhaVille = new javax.swing.JComboBox();
         jScrollPane12 = new javax.swing.JScrollPane();
-        txtMaPhaInfoAddresse = new javax.swing.JTextArea();
-        comboBoxMaPhaInfoType = new javax.swing.JComboBox();
-        jLabel43 = new javax.swing.JLabel();
-        jCalendar2 = new com.toedter.calendar.JCalendar();
+        txtMaPhaAddresse = new javax.swing.JTextArea();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        txtMaPhaLongitude = new javax.swing.JTextField();
+        txtMaPhaLatitude = new javax.swing.JTextField();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        comboBoxMaPhaType = new javax.swing.JComboBox();
+        btMaPhaConfirmer = new javax.swing.JButton();
+        btMaPhaAnnuler = new javax.swing.JButton();
+        btAjoutJourGarde = new javax.swing.JButton();
         panelEvents = new javax.swing.JPanel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         panelMesEvents = new javax.swing.JPanel();
@@ -181,6 +249,11 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         tabPaneMonCompte.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tabPaneMonCompte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabPaneMonCompteMouseClicked(evt);
+            }
+        });
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mes informations", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -198,9 +271,6 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel29.setText("Num Tél :");
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel30.setText("Ancien Mot de passe :");
-
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel31.setText("Nouveau mot de passe :");
 
@@ -215,22 +285,10 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         });
 
         txtMesInfosPrenom.setName("txtprenom"); // NOI18N
-        txtMesInfosPrenom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMesInfosPrenomActionPerformed(evt);
-            }
-        });
 
         txtMesInfosEmail.setName("txtemail"); // NOI18N
-        txtMesInfosEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMesInfosEmailActionPerformed(evt);
-            }
-        });
 
         txtMesInfosTel.setName("txttel"); // NOI18N
-
-        txtMeInfosAncientMDP.setName("txtpwd1"); // NOI18N
 
         txtMeInfosNvMDP.setName("txtpwd2"); // NOI18N
 
@@ -263,44 +321,54 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         panelInfoPersoLayout.setHorizontalGroup(
             panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoPersoLayout.createSequentialGroup()
-                .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelInfoPersoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelInfoPersoLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoPersoLayout.createSequentialGroup()
+                                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoPersoLayout.createSequentialGroup()
-                                .addContainerGap()
                                 .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(18, 18, 18)))
                         .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtMesInfosNom)
-                                .addComponent(txtMesInfosPrenom)
-                                .addComponent(txtMesInfosEmail)
-                                .addComponent(txtMesInfosTel)
-                                .addComponent(txtMeInfosAncientMDP)
                                 .addComponent(txtMeInfosNvRMDP)
                                 .addComponent(txtMeInfosNvMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelInfoPersoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelInfoPersoLayout.createSequentialGroup()
-                        .addContainerGap(172, Short.MAX_VALUE)
-                        .addComponent(btMesInfoConfirmer)
-                        .addGap(18, 18, 18)
-                        .addComponent(btMesInfoAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(506, Short.MAX_VALUE))
+                        .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelInfoPersoLayout.createSequentialGroup()
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(panelInfoPersoLayout.createSequentialGroup()
+                                .addGap(0, 94, Short.MAX_VALUE)
+                                .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoPersoLayout.createSequentialGroup()
+                                        .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoPersoLayout.createSequentialGroup()
+                                        .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)))
+                                .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtMesInfosNom, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                    .addComponent(txtMesInfosPrenom)
+                                    .addComponent(txtMesInfosEmail)
+                                    .addComponent(txtMesInfosTel))))))
+                .addContainerGap(546, Short.MAX_VALUE))
+            .addGroup(panelInfoPersoLayout.createSequentialGroup()
+                .addGap(338, 338, 338)
+                .addComponent(btMesInfoConfirmer)
+                .addGap(18, 18, 18)
+                .addComponent(btMesInfoAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelInfoPersoLayout.setVerticalGroup(
             panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,16 +390,12 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMesInfosTel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel29))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtMeInfosAncientMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel30))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtMeInfosNvMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel31)))
+                            .addComponent(jLabel29)))
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMeInfosNvMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel31))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMeInfosNvRMDP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,11 +404,11 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel32)
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addGap(87, 87, 87)
                 .addGroup(panelInfoPersoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btMesInfoConfirmer)
                     .addComponent(btMesInfoAnnuler))
-                .addGap(66, 66, 66))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -355,9 +419,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(panelInfoPerso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 3, Short.MAX_VALUE))
+            .addComponent(panelInfoPerso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel787Layout = new javax.swing.GroupLayout(jPanel787);
@@ -368,9 +430,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         );
         jPanel787Layout.setVerticalGroup(
             jPanel787Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel787Layout.createSequentialGroup()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         tabPaneMonCompte.addTab("Informations personnelles", jPanel787);
@@ -384,7 +444,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             }
         ));
         tableMesMsg.setToolTipText("");
-        tableMesMsg = makeTable(GUIUtil.getModel(new Object[][]{{"","","","","","",""}}, new String [] {
+        tableMesMsg = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{{"","","","","","",""}}, new String [] {
             "ID", "De", "À", "Date", "Objet", "Message", "Options"
         }),6,TableButton.AFFFICHER_REPONDRE_SUPPRIMER);
         tableMesMsg.setName("tableMesMsg");
@@ -396,14 +456,14 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             panelMsgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMsgLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelMsgLayout.setVerticalGroup(
             panelMsgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMsgLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -412,205 +472,262 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         panelMaPha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jTabMyPhaInfo.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabMyPhaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabMyPhaInfoMouseClicked(evt);
+            }
+        });
 
-        btMaPhaInfoAnnuler.setText("Annuler");
+        jLabel45.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel45.setText("Nom :");
 
-        btMaPhaInfoConfirmer.setText("Confirmer ajout");
+        txtMaPhaNom.setName("Nom");
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Emplacement - Google Maps", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), java.awt.Color.black)); // NOI18N
+        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setText("Jours de garde");
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 145, Short.MAX_VALUE)
-        );
+        tableMaPhaJourDeGarde.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Jour", "Options"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableMaPhaJourDeGarde = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{}, new String [] {
+            "Jour", "Options"
+        }),1,TableButton.SUPPRIMER);
+        tableMaPhaJourDeGarde.setName("tableMaPhaJourDeGarde");
+        jScrollPane3.setViewportView(tableMaPhaJourDeGarde);
+
+        jLabel46.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel46.setText("Email :");
+        jLabel46.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel46.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        txtMaPhaEmail.setName("Email");
+
+        txtMaPhaTel.setName("Num Tél");
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel37.setText("Nom :");
-
-        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel38.setText("Adresse :");
-        jLabel38.setMaximumSize(new java.awt.Dimension(38, 17));
-        jLabel38.setMinimumSize(new java.awt.Dimension(38, 17));
+        jLabel37.setText("Num Tél :");
+        jLabel37.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel37.setMinimumSize(new java.awt.Dimension(38, 17));
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel39.setText("Adresse Email :");
+        jLabel39.setText("Num Fax :");
         jLabel39.setMaximumSize(new java.awt.Dimension(38, 17));
         jLabel39.setMinimumSize(new java.awt.Dimension(38, 17));
 
-        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel40.setText("Num Tél :");
-        jLabel40.setMaximumSize(new java.awt.Dimension(38, 17));
-        jLabel40.setMinimumSize(new java.awt.Dimension(38, 17));
+        txtMaPhaFax.setName("Num Fax");
 
-        txtMaPhaInfoEmail.setName("txtnom"); // NOI18N
-        txtMaPhaInfoEmail.addActionListener(new java.awt.event.ActionListener() {
+        comboBoxMaPhaGouv.setName("Gouvernorat");
+
+        jLabel50.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel50.setText("Gouvernorat : ");
+        jLabel50.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel50.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        jLabel51.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel51.setText("Ville :");
+        jLabel51.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel51.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        comboBoxMaPhaVille.setName("Ville");
+
+        txtMaPhaAddresse.setColumns(20);
+        txtMaPhaAddresse.setRows(5);
+        txtMaPhaAddresse.setName("Adresse");
+        jScrollPane12.setViewportView(txtMaPhaAddresse);
+
+        jLabel52.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel52.setText("Adresse :");
+        jLabel52.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel52.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        jLabel53.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel53.setText("Longitude : ");
+        jLabel53.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel53.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        txtMaPhaLongitude.setName("Longitude Google Map");
+
+        txtMaPhaLatitude.setName("Latitude Google Map");
+
+        jLabel54.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel54.setText("Latitude :");
+        jLabel54.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel54.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        jLabel55.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel55.setText("Type : ");
+        jLabel55.setMaximumSize(new java.awt.Dimension(38, 17));
+        jLabel55.setMinimumSize(new java.awt.Dimension(38, 17));
+
+        comboBoxMaPhaType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jour", "Nuit" }));
+        comboBoxMaPhaType.setSelectedIndex(-1);
+        comboBoxMaPhaType.setName("Type de pharmacie");
+
+        btMaPhaConfirmer.setText("Enregistrer les modification");
+        btMaPhaConfirmer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaPhaInfoEmailActionPerformed(evt);
+                btMaPhaConfirmerActionPerformed(evt);
             }
         });
 
-        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel41.setText("Responsable :");
-        jLabel41.setMaximumSize(new java.awt.Dimension(38, 17));
-        jLabel41.setMinimumSize(new java.awt.Dimension(38, 17));
-
-        jLabel42.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel42.setText("Num Fax :");
-        jLabel42.setMaximumSize(new java.awt.Dimension(38, 17));
-        jLabel42.setMinimumSize(new java.awt.Dimension(38, 17));
-
-        txtMaPhaInfoNom.setName("txtnom"); // NOI18N
-        txtMaPhaInfoNom.addActionListener(new java.awt.event.ActionListener() {
+        btMaPhaAnnuler.setText("Annuler");
+        btMaPhaAnnuler.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaPhaInfoNomActionPerformed(evt);
+                btMaPhaAnnulerActionPerformed(evt);
             }
         });
 
-        txtMaPhaInfoFax.setName("txtnom"); // NOI18N
-        txtMaPhaInfoFax.addActionListener(new java.awt.event.ActionListener() {
+        btAjoutJourGarde.setText("Ajouter garde");
+        btAjoutJourGarde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaPhaInfoFaxActionPerformed(evt);
+                btAjoutJourGardeActionPerformed(evt);
             }
         });
 
-        txtMaPhaInfoTel.setName("txtnom"); // NOI18N
-        txtMaPhaInfoTel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaPhaInfoTelActionPerformed(evt);
-            }
-        });
-
-        txtMaPhaInfoAddresse.setColumns(20);
-        txtMaPhaInfoAddresse.setRows(5);
-        txtMaPhaInfoAddresse.setName("txtadresse"); // NOI18N
-        jScrollPane12.setViewportView(txtMaPhaInfoAddresse);
-
-        jLabel43.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel43.setText("Horaire de travail");
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addGap(0, 396, Short.MAX_VALUE)
-                .addComponent(btMaPhaInfoConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
-                .addComponent(btMaPhaInfoAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(263, 263, 263))
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtMaPhaInfoFax, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtMaPhaInfoNom, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(3, 3, 3)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
-                                        .addGap(65, 65, 65)
-                                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
-                                        .addGap(137, 137, 137)
-                                        .addComponent(txtMaPhaInfoTel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel13Layout.createSequentialGroup()
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboBoxMaPhaInfoType, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtMaPhaInfoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jCalendar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel43, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(166, Short.MAX_VALUE))
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMaPhaInfoNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBoxMaPhaInfoType, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMaPhaInfoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMaPhaInfoTel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMaPhaInfoFax, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelInfoMaPhaLayout = new javax.swing.GroupLayout(panelInfoMaPha);
+        panelInfoMaPha.setLayout(panelInfoMaPhaLayout);
+        panelInfoMaPhaLayout.setHorizontalGroup(
+            panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoMaPhaLayout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtMaPhaLatitude)
+                    .addComponent(txtMaPhaLongitude, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMaPhaNom, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMaPhaEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMaPhaTel, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMaPhaFax, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboBoxMaPhaGouv, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboBoxMaPhaVille, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboBoxMaPhaType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoMaPhaLayout.createSequentialGroup()
+                        .addComponent(dateGarde, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btAjoutJourGarde))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(111, Short.MAX_VALUE))
+            .addGroup(panelInfoMaPhaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btMaPhaConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btMaPhaInfoAnnuler)
-                    .addComponent(btMaPhaInfoConfirmer))
-                .addGap(110, 110, 110))
+                .addComponent(btMaPhaAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelInfoMaPhaLayout.setVerticalGroup(
+            panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoMaPhaLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInfoMaPhaLayout.createSequentialGroup()
+                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dateGarde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btAjoutJourGarde))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInfoMaPhaLayout.createSequentialGroup()
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaPhaNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaPhaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtMaPhaTel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtMaPhaFax, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboBoxMaPhaGouv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboBoxMaPhaVille, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelInfoMaPhaLayout.createSequentialGroup()
+                                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtMaPhaLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtMaPhaLatitude, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(comboBoxMaPhaType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addGroup(panelInfoMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btMaPhaAnnuler)
+                    .addComponent(btMaPhaConfirmer))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelInfoPhaLayout = new javax.swing.GroupLayout(panelInfoPha);
         panelInfoPha.setLayout(panelInfoPhaLayout);
         panelInfoPhaLayout.setHorizontalGroup(
             panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1005, Short.MAX_VALUE)
-            .addGroup(panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelInfoPhaLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(panelInfoPhaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelInfoMaPha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelInfoPhaLayout.setVerticalGroup(
             panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 692, Short.MAX_VALUE)
-            .addGroup(panelInfoPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelInfoPhaLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(panelInfoPhaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelInfoMaPha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabMyPhaInfo.addTab("Informations pharmacie", panelInfoPha);
+
+        jTabbedPane3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane3MouseClicked(evt);
+            }
+        });
 
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Evenement", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(0, 0, 102))); // NOI18N
 
@@ -619,21 +736,26 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nom Evenement", "Description Evenement", "Date Evenement", "Heure Evenement", "Options"
+                "ID", "Nom Evenement", "Description Evenement", "Date Evenement", "Options"
             }
         ));
+        tableMaPhaMesEvent.setToolTipText("");
+        tableMaPhaMesEvent = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{}, new String [] {
+            "ID", "Nom Evenement", "Description Evenement", "Date Evenement", "Options"
+        }),4,TableButton.SUPPRIMER);
+        tableMaPhaMesEvent.setName("tableMaPhaMesEvent");
         jScrollPane4.setViewportView(tableMaPhaMesEvent);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 861, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -654,7 +776,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
 
         btMaPhaAjoutEventAnnuler.setText("Annuler");
 
-        btMaPhaAjoutEventConfirmer.setText("Confirmer ajout");
+        btMaPhaAjoutEventConfirmer.setText("Confirmer ajout ");
         btMaPhaAjoutEventConfirmer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btMaPhaAjoutEventConfirmerActionPerformed(evt);
@@ -724,7 +846,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                         .addComponent(btMaPhaAjoutEventConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(72, 72, 72)
                         .addComponent(btMaPhaAjoutEventAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(353, Short.MAX_VALUE))
+                .addContainerGap(357, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -788,18 +910,22 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                 "ID", "Type", "Nom", "Descriptions", "Options"
             }
         ));
+        tableMaPhaMesSrv.setToolTipText("");
+        tableMaPhaMesSrv = makeTable(pidev.tunipharma.utils.GUIUtil.getModel(new Object[][]{}, new String [] {
+            "ID", "Type", "Nom", "Descriptions", "Options"
+        }),4,TableButton.SUPPRIMER); tableMaPhaMesSrv.setName("tableMaPhaMesSrv");
         jScrollPane5.setViewportView(tableMaPhaMesSrv);
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 873, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -828,7 +954,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         jLabel49.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel49.setText("Type service : ");
 
-        buttonMaPhaAjoutSrvConfirmer.setText("Confirmer ajout");
+        buttonMaPhaAjoutSrvConfirmer.setText("Confirmer ajout service");
         buttonMaPhaAjoutSrvConfirmer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonMaPhaAjoutSrvConfirmerActionPerformed(evt);
@@ -842,28 +968,32 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         panelAjoutServiceLayout.setHorizontalGroup(
             panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAjoutServiceLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel47)
-                    .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelAjoutServiceLayout.createSequentialGroup()
+                        .addComponent(jLabel47, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(panelAjoutServiceLayout.createSequentialGroup()
+                        .addGroup(panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)))
                 .addGroup(panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(comboBoxMaPhaAjoutSrvType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtMaPhaAjoutSrvNom)
                     .addComponent(jScrollPane14, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(436, 436, 436))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAjoutServiceLayout.createSequentialGroup()
-                .addContainerGap(192, Short.MAX_VALUE)
-                .addComponent(buttonMaPhaAjoutSrvConfirmer, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(buttonMaPhaAjoutSrvAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(361, 361, 361))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonMaPhaAjoutSrvConfirmer)
+                .addGap(18, 18, 18)
+                .addComponent(buttonMaPhaAjoutSrvAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAjoutServiceLayout.setVerticalGroup(
             panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAjoutServiceLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMaPhaAjoutSrvNom, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -879,8 +1009,8 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
                     .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57)
                 .addGroup(panelAjoutServiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonMaPhaAjoutSrvAnnuler)
-                    .addComponent(buttonMaPhaAjoutSrvConfirmer))
+                    .addComponent(buttonMaPhaAjoutSrvConfirmer)
+                    .addComponent(buttonMaPhaAjoutSrvAnnuler))
                 .addContainerGap(221, Short.MAX_VALUE))
         );
 
@@ -907,14 +1037,14 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             panelMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMaPhaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabMyPhaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 1066, Short.MAX_VALUE)
+                .addComponent(jTabMyPhaInfo)
                 .addContainerGap())
         );
         panelMaPhaLayout.setVerticalGroup(
             panelMaPhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMaPhaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabMyPhaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(jTabMyPhaInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -944,33 +1074,9 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMesInfosNomActionPerformed
 
-    private void txtMesInfosPrenomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMesInfosPrenomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMesInfosPrenomActionPerformed
-
-    private void txtMesInfosEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMesInfosEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMesInfosEmailActionPerformed
-
     private void txtMaPhaAjoutEventNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhaAjoutEventNomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaPhaAjoutEventNomActionPerformed
-
-    private void txtMaPhaInfoEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhaInfoEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaPhaInfoEmailActionPerformed
-
-    private void txtMaPhaInfoNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhaInfoNomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaPhaInfoNomActionPerformed
-
-    private void txtMaPhaInfoFaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhaInfoFaxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaPhaInfoFaxActionPerformed
-
-    private void txtMaPhaInfoTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhaInfoTelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaPhaInfoTelActionPerformed
 
     private void txtMaPhaAjoutSrvNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPhaAjoutSrvNomActionPerformed
         // TODO add your handling code here:
@@ -986,6 +1092,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (GUIUtil.checkForm(panelAjoutEvent) && maPharmacie != null) {
             System.out.println("Mon Compte event : " + connUser);
+
             JDateChooser jc = dateChooserAjoutEvent;
             java.sql.Date date = new java.sql.Date(new Date(jc.getDate().getYear(), jc.getDate().getMonth(), jc.getDate().getDate(), (int) spMaPhaAjoutEventHeure.getValue(), (int) spMaPhaAjoutEventMin.getValue()).getTime());
             Evenement event = new Evenement(-1, maPharmacie.getId_pha(), date, txtMaPhaAjoutEventNom.getText(), txtMaPhaAjoutEventDesc.getText(), false);
@@ -994,6 +1101,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             Demande d = new Demande(-1, Demande.DEMANDE_EVENEMENT, date, connUser.getId_cpt(), event.getId_event());
             System.out.println("Demande : " + d);
             DemandesDAO.getInstance().create(d);
+
             GUIUtil.resetForm(panelAjoutEvent);
         }
     }//GEN-LAST:event_btMaPhaAjoutEventConfirmerActionPerformed
@@ -1009,13 +1117,94 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
             GUIUtil.resetForm(panelAjoutEvent);
         }
     }//GEN-LAST:event_buttonMaPhaAjoutSrvConfirmerActionPerformed
-    //</editor-fold>
 
+    //</editor-fold>
     //Reinitialiser les information au de l'annulation des modification
     private void btMesInfoAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMesInfoAnnulerActionPerformed
         // TODO add your handling code here:
         fillMesInformation();
     }//GEN-LAST:event_btMesInfoAnnulerActionPerformed
+
+    private void btAjoutJourGardeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAjoutJourGardeActionPerformed
+        //        GUIUtil.showMsgBox(evt.getSource().getClass().getName());
+        try {
+            Date d = dateGarde.getDate();
+            GUIUtil.addRowCallTable(tableMaPhaJourDeGarde, d);
+            ((JTextField) dateGarde.getDateEditor().getUiComponent()).setText("");
+        } catch (Exception e) {
+            System.out.println("JDateChooser Exception");
+        }
+    }//GEN-LAST:event_btAjoutJourGardeActionPerformed
+
+    private void btMaPhaAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMaPhaAnnulerActionPerformed
+        // TODO add your handling code here:
+        if (GUIUtil.showConfBox("Voulez-vous annuler les modification ?")) {
+            // Renitialisation de champs des jour de garde
+            ((JTextField) dateGarde.getDateEditor().getUiComponent()).setText("");
+            if (maPharmacie != null) {
+                fillMaPhaInformation();
+            }
+        }
+    }//GEN-LAST:event_btMaPhaAnnulerActionPerformed
+
+    private void btMaPhaConfirmerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMaPhaConfirmerActionPerformed
+        // TODO add your handling code here:
+        if (btMaPhaConfirmer.getName().equals("Affichage")) {
+            btMaPhaConfirmer.setText("Enregistrer les modification");
+            btMaPhaConfirmer.setName("Modification");
+            GUIUtil.enAllTextField(panelInfoMaPha);
+        } else {
+            if (GUIUtil.checkForm(panelInfoMaPha)) {
+                //Ajout du compte dans la base de donnée
+                System.out.println("[Log] Gouvernorat et ville choisi : " + ((Gouvernorat) comboBoxMaPhaGouv.getSelectedItem()).getNom_gouv() + " - " + ((Ville) comboBoxMaPhaVille.getSelectedItem()));
+                Pharmacie pha = new Pharmacie((maPharmacie != null ? maPharmacie.getId_pha() : -1),
+                        connUser.getId_cpt(),
+                        txtMaPhaNom.getText(),
+                        txtMaPhaAddresse.getText(),
+                        Integer.parseInt(txtMaPhaTel.getText()),
+                        Integer.parseInt(txtMaPhaFax.getText()),
+                        txtMaPhaLatitude.getText(),
+                        txtMaPhaLongitude.getText(),
+                        txtMaPhaEmail.getText(),
+                        comboBoxMaPhaType.getSelectedIndex() + 1,
+                        ((Ville) comboBoxMaPhaVille.getSelectedItem()).getId_ville(),
+                        ((Gouvernorat) comboBoxMaPhaGouv.getSelectedItem()).getId_gouv()
+                );
+
+                //Ajout dans la base de donnée de la nouvelle pharamacie
+                if (maPharmacie != null) {
+                    PharmaciesDAO.getInstance().update(pha);
+                } else {
+                    PharmaciesDAO.getInstance().create(pha);
+                    maPharmacie = pha;
+                    System.out.println("Pharmacie " + pha + " Créé !!");
+                }
+                //Ajout de jours de garde dans la base de données
+                GUIUtil.addAllDateToDB(tableMaPhaJourDeGarde, pha.getId_pha());
+                ((JTextField) dateGarde.getDateEditor().getUiComponent()).setText("");
+                GUIUtil.disAllTextField(panelInfoMaPha);
+                btMaPhaConfirmer.setText("Modifier les informations");
+            }
+
+        }
+    }//GEN-LAST:event_btMaPhaConfirmerActionPerformed
+
+    private void jTabbedPane3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane3MouseClicked
+        // TODO add your handling code here:
+        fillTableMesSrv();
+        fillTableMesEvent();
+    }//GEN-LAST:event_jTabbedPane3MouseClicked
+
+    private void jTabMyPhaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabMyPhaInfoMouseClicked
+        // TODO add your handling code here:
+        fillTableMesSrv();
+        fillTableMesEvent();
+    }//GEN-LAST:event_jTabMyPhaInfoMouseClicked
+
+    private void tabPaneMonCompteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPaneMonCompteMouseClicked
+        // TODO add your handling code here:
+        fillTableMesMsg();
+    }//GEN-LAST:event_tabPaneMonCompteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1053,25 +1242,27 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAjoutJourGarde;
     private javax.swing.JButton btMaPhaAjoutEventAnnuler;
     private javax.swing.JButton btMaPhaAjoutEventConfirmer;
-    private javax.swing.JButton btMaPhaInfoAnnuler;
-    private javax.swing.JButton btMaPhaInfoConfirmer;
+    private javax.swing.JButton btMaPhaAnnuler;
+    private javax.swing.JButton btMaPhaConfirmer;
     private javax.swing.JButton btMesInfoAnnuler;
     private javax.swing.JButton btMesInfoConfirmer;
     private javax.swing.JButton buttonMaPhaAjoutSrvAnnuler;
     private javax.swing.JButton buttonMaPhaAjoutSrvConfirmer;
     private javax.swing.JComboBox comboBoxMaPhaAjoutSrvType;
-    private javax.swing.JComboBox comboBoxMaPhaInfoType;
+    private javax.swing.JComboBox comboBoxMaPhaGouv;
+    private javax.swing.JComboBox comboBoxMaPhaType;
+    private javax.swing.JComboBox comboBoxMaPhaVille;
     private com.toedter.calendar.JDateChooser dateChooserAjoutEvent;
-    private com.toedter.calendar.JCalendar jCalendar2;
+    private com.toedter.calendar.JDateChooser dateGarde;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
@@ -1079,20 +1270,22 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel787;
@@ -1102,6 +1295,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabMyPhaInfo;
@@ -1109,6 +1303,7 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JPanel panelAjoutEvent;
     private javax.swing.JPanel panelAjoutService;
     private javax.swing.JPanel panelEvents;
+    private javax.swing.JPanel panelInfoMaPha;
     private javax.swing.JPanel panelInfoPerso;
     private javax.swing.JPanel panelInfoPha;
     private javax.swing.JPanel panelMaPha;
@@ -1118,20 +1313,22 @@ public class InterfaceUtilisateur extends javax.swing.JFrame {
     private javax.swing.JSpinner spMaPhaAjoutEventMin;
     private javax.swing.JTabbedPane tabPaneMonCompte;
     private javax.swing.JTabbedPane tabbedPaneServices;
+    private javax.swing.JTable tableMaPhaJourDeGarde;
     private javax.swing.JTable tableMaPhaMesEvent;
     private javax.swing.JTable tableMaPhaMesSrv;
     private javax.swing.JTable tableMesMsg;
+    private javax.swing.JTextArea txtMaPhaAddresse;
     private javax.swing.JTextArea txtMaPhaAjoutEventDesc;
     private javax.swing.JTextField txtMaPhaAjoutEventNom;
     private javax.swing.JTextArea txtMaPhaAjoutSrvDesc;
     private javax.swing.JTextField txtMaPhaAjoutSrvNom;
-    private javax.swing.JTextArea txtMaPhaInfoAddresse;
-    private javax.swing.JTextField txtMaPhaInfoEmail;
-    private javax.swing.JTextField txtMaPhaInfoFax;
-    private javax.swing.JTextField txtMaPhaInfoNom;
-    private javax.swing.JTextField txtMaPhaInfoTel;
+    private javax.swing.JTextField txtMaPhaEmail;
+    private javax.swing.JTextField txtMaPhaFax;
+    private javax.swing.JTextField txtMaPhaLatitude;
+    private javax.swing.JTextField txtMaPhaLongitude;
+    private javax.swing.JTextField txtMaPhaNom;
+    private javax.swing.JTextField txtMaPhaTel;
     private javax.swing.JTextArea txtMeInfosAddresse;
-    private javax.swing.JTextField txtMeInfosAncientMDP;
     private javax.swing.JTextField txtMeInfosNvMDP;
     private javax.swing.JTextField txtMeInfosNvRMDP;
     private javax.swing.JTextField txtMesInfosEmail;

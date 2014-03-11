@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pidev.tunipharma.classes.Vote;
 import pidev.tunipharma.connection.DBConnection;
 
@@ -30,9 +32,13 @@ public class VotesDAO {
         stmt = connexion.createStatement();
     }
 
-    public static VotesDAO getInstance() throws SQLException {
+    public static VotesDAO getInstance() {
         if (instance == null) {
-            instance = new VotesDAO();
+            try {
+                instance = new VotesDAO();
+            } catch (SQLException ex) {
+                Logger.getLogger(VotesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (instance);
 
@@ -119,31 +125,58 @@ public class VotesDAO {
         }
     }
 
+    public void updateVote(int id, int vote) {
+        String sql;
+
+        sql = "UPDATE Votes SET "
+                + "valeur_vote = (valeur_vote+" + vote + ")/nbr_vote,"
+                + "nbr_vote = nbr_vote+1"
+                + "WHERE id_pha = '" + id + "';";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void delete(Vote obj) {
         String sql;
         sql = "DELETE FROM Votes WHERE id_vote = ?;";
         try {
             PreparedStatement pstmt = connexion.prepareStatement(sql);
             pstmt.setInt(1, obj.getId_vote());
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void deleteByIdPha(int id_pha) {
+        String sql;
+        sql = "DELETE FROM Votes WHERE id_pha = ?;";
+        try {
+            PreparedStatement pstmt = connexion.prepareStatement(sql);
+            pstmt.setInt(1, id_pha);
+            pstmt.executeUpdate();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-     public int readByIdPha(Integer id) {
-         
-       int val=0;
-        String sql = "SELECT valeur_vote FROM Votes WHERE id_vote='" + id + "'";
+
+    public Vote readByIdPha(Integer id) {
+        String sql = "SELECT * FROM Votes WHERE id_pha='" + id + "'";
+        System.out.println("SQL VotesDAO - readByIdPha : " + sql);
+        Vote v=null;
         try {
             ResultSet res = stmt.executeQuery(sql);
-            while(res.next()){
-            res.getInt(1);
+            while (res.next()) {
+                v = new Vote(res.getInt(1), res.getInt(2),res.getInt(3),res.getInt(4));
             }
-            }
-         catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return (val);
+        return (v);
     }
 }
